@@ -1,0 +1,87 @@
+.recommend-banner-wrapper {
+    position: relative;
+    overflow: hidden;
+    
+}
+
+.recommend-banner-center {
+    display: block;
+    z-index: 666;
+}
+
+.recommend-banner-center img {
+    width: 100%;
+}
+
+.recommend-banner-filter {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #666;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(64px);
+    margin: -96px;
+    z-index: -1;
+}
+
+.recommend-banner-wrapper .recommend-banner-dots li button {
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    /* background-color: #c20c0c; */
+}
+.recommend-banner-wrapper .recommend-banner-dots li button:focus {
+    opacity: 0.3;
+}
+.recommend-banner-wrapper .recommend-banner-dots li button:hover {
+    opacity: 1;
+    background-color: #c20c0c;
+}
+.recommend-banner-wrapper .recommend-banner-dots li.slick-active button {
+    background-color: #c20c0c;
+}
+
+div.recommend-banner-wrapper button.slick-arrow {
+    position: absolute;
+    font-size: 0px;
+    width: 32px;
+    height: 64px;
+    border-radius: 1px;
+    margin: 0;
+    z-index: 111;
+    background-image: url(../../../../../../assets/images/banner_sprite.png);
+    background-repeat:  no-repeat;
+
+    &:hover,
+    &:focus {
+        background-image: url(../../../../../../assets/images/banner_sprite.png);
+        background-repeat:  no-repeat;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+}
+
+
+
+.recommend-banner-wrapper button.slick-prev {
+    left: 50%;
+    transform: translate(calc(-490px - 100% - 20px), -50%);
+    background-position: -4px -360px;
+
+    &:hover,
+    &:focus {
+        background-position: -4px -360px;
+    }
+}
+.recommend-banner-wrapper button.slick-next {
+    right: 50%;
+    transform: translate(calc(490px + 100% + 20px), -50%);
+    background-position: -3px -506px;
+
+    &:hover,
+    &:focus {
+        background-position: -3px -506px;
+    }
+}

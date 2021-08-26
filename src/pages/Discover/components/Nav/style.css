@@ -1,0 +1,31 @@
+.discover-nav {
+    height: 34px;
+    background-color: #c20c0c;
+}
+
+.discover-nav ul {
+    display: flex;
+    padding-left: 183px;
+}
+
+.discover-nav-item {
+    height: 34px;
+    line-height: 34px;
+    padding: 0 17px;
+}
+
+.discover-nav-item a {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 10px;
+    padding: 0 13px;
+    color: white;
+}
+
+.discover-nav-active,
+.discover-nav-item a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: white;
+}

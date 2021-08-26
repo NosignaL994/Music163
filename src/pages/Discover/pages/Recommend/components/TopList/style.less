@@ -1,0 +1,124 @@
+.recommend-toplist-content {
+    height: 472px;
+    border-radius: 3px;
+    background-size: 100% 100%;
+}
+
+.recommend-toplist-content {
+    ul {
+        display: flex;
+        li {
+            flex: 1;
+        }
+    }
+    .recommend-toplist-title {
+        padding: 20px 21px;
+
+        img {
+            width: 80px;
+            vertical-align: top;
+        }
+        
+        h3 {
+            padding-left: 10px;
+            display: inline-block;
+            a {
+                color: #333;
+                font-weight: bold;
+                display: block;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            button {
+                width: 22px;
+                height: 22px;
+                
+            }
+            
+            .recommend-toplist-listplay {
+                background-position: -267px -205px;
+                margin-right: 10px;
+                &:hover {
+                    background-position: -267px -235px;
+                }
+            }
+
+            .recommend-toplist-listcollect {
+                background-position: -300px -205px;
+                &:hover {
+                    background-position: -300px -235px;
+                }
+            }
+        }
+    }
+    dd {
+        ol>li {
+            height: 32px;
+            line-height: 32px;
+            position: relative;
+            padding-left: 50px;
+            .recommend-toplist-rank {
+                position: absolute;
+                left: 20px;
+            }
+            .recommend-toplist-topthree {
+                color: #c10d0c;
+                font-size: 16px;
+            }
+            .recommend-toplist-song {
+                display: inline-block;
+                width: 170px;
+                font-size: 12px;
+                color: black;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            &:hover .recommend-toplist-song {
+                width: 96px;
+            }
+            .recommend-toplist-songbtns {
+                float: right;
+                height: 32px;
+                display: none;
+                
+                align-items: center;
+                button {
+                    width: 17px;
+                    height: 17px;
+                    display: inline;
+                    vertical-align: center;
+                    margin-right: 8px;
+                }
+                .recommend-toplist-play {
+                    background-position: -267px -268px;
+                    &:hover {
+                        background-position: -267px -288px;
+                    }
+                }
+                .recommend-toplist-add {
+                    background-position: 0 -698px;
+                    &:hover {
+                        background-position: -22px -698px;
+                    }
+                }
+                .recommend-toplist-collect {
+                    background-position: -297px -268px;
+                    &:hover {
+                        background-position: -297px -288px;
+                    }
+                }
+            }
+            &:hover .recommend-toplist-songbtns {
+                display: flex;
+            }
+            .recommend-toplist-all {
+                float: right;
+                color: black;
+                font-size: 12px;
+                margin-right: 20px;
+            }
+        }
+    }
+}

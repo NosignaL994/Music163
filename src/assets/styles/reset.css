@@ -1,0 +1,31 @@
+div,p,h1,h2,h3,header,section,footer,main,ul,ol,li,dt,dd,dl,body,input {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+input,
+textarea,
+button,
+select,
+a {
+  outline: none;
+  border: none;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
