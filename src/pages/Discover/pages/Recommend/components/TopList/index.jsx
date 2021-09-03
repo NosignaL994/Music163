@@ -3,9 +3,20 @@ import "./style.less"
 import { Component } from "react";
 import { connect } from "react-redux";
 
+import {setPlaySongAction,setPlayDurationAction,setPlayArtistsAction,setPlayIdAction } from "@/redux/actions/playbar"
+
 class RecommendToplist extends Component {
+    playSongHandler = track => () => {
+        
+        const {setPlayArtistsAction, setPlayDurationAction, setPlaySongAction, setPlayIdAction} = this.props
+        setPlayArtistsAction(track)
+        setPlayDurationAction(track)
+        setPlaySongAction(track)
+        setPlayIdAction(track)
+    }
     render () {
         const {risingToplist, newToplist, originalToplist} = this.props
+        console.log(risingToplist, newToplist, originalToplist);
         return (
             <section className="recommend-toplist">
                 <header className="recommend-toplist-hd recommend-main-hd">
@@ -33,7 +44,7 @@ class RecommendToplist extends Component {
                                     <span className={idx < 3 ? "recommend-toplist-rank recommend-toplist-topthree" : "recommend-toplist-rank"} >{idx+1}</span>
                                     <a className="recommend-toplist-song" href="javascript:;" >{item.name}</a>
                                     <div className="recommend-toplist-songbtns">
-                                        <button className="recommend-toplist-play sprite_02"></button>
+                                        <button className="recommend-toplist-play sprite_02" onClick={this.playSongHandler(item)}></button>
                                         <button className="recommend-toplist-add sprite_icon2"></button>
                                         <button className="recommend-toplist-collect sprite_02"></button>
                                     </div>
@@ -58,7 +69,7 @@ class RecommendToplist extends Component {
                                     <span className={idx < 3 ? "recommend-toplist-rank recommend-toplist-topthree" : "recommend-toplist-rank"} >{idx+1}</span>
                                     <a className="recommend-toplist-song" href="javascript:;" >{item.name}</a>
                                     <div className="recommend-toplist-songbtns">
-                                        <button className="recommend-toplist-play sprite_02"></button>
+                                        <button className="recommend-toplist-play sprite_02" onClick={this.playSongHandler(item)}></button>
                                         <button className="recommend-toplist-add sprite_icon2"></button>
                                         <button className="recommend-toplist-collect sprite_02"></button>
                                     </div>
@@ -83,7 +94,7 @@ class RecommendToplist extends Component {
                                     <span className={idx < 3 ? "recommend-toplist-rank recommend-toplist-topthree" : "recommend-toplist-rank"} >{idx+1}</span>
                                     <a className="recommend-toplist-song" href="javascript:;" >{item.name}</a>
                                     <div className="recommend-toplist-songbtns">
-                                        <button className="recommend-toplist-play sprite_02"></button>
+                                        <button className="recommend-toplist-play sprite_02" onClick={this.playSongHandler(item)}></button>
                                         <button className="recommend-toplist-add sprite_icon2"></button>
                                         <button className="recommend-toplist-collect sprite_02"></button>
                                     </div>
@@ -109,4 +120,9 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, null)(RecommendToplist)
+export default connect(mapStateToProps, {
+    setPlayDurationAction,
+    setPlaySongAction,
+    setPlayArtistsAction,
+    setPlayIdAction
+})(RecommendToplist)

@@ -1,4 +1,4 @@
-import './style.css'
+import './style.less'
 
 import {Component} from 'react'
 import {NavLink} from 'react-router-dom'

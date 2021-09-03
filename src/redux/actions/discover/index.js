@@ -2,6 +2,14 @@ import {getRequest} from "@/utils/request"
 import { GET_BANNER_OVER, GET_HOTRECOMMEND_OVER,GET_TOPLIST_OVER,GET_RECOMMEND_NEW_OVER,GET_RISING_TOPLIST_OVER, GET_NEW_TOPLIST_OVER, GET_ORIGINAL_TOPLIST_OVER,GET_RECOMMEND_SINGER_OVER,GET_RECOMMEND_ANCHOR_OVER } from "@/common/actionType"
 import { risingToplistId, newToplistId, originalToplistId } from "@/common/constant"
 
+// function errorHander (error) {
+//     if (error.response) {
+//         console.log(error)
+//     } else {
+
+//     }
+// }
+
 export const getBannerAction = () => dispatch => {
     getRequest('/banner')
     .then(response => dispatch({

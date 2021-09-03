@@ -8,9 +8,9 @@ button {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #eaedf2;
 }
-/* #root {
+#root {
   background-color: #eaedf2;
-} */
+}
 .w1100 {
     width: 1100px;
     margin: 0 auto;
@@ -80,10 +80,26 @@ button {
   background: url(../images/notlogin.jpg) no-repeat;
 }
 
-.sprite_player {
+.sprite_playbar {
   background: url(../images/playbar_sprite.png) no-repeat;
 }
 
 .recommend-top-bg {
   background: url(../images/recommend-top-bg.png) no-repeat;
+}
+
+.sprite_progress {
+  background: url(../images/progress_bar.png) no-repeat;
+}
+
+.sprite_pip {
+  background: url(../images/sprite_pip.png) no-repeat;
+}
+
+.sprite_footer1 {
+  background: url(../images/sprite_footer_01.png) no-repeat;
+}
+
+.sprite_footer2 {
+  background: url(../images/sprite_footer_02.png) no-repeat;
 }

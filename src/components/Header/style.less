@@ -1,0 +1,174 @@
+.site-hd {
+    height: 70px;
+    background-color: #242424;
+    /* border-bottom: solid 5px #c20c0c; */
+}
+
+.site-hd-left {
+    float: left;
+    display: flex;
+
+    .logo {
+        display: block;
+        width: 157px;
+        height: 70px;
+        background-position: 0 0;
+    }
+    
+    .site-hd-group {
+        margin-left: 20px;
+        display: flex;
+        a {
+            position: relative;
+            display: block;
+            height: 70px;
+            line-height: 70px;
+            color: #b4b4b4;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+        a.hd-group-active,
+        a:hover {
+            background-color: black;
+            color: white;
+            text-decoration: none;
+        }
+        .hd-group-active::after {
+            content: "";
+            display: block;
+            width: 12px;
+            height: 7px;
+            background-color: #c20c0c;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            /* z-index: 666; */
+            transform: translate(-50%, 0);
+            clip-path: polygon(0 100%, 50% 0, 100% 100%);
+        }
+    }
+}
+.site-hd-right {
+    float: right;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+
+    .search-box {
+        position: relative;
+        .search {
+            height: 32px;
+            width: 158px;
+            border-radius: 16px;
+            background-color: white;
+            background-position: 0 -99px;
+            padding-left: 28px;
+            margin-right: 12px;
+        }
+        .search-suggest {
+            position: absolute;
+            top: calc(100% + 10px);
+            z-index: 111;
+            width: 240px;
+            border: solid 1px #bebebe;
+            border-radius: 4px;
+            /* height: 236px; */
+            background-color: white;
+            box-shadow: 0 0 7px #555;
+            .searchUser {
+                display: block;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px;
+                border-bottom: solid 1px #e2e2e2;
+                color: #666;
+                &:hover {
+                    text-decoration: none;
+                    background-color: #e3e5e7;
+                }
+            }
+            .search-suggest-item {
+                display: flex;
+                h3 {
+                
+                    font-weight: normal;
+                    font-size: 12px;
+                    width: 63px;
+                    padding-top: 5px;
+                    text-align: center;
+                    border-right: solid 1px #e2e2e2;
+                }
+                
+                ul {
+                    width: calc(100% - 63px);
+                    padding: 5px 0;
+                    border-bottom: solid 1px #e2e2e2;
+                    li {
+                        width: 100%;
+                        a {
+                            color: black;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;
+                        }
+                    }
+                }
+                
+                i {
+                    vertical-align: bottom;
+                    display: inline-block;
+                    width: 15px;
+                    height: 15px;
+                    margin-right: 5px;
+                }
+                
+                a {
+                    display: block;
+                    height: 24px;
+                    line-height: 24px;
+                    padding: 0 10px;
+                    overflow: hidden;
+                    &:hover {
+                        background-color: #e3e5e7;
+                        text-decoration: none;
+                    }
+                }
+            }
+            .search-suggest-songs i {
+                background-position: -35px -300px;
+            }
+            
+            .search-suggest-artists i {
+                background-position: -50px -300px;
+            }
+            
+            .search-suggest-albums i {
+                background-position: -35px -320px;
+            }
+            
+        }
+    }
+    .create-center {
+        display: block;
+        height: 32px;
+        line-height: 32px;
+        border: solid 1px #4f4f4f;
+        color: #ccc;
+        border-radius: 16px;
+        padding: 0 15px;
+        margin-right: 20px;
+        &:hover {
+            border-color: white;
+            color: white;
+            text-decoration: none;
+        }
+        
+    }
+    .login {
+        color: #787878;
+    }
+}
+
+
+

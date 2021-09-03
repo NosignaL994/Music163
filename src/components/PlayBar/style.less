@@ -1,0 +1,208 @@
+.playbar {
+    position: fixed;
+    z-index: 999;
+    bottom: 0;
+    width: 100%;
+    background-position: 0 -6px;
+    background-repeat: repeat-x;
+
+    .playbar-player {
+        height: 47px;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .playbar-controls {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        .playbar-prev,
+        .playbar-next {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+        .playbar-prev {
+            background-position: 0px -130px;
+            &:hover {
+                background-position: -30px -130px;
+            }
+        }
+        .playbar-switch {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-left: 10px;
+            
+        }
+        .playbar-switch-pause {
+            background-position: 0px -165px;
+        
+            &:hover {
+                background-position: -40px -165px;
+            }
+        }
+        .playbar-switch-play {
+            
+            background-position: 0px -204px;
+        
+            &:hover {
+                background-position: -40px -204px;
+            }
+        }
+        .playbar-next {
+            background-position: -80px -130px;
+            margin-left: 10px;
+            &:hover {
+                background-position: -110px -130px;
+            }
+        }
+    }
+    .playbar-cover {
+        display: block;
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+        position: relative;
+        margin-right: 20px;
+        .playbar-cover-mask {
+            position: absolute;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background-position: 0 -80px;
+            z-index: 6;
+        }
+        
+        img {
+            width: 100%;
+        }
+    }
+
+    .playbar-info {
+        width: 564px;
+        height: 34px;
+        margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .playbar-songinfo {
+            font-size: 12px;
+            line-height: 15px;
+            .playbar-song {
+                color: white;
+                margin-right: 15px;
+                vertical-align: top;
+            }
+            .playbar-artists {
+                display: inline-block;
+                vertical-align: top;
+
+                a {
+                    color: #999;
+                }
+            }
+        }
+        .playbar-progress {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #797979;
+
+            .ant-slider {
+                width: 466px;
+                padding: 0;
+                margin: 0;
+                margin-right: 10px;
+                height: 9px;
+                .ant-slider-rail {
+                    height: 9px;
+                    background: url(../../assets/images/progress_bar.png) no-repeat right 0 / cover;
+                }
+                .ant-slider-step {
+                    height: 9px;
+                }
+                .ant-slider-handle {
+                    width: 22px;
+                    height: 24px;
+                    margin: 0;
+                    border: none;
+                    top: 50%;
+                    transform: translate(-50%, -50%) !important;
+                    background: url(../../assets/images/sprite_icon.png) no-repeat 0 -250px;
+                    cursor: pointer;
+                    &:hover {
+                        background-position: 0 -280px;
+                    }
+                }
+            }
+            .playbar-currentTime {
+                color: #a1a1a1;
+            }
+            .playbar-time {
+                color: #797979;
+            }
+        }
+    }
+    .playbar-btns {
+        display: flex;
+        align-items: center;
+        
+        button {
+            width: 25px;
+            height: 25px;
+            margin-right: 2px;
+        }
+        .playbar-btns-pip {
+            background-position: 0 0;
+            &:hover {
+                background-position: 0 -25px;
+            }
+        }
+        .playbar-btns-add {
+            background-position: -88px -163px;
+            &:hover {
+                background-position: -88px -189px;
+            }
+        }
+        .playbar-btns-share {
+            background-position: -114px -163px;
+            &:hover {
+                background-position: -114px -189px;
+            }
+        }
+        .split-line {
+            width: 3px;
+            height: 20px;
+            margin: 0 6px 0 4px;
+            background-position: -149px -252px;
+        }
+        .playbar-btns-volumn {
+            background-position: -2px -248px;
+            &:hover {
+                background-position: -31px -248px;
+            }
+        }
+        .playbar-btns-order {
+            background-position: -3px -344px;
+            &:hover {
+                background-position: -33px -344px;
+            }
+
+        }
+        .playbar-btns-list {
+            width: 59px;
+            line-height: 25px;
+            padding: 0;
+            padding-left: 21px;
+            background-position: -42px -68px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            &:hover {
+                background-position: -42px -98px;
+            }
+            
+
+        }
+    }
+}

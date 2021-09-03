@@ -29,3 +29,7 @@ img {
     border: none;
     vertical-align: middle;
 }
+
+button:hover {
+    cursor: pointer;
+}

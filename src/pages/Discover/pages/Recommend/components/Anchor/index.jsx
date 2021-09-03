@@ -5,7 +5,6 @@ import {connect} from "react-redux"
 class RecommendAnchor extends Component {
     render () {
         const {anchors} = this.props
-        console.log(anchors);
         return (
             <section className="recommend-aside-anchor">
                 <header className="recommend-aside-hd">

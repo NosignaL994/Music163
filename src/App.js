@@ -7,6 +7,8 @@ import React from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
 import Header from "./components/Header";
+import PlayBar from "./components/PlayBar"
+import Footer from "./components/Footer"
 import Discover from './pages/Discover';
 import Download from './pages/Download';
 import Friend from './pages/Friend';
@@ -29,6 +31,8 @@ function App() {
         <Route exact path="/" component={Discover}/>
         {/* // <Redirect from="/" to="/discover"/> */}
       </Switch>
+      <PlayBar/>
+      <Footer/>
     </BrowserRouter>
   );
 }
