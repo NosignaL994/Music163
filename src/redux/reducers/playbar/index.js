@@ -1,24 +1,29 @@
 import { Map } from "immutable"
-import {SET_PLAY_SONG,SET_PLAY_DURATION,SET_PLAY_ARTISTS,SET_PLAY_ID} from "@/common/actionType"
-
+import {SET_PLAY_SONG,SET_PLAYLIST,SET_PLAY_IDX} from "@/common/actionType"
 const defaultState = Map({
-    song: null,
-    duration: 0,
-    artists: null,
-    id: 0
+    playIdx: -1,
+    playlist: []
 })
 
 export default function reducer (state = defaultState, action) {
     const {type, data} = action
     switch (type) {
         case SET_PLAY_SONG:
-            return state.set("song", data)
-        case SET_PLAY_DURATION:
-            return state.set("duration", data)
-        case SET_PLAY_ARTISTS:
-            return state.set("artists", data)
-        case SET_PLAY_ID:
-            return state.set("id", data)
+            const oldPlaylist = state.get("playlist")
+            const idx = oldPlaylist.findIndex(ele => ele.id === data.id)
+            if (idx !== -1 ) {
+                return state.set("playIdx", idx)
+            } else {
+                return state.merge({
+                    playIdx: oldPlaylist.length,
+                    // playlist: oldPlaylist.push(data)
+                    playlist: [...oldPlaylist,data]
+                })
+            }
+        case SET_PLAYLIST:
+            return state.set("playlist", data)
+        case SET_PLAY_IDX:
+            return state.set("playIdx", data)
         default:
             return state
     }

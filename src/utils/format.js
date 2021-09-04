@@ -3,7 +3,7 @@ export function formatSongUrl (id) {
 }
 
 export function formatMMSS (time) {
-    time = new Date(time)
+    time = new Date(Math.floor(time))
     let minute = time.getMinutes().toString()
     let second = time.getSeconds().toString()
     minute = minute.length === 1 ? '0'+minute : minute

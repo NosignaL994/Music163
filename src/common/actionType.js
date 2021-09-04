@@ -27,6 +27,5 @@ export const GET_TOPLIST_OVER = "GET_TOPLIST_OVER"
 // 
 // export const GET_DEFAULT_PLAY_OVER = "GET_DEFAULT_PLAY_OVER"
 export const SET_PLAY_SONG = "SET_PLAY_SONG"
-export const SET_PLAY_DURATION = "SET_PLAY_DURATION"
-export const SET_PLAY_ARTISTS = "SET_PLAY_ARTISTS"
-export const SET_PLAY_ID = "SET_PLAY_ID"
+export const SET_PLAYLIST = "SET_PLAYLIST"
+export const SET_PLAY_IDX = "SET_PLAY_IDX"

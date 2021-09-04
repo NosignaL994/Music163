@@ -1,24 +1,27 @@
 
-import { SET_PLAY_SONG, SET_PLAY_DURATION,SET_PLAY_ARTISTS,SET_PLAY_ID } from "@/common/actionType"
-
+import { SET_PLAY_SONG, SET_PLAYLIST,SET_PLAY_IDX } from "@/common/actionType"
+// import {getRequest} from "@/utils/request"
 
 
 export const setPlaySongAction = track => ({
     type: SET_PLAY_SONG,
-    data: track.al
+    data: track
+})
+export const setPlaylist = playlist => ({
+    type: SET_PLAYLIST,
+    data: playlist
 })
 
-export const setPlayDurationAction = track => ({
-    type: SET_PLAY_DURATION,
-    data: track.dt
+export const setPlayIdxAction = idx => ({
+    type: SET_PLAY_IDX,
+    data: idx
 })
 
-export const setPlayArtistsAction = track => ({
-    type: SET_PLAY_ARTISTS,
-    data: track.ar
-})
-
-export const setPlayIdAction = track => ({
-    type: SET_PLAY_ID,
-    data: track.id
-})
+// export const setPlayUrlAction = track => dispatch => getRequest("/song/url", {
+//     id: track.id
+// })
+// // .then(response => dispatch({
+// //     type: SET_PLAY_URL,
+// //     data: response.data.data[0].url
+// // })).catch(error => console.log(error))
+// .then(response => console.log(response.data))

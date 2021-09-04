@@ -3,20 +3,15 @@ import "./style.less"
 import { Component } from "react";
 import { connect } from "react-redux";
 
-import {setPlaySongAction,setPlayDurationAction,setPlayArtistsAction,setPlayIdAction } from "@/redux/actions/playbar"
+import {setPlaySongAction} from "@/redux/actions/playbar"
 
 class RecommendToplist extends Component {
     playSongHandler = track => () => {
-        
-        const {setPlayArtistsAction, setPlayDurationAction, setPlaySongAction, setPlayIdAction} = this.props
-        setPlayArtistsAction(track)
-        setPlayDurationAction(track)
+        const {setPlaySongAction} = this.props
         setPlaySongAction(track)
-        setPlayIdAction(track)
     }
     render () {
         const {risingToplist, newToplist, originalToplist} = this.props
-        console.log(risingToplist, newToplist, originalToplist);
         return (
             <section className="recommend-toplist">
                 <header className="recommend-toplist-hd recommend-main-hd">
@@ -121,8 +116,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-    setPlayDurationAction,
     setPlaySongAction,
-    setPlayArtistsAction,
-    setPlayIdAction
 })(RecommendToplist)

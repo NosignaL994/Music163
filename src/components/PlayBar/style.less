@@ -1,3 +1,7 @@
+#root {
+    padding-bottom: 47px;
+}
+
 .playbar {
     position: fixed;
     z-index: 999;
@@ -116,16 +120,22 @@
                 height: 9px;
                 .ant-slider-rail {
                     height: 9px;
-                    background: url(../../assets/images/progress_bar.png) no-repeat right 0 / cover;
+                    background: url(../../assets/images/progress_bar.png) no-repeat right 0;
                 }
                 .ant-slider-step {
                     height: 9px;
+                }
+                .ant-slider-track {
+                    height: 9px;
+                    border-radius: 4.5px;
+                    background: url(../../assets/images/progress_bar.png) no-repeat left -66px;
                 }
                 .ant-slider-handle {
                     width: 22px;
                     height: 24px;
                     margin: 0;
                     border: none;
+                    box-shadow: none;
                     top: 50%;
                     transform: translate(-50%, -50%) !important;
                     background: url(../../assets/images/sprite_icon.png) no-repeat 0 -250px;
@@ -189,7 +199,7 @@
             }
 
         }
-        .playbar-btns-list {
+        .playbar-btns-playlist {
             width: 59px;
             line-height: 25px;
             padding: 0;
@@ -201,8 +211,37 @@
             &:hover {
                 background-position: -42px -98px;
             }
-            
+        }
+        
+    }
+}
 
+.playbar-playlist {
+    position: fixed;
+    .ant-popover-arrow-content {
+        background-color: rgba(0,0,0,0.7);
+    }
+    .ant-popover-inner {
+        background-color: rgba(0,0,0,0.7);
+        width: 300px;
+        .ant-popover-title {
+            border: none;
+            text-align: center;
+            color: #e2e2e2;
+            font-size: 14px;
+        }
+        .ant-popover-inner-content {
+            .playbar-playlist-songinfo {
+                font-size: 12px;
+                span,a {
+                    color: #ccc;
+                }
+            }
+            .playbar-playlist-empty {
+                // width: 100%;
+                color: #aaa;
+                text-align: center;
+            }
         }
     }
 }

@@ -84,7 +84,7 @@ button {
   background: url(../images/playbar_sprite.png) no-repeat;
 }
 
-.recommend-top-bg {
+.recommend_top_bg {
   background: url(../images/recommend-top-bg.png) no-repeat;
 }
 
@@ -102,4 +102,8 @@ button {
 
 .sprite_footer2 {
   background: url(../images/sprite_footer_02.png) no-repeat;
+}
+
+.sprite_playlist {
+  background: url(../images/playlist.png) no-repeat;
 }
