@@ -1,13 +1,14 @@
 const axios = require("axios")
-const url = "/check/music"
+const url = "/login/qr/create"
 // url.searchParams.set("keyword", "修炼爱情")
 // console.log(123);
 axios({
     url,
     method: "get",
-    baseURL: "https://netease-cloud-music-api-lilac-kappa.vercel.app",
+    baseURL: "http://localhost:4000",
     params: {
-        id: 1437266892
+        key: 'c3958c6d-b479-4747-8382-80b917249092',
+        // qrimg: true
     }
 })
 .then(response => console.log(response.data))

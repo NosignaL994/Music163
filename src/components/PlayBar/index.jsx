@@ -5,7 +5,6 @@ import { Slider,Popover } from "antd"
 
 import {formatSongUrl,formatMMSS} from "@/utils/format"
 import {setPlayIdxAction} from "@/redux/actions/playbar"
-import { Link } from "react-router-dom";
 class PlayBar extends Component {
     state = {
         progress: 0,
@@ -130,17 +129,17 @@ class PlayBar extends Component {
                             <Popover 
                             title="播放列表" 
                             overlayClassName="playbar-playlist" 
-                            defaultVisible={true}
+                            // defaultVisible={true}
                             content={(
                                 playlist.length ? 
                                 (<ul>
-                                    {playlist.map(song => (
-                                        <li key={song.id}>
+                                    {playlist.map((song,songIdx) => (
+                                        <li key={song.id} className={songIdx === playIdx ? "playlist-active" : ""}>
                                             <div className="playbar-playlist-songinfo">
                                                 <span className="playlist-songinfo-song">{song.name}</span>
-                                                <span>-</span>
-                                                {song.ar.map((artist,idx,artists) => (
-                                                    (idx === artists.length-1) ? <a key={artist.id}>{artist.name}</a> : 
+                                                <span>&nbsp;-&nbsp;</span>
+                                                {song.ar.map((artist,idx) => (
+                                                    (idx === 0) ? <a key={artist.id}>{artist.name}</a> : 
                                                     <Fragment key={artist.id}>&nbsp;/&nbsp;<a key={artist.id}>{artist.name}</a></Fragment>
                                                 ))}
                                             </div>

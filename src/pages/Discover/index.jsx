@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 
 import DiscoverNav from "./components/Nav"
-
+// import DiscoverLogin from "./components/Login"
 import DiscoverRecommend from "./pages/Recommend"
 import DiscoverTopList from "./pages/TopList"
 
@@ -14,6 +14,7 @@ class Discover extends Component {
         return (
             <main>
                 <DiscoverNav/>
+                {/* <DiscoverLogin/> */}
                 <Switch>
                     <Route path="/discover/recommend" component={DiscoverRecommend}/>
                     <Route path="/discover/toplist" component={DiscoverTopList}/>

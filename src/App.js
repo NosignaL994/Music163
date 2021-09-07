@@ -7,6 +7,7 @@ import React from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
 import Header from "./components/Header";
+import Login from "./components/Login"
 import PlayBar from "./components/PlayBar"
 import Footer from "./components/Footer"
 import Discover from './pages/Discover';
@@ -23,6 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header/>
+      <Login/>
       <Switch>
         <Route path="/discover" component={Discover}/>
         <Route path="/musician" component={Musician}/>

@@ -1,7 +1,13 @@
 import { Map } from "immutable";
 
-import { GET_BANNER_OVER, GET_HOTRECOMMEND_OVER, GET_RECOMMEND_NEW_OVER,GET_TOPLIST_OVER,GET_RISING_TOPLIST_OVER,
-GET_NEW_TOPLIST_OVER,GET_ORIGINAL_TOPLIST_OVER,GET_RECOMMEND_SINGER_OVER,GET_RECOMMEND_ANCHOR_OVER } from "@/common/actionType";
+import { GET_BANNER_OVER,
+    GET_HOTRECOMMEND_OVER,
+    GET_RECOMMEND_NEW_OVER,
+    GET_RISING_TOPLIST_OVER,
+    GET_NEW_TOPLIST_OVER,
+    GET_ORIGINAL_TOPLIST_OVER,
+    GET_RECOMMEND_SINGER_OVER,
+    GET_RECOMMEND_ANCHOR_OVER} from "@/common/actionType";
 
 const defaultState = Map({
     banners: null,
@@ -12,9 +18,11 @@ const defaultState = Map({
     originalToplist: null,
     recommendSingers: null,
     recommendAnchors: null,
+    loginVisible: false
 })
 
 export default function reducer (state = defaultState, action) {
+    // console.log(state);
     const {type, data} = action
     switch (type) {
         case GET_BANNER_OVER:
@@ -33,6 +41,8 @@ export default function reducer (state = defaultState, action) {
             return state.set("recommendSingers", data)
         case GET_RECOMMEND_ANCHOR_OVER:
             return state.set("recommendAnchors", data)
+        // case SWITCH_LOGIN_VISIBLE:
+        //     return state.set("loginVisible", data)
         default:
             return state
     }

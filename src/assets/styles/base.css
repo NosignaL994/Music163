@@ -8,6 +8,9 @@ button {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #eaedf2;
 }
+/* body {
+  
+} */
 #root {
   background-color: #eaedf2;
 }
@@ -106,4 +109,8 @@ button {
 
 .sprite_playlist {
   background: url(../images/playlist.png) no-repeat;
+}
+
+.qr_guide {
+  background: url(../images/qr_guide.png) no-repeat;
 }

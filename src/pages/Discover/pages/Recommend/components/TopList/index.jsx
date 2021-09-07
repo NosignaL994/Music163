@@ -20,7 +20,7 @@ class RecommendToplist extends Component {
                     </h2>
                     <a href="javascript:;" className="main-hd-more sprite_02">更多</a>
                 </header>
-                <div className="recommend-toplist-content recommend-top-bg">
+                <div className="recommend-toplist-content recommend_top_bg">
                     <ul>
 
                         <li><dl>

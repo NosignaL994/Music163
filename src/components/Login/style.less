@@ -1,0 +1,135 @@
+.discover-login {
+    .ant-modal-content {
+        border-radius: 3px;
+    }
+    .ant-modal-close {
+        right: 20px;
+        height: 38px;
+        line-height: 38px;
+        .ant-modal-close-x {
+            width: 16px;
+            line-height: inherit;
+            svg {
+                fill: grey;
+            }
+        }
+    }
+    
+    .ant-modal-header {
+        background-color: #2d2d2d;
+        height: 38px;
+        line-height: 38px;
+        padding: 0 18px;
+        .ant-modal-title {
+            display: inline-block;
+            color: white;
+            font-size: 14px;
+        }
+    }
+    .ant-modal-body {
+        padding: 0;
+    }
+    .login-qr-commit {
+        height: 258px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 140px;
+        }
+        div {
+            font-size: 18px;
+            margin-top: 12px;
+            font-weight: 450;
+            &:last-child {
+                margin-top: 4px;
+                font-size: 12px;
+            }
+        }
+    }
+    .discover-login-qr {
+        height: 258px;
+        padding-top: 38px;
+        padding-left: 100px;
+        display: flex;
+        .login-qr-left {
+            height: 100%;
+            width: 125px;
+            margin-right: 25px;
+            background-size: contain;
+        }
+        .login-qr-right {
+            width: 200px;
+            height: 100%;
+            // text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            .qr-right-title {
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .qr-right-pic {
+                width: 130px;
+                height: 130px;
+                position: relative;
+                img {
+                    width: 100%;
+                }
+                &.out-of-date .qr-pic-mask {
+                    display: flex;
+                }
+                .qr-pic-mask {
+                    display: none;
+                    position: absolute;
+                    top: 0; left: 0; right: 0; bottom: 0;
+                    background-color: rgba(255,255,255,0.9);
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 12px;
+                    div {
+                        font-weight: 500;
+                    }
+                    button {
+                        margin-top: 10px;
+                        border-radius: 3px;
+                        padding: 3px 5px;
+                        // background-color: radial-gradient(#81DD81, #55A055);
+                        background: linear-gradient(180deg, #81DD81 0%, #212f21 100%);
+                        box-shadow: inset 0 -1px 1px 1px rgb(185 230 185 / 31%);
+                        color: white;
+                    }
+                }
+            }
+            .qr-right-state {
+                font-size: 12px;
+                color: gray;
+                a {
+                    color: #0c73c2;
+                }
+            }
+        }
+    }
+    .discover-login-other {
+        height: 90px;
+        line-height: 90px;
+        width: 100%;
+        text-align: center;
+        
+        button {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: gray;
+            &:hover {
+                color: #666;
+                box-shadow: 0 0 5px 2px skyblue;
+            }
+        }
+    }
+}
