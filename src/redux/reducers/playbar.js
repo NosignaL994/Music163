@@ -16,12 +16,14 @@ export default function reducer (state = defaultState, action) {
             } else {
                 return state.merge({
                     playIdx: oldPlaylist.length,
-                    // playlist: oldPlaylist.push(data)
                     playlist: [...oldPlaylist,data]
                 })
             }
         case SET_PLAYLIST:
-            return state.set("playlist", data)
+            return state.merge({
+                playIdx: 0,
+                playlist: data
+            })
         case SET_PLAY_IDX:
             return state.set("playIdx", data)
         default:

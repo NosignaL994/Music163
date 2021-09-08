@@ -7,7 +7,7 @@ export const setPlaySongAction = track => ({
     type: SET_PLAY_SONG,
     data: track
 })
-export const setPlaylist = playlist => ({
+export const setPlaylistAction = playlist => ({
     type: SET_PLAYLIST,
     data: playlist
 })

@@ -114,3 +114,7 @@ button {
 .qr_guide {
   background: url(../images/qr_guide.png) no-repeat;
 }
+
+.sprite_date {
+  background: url(../images/date.png) no-repeat;
+}

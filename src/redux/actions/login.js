@@ -2,9 +2,10 @@ import { SWITCH_LOGIN_VISIBLE,
     SET_LOGIN_QRIMG,
     SET_LOGIN_QR_KEY,
     SET_LOGIN_CODE,
-    SET_LOGINED } from "@/common/actionType"
+    SET_LOGINED,
+    SET_USER_PROFILE } from "@/common/actionType"
 import {getRequest} from "@/utils/request"
-import { saveCookie } from "@/utils/storage"
+import { saveCookie,getCookie } from "@/utils/storage"
 // import { SET_LOGINED } from "../../common/actionType"
 export function switchLoginVisibleAction () {
     return {
@@ -52,7 +53,7 @@ export function checkLoginQrAction (key) {
 }
 
 export function setLoginCodeAction (code) {
-    console.log(code)
+    // console.log(code)
     return {
         type: SET_LOGIN_CODE,
         data: code
@@ -63,4 +64,14 @@ export function setLoginedAction (logined) {
         type: SET_LOGINED,
         data: logined
     }
+}
+
+export function getUserProfileAction () {
+    const cookie = getCookie()
+    return dispatch => getRequest("user/account", {
+            cookie
+        }).then(response => dispatch({
+            type: SET_USER_PROFILE,
+            data: response.data.profile
+        })).catch(error => console.log(error))
 }

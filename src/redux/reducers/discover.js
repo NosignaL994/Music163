@@ -1,8 +1,8 @@
 import { Map } from "immutable";
 
 import { GET_BANNER_OVER,
-    GET_HOTRECOMMEND_OVER,
-    GET_RECOMMEND_NEW_OVER,
+    SET_RCMD_SONGLIST,
+    SET_RCMD_NEW,
     GET_RISING_TOPLIST_OVER,
     GET_NEW_TOPLIST_OVER,
     GET_ORIGINAL_TOPLIST_OVER,
@@ -11,8 +11,8 @@ import { GET_BANNER_OVER,
 
 const defaultState = Map({
     banners: null,
-    hotRecommends: null,
-    recommendNews: null,
+    songList: null,
+    news: null,
     risingToplist: null,
     newToplist: null,
     originalToplist: null,
@@ -27,10 +27,10 @@ export default function reducer (state = defaultState, action) {
     switch (type) {
         case GET_BANNER_OVER:
             return state.set("banners", data)
-        case GET_HOTRECOMMEND_OVER:
-            return state.set("hotRecommends", data)
-        case GET_RECOMMEND_NEW_OVER:
-            return state.set("recommendNews", data)
+        case SET_RCMD_SONGLIST:
+            return state.set("songList", data)
+        case SET_RCMD_NEW:
+            return state.set("news", data)
         case GET_RISING_TOPLIST_OVER:
             return state.set("risingToplist", data)
         case GET_NEW_TOPLIST_OVER:

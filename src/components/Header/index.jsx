@@ -1,28 +1,36 @@
 import './style.less'
 
-import {Component} from 'react'
 import {NavLink} from 'react-router-dom'
-import { connect } from 'react-redux'
-// import { Route } from 'react-router'
 
+import { useEffect } from 'react'
 import debounce from '@/utils/debounce'
 import {getSearchSuggestAction, searchIptAction, searchFocusChangeAction} from "@/redux/actions/header"
-import {switchLoginVisibleAction} from "@/redux/actions/login"
+import {
+    switchLoginVisibleAction,
+    getUserProfileAction} from "@/redux/actions/login"
 import { useSelector,useDispatch } from 'react-redux'
 // import { useDispatch } from 'react-redux'
 
 export default function Header () {
     const dispatch = useDispatch()
-    const {searchValue,searchSuggest, searchFocused} = useSelector(state => {
+    const {searchValue,searchSuggest, searchFocused,logined,profile} = useSelector(state => {
         const headerState = state.header
         const loginState = state.login
         return {
             searchValue: headerState.get("searchValue"),
             searchSuggest: headerState.get("searchSuggest"), 
             searchFocused: headerState.get("searchFocused"),
-            logined: loginState.get("logined")
+            logined: loginState.get("logined"),
+            profile: loginState.get("profile")
         }
     })
+    // 登录成功应执行的操作
+    useEffect(() => {
+        if (logined) {
+            dispatch(getUserProfileAction())
+        }
+    }, [logined])
+
     const iptChangeHandler = debounce(function (event) {
         const searchValue = event.target.value.trim()
         dispatch(searchIptAction(searchValue))
@@ -99,7 +107,7 @@ export default function Header () {
                     </div>
                 </div>
                 <NavLink className="create-center" to="/create-center">创作者中心</NavLink>
-                <button className="login" onClick={loginHandler}>登录</button>
+                {profile ? <div className="header-avatar"><img src={profile?.avatarUrl} alt="" /></div> : <button className="login" onClick={loginHandler}>登录</button>}
             </div>
         </div>
         

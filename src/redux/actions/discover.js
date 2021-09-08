@@ -1,23 +1,16 @@
 import {getRequest} from "@/utils/request"
 import { 
     GET_BANNER_OVER,
-    GET_HOTRECOMMEND_OVER,
+    SET_RCMD_SONGLIST,
     GET_TOPLIST_OVER,
-    GET_RECOMMEND_NEW_OVER,
+    SET_RCMD_NEW,
     GET_RISING_TOPLIST_OVER, 
     GET_NEW_TOPLIST_OVER, 
     GET_ORIGINAL_TOPLIST_OVER,
     GET_RECOMMEND_SINGER_OVER,
     GET_RECOMMEND_ANCHOR_OVER} from "@/common/actionType"
 import { risingToplistId, newToplistId, originalToplistId } from "@/common/constant"
-
-// function errorHander (error) {
-//     if (error.response) {
-//         console.log(error)
-//     } else {
-
-//     }
-// }
+import {getCookie} from "@/utils/storage"
 
 export const getBannerAction = () => dispatch => {
     getRequest('/banner')
@@ -33,12 +26,12 @@ export const getBannerAction = () => dispatch => {
 //     data: currentIdx
 // })
 
-export const getHotRecommendAction = () => dispatch => {
+export const getRcmdSongListAction = () => dispatch => {
     getRequest('/personalized', {
         limit: 8
     })
     .then(response => dispatch({
-            type: GET_HOTRECOMMEND_OVER,
+            type: SET_RCMD_SONGLIST,
             data: response.data.result
         }))
     .catch(error => console.log(error))
@@ -47,7 +40,7 @@ export const getHotRecommendAction = () => dispatch => {
 export const getRecommendNewAction = () => dispatch => {
     getRequest('/album/newest')
     .then(response => dispatch({
-        type: GET_RECOMMEND_NEW_OVER,
+        type: SET_RCMD_NEW,
         data: response.data.albums
     }))
     .catch(error => console.log(error))
@@ -99,9 +92,12 @@ export const getRecommendAnchorAction = () => dispatch => getRequest('/dj/toplis
     data: response.data.toplist
 })).catch(error => console.log(error))
 
-// export function switchLoginVisibleAction (visible) {
-//     return {
-//         type: SWITCH_LOGIN_VISIBLE,
-//         data: visible
-//     }
-// }
+export function getPersonalSongListAction () {
+    const cookie = getCookie()
+    return dispatch => getRequest("/recommend/resource", {
+        cookie
+    }).then(response => dispatch({
+        type: SET_RCMD_SONGLIST,
+        data: response.data.recommend
+    }))
+}
