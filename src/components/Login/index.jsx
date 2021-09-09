@@ -72,7 +72,7 @@ export default function Login () {
         <Modal 
         title="登录"
         visible={visible} 
-        wrapClassName="discover-login"
+        wrapClassName="login-frame"
         centered={true} 
         width="530px"
         onCancel={cancelHandler}

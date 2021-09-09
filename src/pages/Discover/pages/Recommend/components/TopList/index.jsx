@@ -4,11 +4,12 @@ import { Component } from "react";
 import { connect } from "react-redux";
 
 import {setPlaySongAction} from "@/redux/actions/playbar"
-
+import {switchVipVisibleAction} from "@/redux/actions/vip"
+import {isAccessible} from "@/utils/common"
 class RecommendToplist extends Component {
     playSongHandler = track => () => {
         const {setPlaySongAction} = this.props
-        setPlaySongAction(track)
+        isAccessible(track) ? setPlaySongAction(track) : switchVipVisibleAction()
     }
     render () {
         const {risingToplist, newToplist, originalToplist} = this.props

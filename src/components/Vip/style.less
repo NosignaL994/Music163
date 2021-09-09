@@ -1,0 +1,86 @@
+.vipguide-frame {
+    border-radius: 3px;
+    overflow: hidden;
+    .ant-modal-content {
+        width: 530px;
+        .ant-modal-close {
+            right: 20px;
+            .ant-modal-close-x {
+                width: 16px;
+                height: 40px;
+                line-height: 40px;
+                svg {
+                    fill: white;
+                }
+            }
+        }
+        
+        .ant-modal-header {
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            background-color: #333;
+            border-bottom: none;
+            .ant-modal-title {
+                line-height: 40px;
+                color: white;
+                font-weight: normal;
+            }
+        }
+        .ant-modal-body {
+            padding: 30px 0 36px;
+            height: 356px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            .vipguide-text {
+                font-size: 16px;
+            }
+            .vipguide-title {
+                font-size: 20px;
+                position: relative;
+                &::before,
+                &::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    transform: translate(-46px,-50%);
+                    width: 36px;
+                    height: 1px;
+                    background-color: #e6e6e6;
+                }
+                &::before {
+                    right: 0;
+                    transform: translate(46px,-50%);
+                }
+            }
+            .vipguide-privilege {
+                display: flex;
+                width: 410px;
+                justify-content: space-between;
+                li {
+                    width: 120px;
+                    text-align: center;
+                    img {
+                        margin-bottom: 15px;
+                    }
+                }
+            }
+            .vipguide-btn {
+                width: 170px;
+                height: 40px;
+                border-radius: 20px;
+                font-size: 16px;
+                color: white;
+                background-image: linear-gradient(
+                    120deg, #fb5758, #ff8063);;
+            }
+            .vipguide-buysong {
+                font-size: 12px;
+                color: #999;
+            }
+        }
+    }
+}

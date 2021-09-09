@@ -218,8 +218,6 @@
 
 .playbar-playlist {
     position: fixed;
-    // overflow: hidden;
-
     .ant-popover-arrow-content {
         background-color: rgba(0,0,0,0.6);
     }
@@ -234,8 +232,8 @@
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             filter: blur(64px);
-            margin: -64px;
-            background-color: #444;
+            margin: -80px;
+            background-color: #181818;
             z-index: -1;
         }
         
@@ -251,6 +249,7 @@
         }
         .ant-popover-inner-content {
             width: 360px;
+            // max-height: 360px;
             padding: 0;
             li {
                 display: flex;
@@ -258,7 +257,7 @@
                 position: relative;
                 height: 32px;
                 line-height: 32px;
-                padding: 0 20px;
+                padding: 0 30px;
                 cursor: pointer;
                 color: #999;
             }
@@ -272,7 +271,7 @@
                     height: 13px;
                     background: url(../../assets/images/playlist.png) no-repeat -182px 0;
                     top: 50%;
-                    transform: translate(-15px, -50%);
+                    transform: translate(-20px, -50%);
                 }
                 a,span.playlist-songinfo-song {
                     color: white;

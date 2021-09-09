@@ -24,7 +24,9 @@ export default function PlayBar () {
         }
     })
     useEffect(() => {
-        audio.current && audio.current.play().then(_ => setPlaying(true))
+        // console.log(playIdx)
+        audio.current && audio.current.play()
+        setPlaying(true)
     },[playIdx, playlist])
     function timeUpdateHandler (event) {
         if (sliderChanging) return
@@ -36,7 +38,7 @@ export default function PlayBar () {
     }
     function endedHandler () {
         setPlaying(false)
-        playIdx === playlist.length-1 ? setPlayIdxAction(0) : setPlayIdxAction(playIdx-1)
+        playIdx === playlist.length-1 ? dispatch(setPlayIdxAction(0)) : dispatch(setPlayIdxAction(playIdx+1))
     }
     function sliderChangeHandler (value) {
         const duration = playlist[playIdx].dt
@@ -69,10 +71,7 @@ export default function PlayBar () {
     }
     const song = playIdx !== -1 && playlist[playIdx]
     const picUrl = song?.al?.picUrl
-    const {name,duration,artists,id} = song
-    // const duration = song.dt
-    // const artists = song && song.ar
-    // const id = song && song.id
+    const {name,dt:duration,ar:artists,id} = song
     const url = id && formatSongUrl(id)
     return <Fragment>
         <div className="playbar sprite_playbar">

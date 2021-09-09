@@ -8,11 +8,13 @@ import headerReducer from "./reducers/header";
 import discoverReducer from "./reducers/discover"
 import playbarReducer from "./reducers/playbar"
 import loginReducer from "./reducers/login"
+import vipReducer from "./reducers/vip"
 const reducer = combineReducers({
     header: headerReducer,
     discover: discoverReducer,
     playbar: playbarReducer,
-    login: loginReducer
+    login: loginReducer,
+    vip: vipReducer
 })
 // const persistConfig = {
 //     key: "root",

@@ -5,7 +5,9 @@ import {Carousel} from "antd"
 import { useSelector,useDispatch } from "react-redux";
 
 import {getRequest} from "@/utils/request"
+import {isAccessible} from "@/utils/common"
 import {setPlaylistAction} from "@/redux/actions/playbar"
+import {switchVipVisibleAction} from "@/redux/actions/vip"
 
 export default function RcmdNew () {
     const dispatch = useDispatch()
@@ -18,9 +20,10 @@ export default function RcmdNew () {
     function playHandler(id) {
         return () => getRequest("album", {
             id
-        }).then(
-            response => dispatch(setPlaylistAction(response.data.songs))
-        ).catch(error => console.log(error))
+        }).then(response => {
+            const tracks = response.data.songs
+            dispatch(isAccessible(tracks[0]) ? setPlaylistAction(tracks) : switchVipVisibleAction())
+        }).catch(error => console.log(error))
     }
     return <section className="discover-recommend-new">
         <header className="recommend-new-hd recommend-main-hd">

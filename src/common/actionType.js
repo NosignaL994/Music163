@@ -35,3 +35,6 @@ export const SET_LOGIN_QR_KEY = "SET_LOGIN_QR_KEY"
 export const SET_LOGIN_CODE = "SET_LOGIN_CODE"
 export const SET_LOGINED = "SET_LOGINED"
 export const SET_USER_PROFILE = "SET_USER_PROFILE"
+
+// vip
+export const SWITCH_VIP_VISIBLE = "SWITCH_VIP_VISIBLE"
