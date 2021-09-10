@@ -1,11 +1,8 @@
 import './style.less'
 
 import { useSelector,useDispatch } from 'react-redux';
-import {setPlaylistAction} from "@/redux/actions/playbar"
-import { switchVipVisibleAction } from '@/redux/actions/vip';
+import { getPlaylistAction } from '@/redux/actions/discover';
 import { formatCount } from '@/utils/format';
-import {getRequest} from "@/utils/request"
-import { isAccessible } from '@/utils/common';
 export default function RcmdHot () {
     const dispatch = useDispatch()
     const {songList} = useSelector(state => {
@@ -15,13 +12,7 @@ export default function RcmdHot () {
         }
     })
     function playHandler(id) {
-        return () => getRequest("/playlist/detail", {
-            id
-        }).then(response => {
-            const tracks = response.data.playlist.tracks
-            dispatch(isAccessible(tracks[0]) ? setPlaylistAction(tracks) : switchVipVisibleAction())
-        // response => console.log(response.data.playlist.tracks)
-        }).catch(error => console.log(error))
+        return () => dispatch(getPlaylistAction(id))
     }
     // console.log(songList)
     return <section className="discover-rcmd-hot">

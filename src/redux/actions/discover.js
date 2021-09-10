@@ -1,16 +1,18 @@
-import {getRequest} from "@/utils/request"
+import {getRequest,getPlaylistDetail,getToplistList,getSongsDetail} from "@/utils/request"
 import { 
     GET_BANNER_OVER,
     SET_RCMD_SONGLIST,
-    GET_TOPLIST_OVER,
+    SET_TOPLIST_LIST,
     SET_RCMD_NEW,
-    GET_RISING_TOPLIST_OVER, 
-    GET_NEW_TOPLIST_OVER, 
-    GET_ORIGINAL_TOPLIST_OVER,
     GET_RECOMMEND_SINGER_OVER,
-    GET_RECOMMEND_ANCHOR_OVER} from "@/common/actionType"
-import { risingToplistId, newToplistId, originalToplistId } from "@/common/constant"
+    GET_RECOMMEND_ANCHOR_OVER,
+    ADD_TOPLIST} from "@/common/actionType"
+
+import {isAccessible} from "@/utils/common"
 import {getCookie} from "@/utils/storage"
+
+import {setPlaylistAction} from "@/redux/actions/playbar"
+import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
 
 export const getBannerAction = () => dispatch => {
     getRequest('/banner')
@@ -37,6 +39,32 @@ export const getRcmdSongListAction = () => dispatch => {
     .catch(error => console.log(error))
 }
 
+export function getRcmdToplistAction () {
+    return dispatch => {
+        getToplistList().then(list => {
+            dispatch({
+                type: SET_TOPLIST_LIST,
+                data: list
+            })
+            for (const toplist of list.slice(0,3)) {
+                getPlaylistDetail(toplist.id).then(playlist => {
+                    dispatch({
+                        type: ADD_TOPLIST,
+                        data: playlist
+                    })
+                })
+            }
+        }).catch(error => console.log(error))
+    }
+} 
+
+export function getPlaylistAction (id) {
+    return dispatch => getPlaylistDetail(id)
+        .then(songlist => isAccessible(songlist.tracks[0]) ?
+            getSongsDetail(songlist.trackIds) : Promise.reject("收费歌曲，无法播放"))
+        .then(songs => dispatch(setPlaylistAction(songs)), () => dispatch(switchVipGuideVisibleAction()))
+        .catch(error => console.log(error))
+} 
 export const getRecommendNewAction = () => dispatch => {
     getRequest('/album/newest')
     .then(response => dispatch({
@@ -45,36 +73,7 @@ export const getRecommendNewAction = () => dispatch => {
     }))
     .catch(error => console.log(error))
 }
-export const getRecommendToplistAction = () => dispatch => {
-    getRequest('/playlist/detail', {
-        id: risingToplistId
-    }).then(response => dispatch({
-        type: GET_RISING_TOPLIST_OVER,
-        data: response.data.playlist
-    })).catch(error => console.log(error))
 
-    getRequest('/playlist/detail', {
-        id: newToplistId
-    }).then(response => dispatch({
-        type: GET_NEW_TOPLIST_OVER,
-        data: response.data.playlist
-    })).catch(error => console.log(error))
-
-    getRequest('/playlist/detail', {
-        id: originalToplistId
-    }).then(response => dispatch({
-        type: GET_ORIGINAL_TOPLIST_OVER,
-        data: response.data.playlist
-    })).catch(error => console.log(error))
-}
-export const getToplistAction = () => dispatch => {
-    getRequest('/toplist')
-    .then(response => dispatch({
-        type: GET_TOPLIST_OVER,
-        data: response.data.list
-    }))
-    .catch(error => console.log(error))
-}
 
 export const getRecommendSingerAction = () => dispatch => getRequest('/top/artists', {
     limit: 5
@@ -92,6 +91,7 @@ export const getRecommendAnchorAction = () => dispatch => getRequest('/dj/toplis
     data: response.data.toplist
 })).catch(error => console.log(error))
 
+// RcmdPersonal
 export function getPersonalSongListAction () {
     const cookie = getCookie()
     return dispatch => getRequest("/recommend/resource", {
@@ -101,3 +101,13 @@ export function getPersonalSongListAction () {
         data: response.data.recommend
     }))
 }
+
+// 根据id获取歌单/榜单playlist
+// export function getPlaylistAction (id,type) {
+//     return dispatch => getPlaylistDetail(id).then(
+//         response => dispatch({
+//             type,
+//             data: response.data.playlist
+//         }).catch(error => console.log(error))
+//     )
+// }

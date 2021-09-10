@@ -1,8 +1,14 @@
 import { Map } from "immutable"
-import {SET_PLAY_SONG,SET_PLAYLIST,SET_PLAY_IDX} from "@/common/actionType"
+import {
+    SET_PLAY_SONG,
+    SET_PLAYLIST,
+    SET_PLAY_IDX,
+    ADD_PLAY,
+    SET_PLAY_URL} from "@/common/actionType"
 const defaultState = Map({
     playIdx: -1,
-    playlist: []
+    playlist: [],
+    playUrl: ""
 })
 
 export default function reducer (state = defaultState, action) {
@@ -26,6 +32,10 @@ export default function reducer (state = defaultState, action) {
             })
         case SET_PLAY_IDX:
             return state.set("playIdx", data)
+        case ADD_PLAY:
+            return state.set("playlist", [...state.get("playlist"),data])
+        case SET_PLAY_URL:
+            return state.set("playUrl", data)
         default:
             return state
     }

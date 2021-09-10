@@ -2,7 +2,7 @@ import "./style.less"
 import { Modal } from "antd"
 import { useSelector,useDispatch } from "react-redux"
 
-import {switchVipVisibleAction} from "@/redux/actions/vip"
+import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
 export default function VipGuide () {
     const dispatch = useDispatch()
     const {visible} = useSelector(state => {
@@ -12,7 +12,7 @@ export default function VipGuide () {
         }
     })
     function cancelHandler () {
-        dispatch(switchVipVisibleAction())
+        dispatch(switchVipGuideVisibleAction())
     }
     return <Modal 
     wrapClassName="vipguide-frame"

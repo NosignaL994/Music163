@@ -27,6 +27,8 @@ export const GET_TOPLIST_OVER = "GET_TOPLIST_OVER"
 export const SET_PLAY_SONG = "SET_PLAY_SONG"
 export const SET_PLAYLIST = "SET_PLAYLIST"
 export const SET_PLAY_IDX = "SET_PLAY_IDX"
+export const ADD_PLAY = "ADD_PLAY"
+export const SET_PLAY_URL= "SET_PLAY_URL"
 
 // login
 export const SWITCH_LOGIN_VISIBLE = "SWITCH_LOGIN_VISIBLE"
@@ -37,4 +39,8 @@ export const SET_LOGINED = "SET_LOGINED"
 export const SET_USER_PROFILE = "SET_USER_PROFILE"
 
 // vip
-export const SWITCH_VIP_VISIBLE = "SWITCH_VIP_VISIBLE"
+export const SWITCH_VIPGUIDE_VISIBLE = "SWITCH_VIPGUIDE_VISIBLE"
+
+// toplist
+export const SET_TOPLIST_LIST = "SET_TOPLIST_LIST"
+export const ADD_TOPLIST = "ADD_TOPLIST"

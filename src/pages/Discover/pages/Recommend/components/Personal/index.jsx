@@ -1,14 +1,11 @@
 import "./style.less"
 
 import { useState,useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { useSelector } from "react-redux"
+import { useDispatch,useSelector } from "react-redux"
 
-import {getRequest} from "@/utils/request"
 import { formatDay,formatCount } from "@/utils/format"
-import {setPlaylistAction} from "@/redux/actions/playbar"
 
-
+import { getPlaylistAction } from "@/redux/actions/discover"
 
 export default function RcmdPersonal () {
     // state
@@ -26,16 +23,8 @@ export default function RcmdPersonal () {
         }
     })
     function playHandler(id) {
-        return () => getRequest("/playlist/detail", {
-            id
-        }).then(
-            response => dispatch(setPlaylistAction(response.data.playlist.tracks))
-        ).catch(error => console.log(error))
+        return () => dispatch(getPlaylistAction(id))
     }
-    // useEffect(() => dispatch(getPersonalSongListAction()), [])
-
-    
-    // console.log(songList)
     return songList && <section className="rcmd-personal">
         <header className="rcmd-personal-hd recommend-main-hd">
             <h2 className="sprite_02 main-hd-title">

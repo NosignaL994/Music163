@@ -3,9 +3,14 @@ import {Fragment, useState,useEffect,useRef } from "react";
 import { Slider,Popover } from "antd"
 import { useSelector,useDispatch } from "react-redux";
 
-import {formatSongUrl,formatMMSS} from "@/utils/format"
-import {setPlayIdxAction} from "@/redux/actions/playbar"
-
+import {formatMMSS} from "@/utils/format"
+import {
+    setPlayIdxAction,
+    setPlayUrlAction
+} from "@/redux/actions/playbar"
+import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
+import {isAccessible} from "@/utils/common"
+import {formatSongUrl} from "@/utils/format"
 export default function PlayBar () {
     // state
     const [progress,setProgress] = useState(0)
@@ -16,21 +21,34 @@ export default function PlayBar () {
     const audio = useRef(null)
     // redux
     const dispatch = useDispatch()
-    const {playIdx, playlist} = useSelector(state => {
+    const {index, playlist,url} = useSelector(state => {
         const playbarState = state.playbar
         return {
-            playIdx: playbarState.get("playIdx"),
-            playlist: playbarState.get("playlist")
+            index: playbarState.get("playIdx"),
+            playlist: playbarState.get("playlist"),
+            url: playbarState.get("playUrl")
         }
     })
+
     useEffect(() => {
-        // console.log(playIdx)
-        audio.current && audio.current.play()
-        setPlaying(true)
-    },[playIdx, playlist])
+        if (!playlist.length) return
+        index !== -1 && dispatch(setPlayUrlAction(playlist[index].id))
+    },[index, playlist])
+
+    useEffect(() => {
+        if (!url) return
+        audio.current.play().then(() => setPlaying(true))
+        .catch(error => setPlayUrlAction(formatSongUrl(playlist[index].id)))
+        
+    },[url])
+
+    useEffect(() => {
+        if (!playlist.length) return
+        index === -1 && dispatch(setPlayIdxAction(0))
+    }, [playlist])
     function timeUpdateHandler (event) {
         if (sliderChanging) return
-        const duration = playlist[playIdx].dt
+        const duration = playlist[index].dt
         const currentTime = event.target.currentTime * 1000
         const progress = (currentTime * 100) / duration
         setCurrentTime(currentTime)
@@ -38,10 +56,12 @@ export default function PlayBar () {
     }
     function endedHandler () {
         setPlaying(false)
-        playIdx === playlist.length-1 ? dispatch(setPlayIdxAction(0)) : dispatch(setPlayIdxAction(playIdx+1))
+        const idx = index === playlist.length-1 ? 0 : index+1
+        dispatch(isAccessible(playlist[idx]) ? setPlayIdxAction(idx) : switchVipGuideVisibleAction())
+    
     }
     function sliderChangeHandler (value) {
-        const duration = playlist[playIdx].dt
+        const duration = playlist[index].dt
         const newCurrentTime = (value * duration) / 100
         setSliderChanging(true)
         setProgress(value)
@@ -52,27 +72,29 @@ export default function PlayBar () {
         audio.current.currentTime = currentTime / 1000
     }
     function switchChangeHandler () {
-        if (playIdx === -1) return
+        if (!audio.current) return
         playing ? audio.current.pause() : audio.current.play()
         setPlaying(!playing)
     }
     function switchPrevHandler () {
-        if (playIdx > 0) dispatch(setPlayIdxAction(playIdx-1))
-        else if (playIdx === 0) replay()
+        if (index > 0) {
+            dispatch(isAccessible(playlist[index-1]) ? setPlayIdxAction(index-1):switchVipGuideVisibleAction())
+        } else if (index === 0) replay()
     }
     function switchNextHandler () {
-        if (playIdx < playlist.length-1) dispatch(setPlayIdxAction(playIdx+1))
-        else if (playIdx === playlist.length-1) replay()
+        if (index < playlist.length-1) {
+            dispatch(isAccessible(playlist[index+1]) ? setPlayIdxAction(index+1):switchVipGuideVisibleAction())
+        } else if (index === playlist.length-1) replay()
+    }
+    function playlistPlayHandler(idx) {
+        return () => dispatch(setPlayIdxAction(idx))
     }
     function replay () {
         setProgress(0)
         setCurrentTime(0)
         audio.current.currentTime = 0
     }
-    const song = playIdx !== -1 && playlist[playIdx]
-    const picUrl = song?.al?.picUrl
-    const {name,dt:duration,ar:artists,id} = song
-    const url = id && formatSongUrl(id)
+    const song = index !== -1 && playlist.length && playlist[index]
     return <Fragment>
         <div className="playbar sprite_playbar">
             <div className="playbar-player w980">
@@ -86,15 +108,15 @@ export default function PlayBar () {
                     <button className="playbar-next sprite_playbar" onClick={switchNextHandler}></button>
                 </div>
                 <a href="javascript:;" className="playbar-cover">
-                    <img src={picUrl || "https://s4.music.126.net/style/web2/img/default/default_album.jpg"} alt="" />
+                    <img src={song ? song.al.picUrl : "https://s4.music.126.net/style/web2/img/default/default_album.jpg"} alt="" />
                     <div className="playbar-cover-mask sprite_playbar"></div>
                 </a>
                 <div className="playbar-info">
                     <div className="playbar-songinfo">
-                        <a href="javascript:;" className="playbar-song">{name}</a>
+                        {song && <a href="javascript:;" className="playbar-song">{song.name}</a>}
                         <div className="playbar-artists">
                         {
-                            artists && artists.map((item,idx,arr) => (
+                            song && song.ar.map((item,idx,arr) => (
                                 idx === arr.length-1 ? <a href="javascript:;" key={item.id}>{item.name}</a> : <Fragment key={item.id}>
                                     <a href="javascript:;" key={item.id}>{item.name}</a>&nbsp;/&nbsp;
                                 </Fragment>
@@ -106,13 +128,13 @@ export default function PlayBar () {
                     <div className="playbar-progress">
                         <Slider 
                         tooltipVisible={false}
-                        disabled={!duration}
+                        disabled={song ? false : true}
                         defaultValue={0} 
                         value={progress} 
                         onChange={sliderChangeHandler} 
                         onAfterChange={sliderAfterChangeHandler} />
                         <span className="playbar-currentTime">{formatMMSS(currentTime)}</span>&nbsp;/&nbsp;
-                        <span className="playbar-time">{duration ? formatMMSS(duration) : formatMMSS(0)}</span>
+                        <span className="playbar-time">{song ? formatMMSS(song.dt) : formatMMSS(0)}</span>
                     </div>
                 </div>
                 
@@ -128,10 +150,10 @@ export default function PlayBar () {
                     overlayClassName="playbar-playlist" 
                     // defaultVisible={true}
                     content={(
-                        playlist.length ? 
+                        playlist.length  ? 
                         (<ul>
                             {playlist.map((song,songIdx) => (
-                                <li key={song.id} className={songIdx === playIdx ? "playlist-active" : ""}>
+                                <li key={song.id} className={songIdx === index ? "playlist-active" : ""} onClick={playlistPlayHandler(songIdx)}>
                                     <div className="playbar-playlist-songinfo">
                                         <span className="playlist-songinfo-song">{song.name}</span>
                                         <span>&nbsp;-&nbsp;</span>
@@ -160,7 +182,7 @@ export default function PlayBar () {
                 </div>
             </div>
         </div>
-        {url && <audio 
+        {song && <audio 
         ref={audio} 
         src={url}
         preload="auto"

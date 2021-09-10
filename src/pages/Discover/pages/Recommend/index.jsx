@@ -17,26 +17,29 @@ import RecommendAnchor from "./components/Anchor";
 import {
     getBannerAction,
     getRcmdSongListAction,
+    getRcmdToplistAction,
     getRecommendNewAction,
-    getRecommendToplistAction,
+    // getRecommendToplistAction,
     getRecommendSingerAction,
     getRecommendAnchorAction,
     getPersonalSongListAction} from "@/redux/actions/discover"
+// import { getToplistListAction } from "@/redux/actions/toplist";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function DscvRcmd () {
     // redux hook
     const {loading, logined} = useSelector(state => {
-        const {discover:dscvState, login:loginState} = state
+        const {discover:dscvState, login:loginState,toplist:toplistState} = state
         // const loginState = state.login
         return {
             loading: !dscvState.get("banners") || 
             !dscvState.get("songList") || 
             !dscvState.get("news") || 
-            !dscvState.get("risingToplist") || 
-            !dscvState.get("newToplist") || 
-            !dscvState.get("originalToplist") ||
+            !toplistState.get("toplists") ||
+            // !dscvState.get("risingToplist") || 
+            // !dscvState.get("newToplist") || 
+            // !dscvState.get("originalToplist") ||
             !dscvState.get("recommendSingers") || 
             !dscvState.get("recommendAnchors"),
             logined: loginState.get("logined")
@@ -48,8 +51,8 @@ export default function DscvRcmd () {
     useEffect(() => {
         dispatch(getBannerAction())
         dispatch(getRcmdSongListAction())
+        dispatch(getRcmdToplistAction())
         dispatch(getRecommendNewAction())
-        dispatch(getRecommendToplistAction())
         dispatch(getRecommendSingerAction())
         dispatch(getRecommendAnchorAction())
     },[])

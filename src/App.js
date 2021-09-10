@@ -9,7 +9,8 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 import Header from "./components/Header";
 import Login from "./components/Login"
 import PlayBar from "./components/PlayBar"
-import Vip from "./components/Vip"
+import VipGuide from "./components/VipGuide"
+import BackTop from './components/BackTop';
 import Footer from "./components/Footer"
 import Discover from './pages/Discover';
 import Download from './pages/Download';
@@ -26,7 +27,7 @@ function App() {
     <BrowserRouter>
       <Header/>
       <Login/>
-      <Vip/>
+      <VipGuide/>
       <Switch>
         <Route path="/discover" component={Discover}/>
         <Route path="/musician" component={Musician}/>
@@ -35,6 +36,7 @@ function App() {
         <Route exact path="/" component={Discover}/>
         {/* // <Redirect from="/" to="/discover"/> */}
       </Switch>
+      <BackTop/>
       <PlayBar/>
       <Footer/>
     </BrowserRouter>

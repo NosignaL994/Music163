@@ -4,7 +4,8 @@ export const SEARCH_SUGGEST_URL = "/search/suggest"
 
 export const DEFAULT_REQUEST_TIMEOUT = 5000
 
+// id
 export const newToplistId = 3779629
-export const risingToplistId = 19723756
+export const riseToplistId = 19723756
 export const originalToplistId = 2884035
 export const hotToplistId = 3778678
