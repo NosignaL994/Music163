@@ -1,8 +1,8 @@
 
 
-import React, { Component } from "react";
+// import React, { Component } from "react";
 import {Skeleton} from "antd"
-import {connect, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 
 import "@/assets/styles/reset.css"
 import "./style.less"
@@ -20,7 +20,7 @@ import {
     getRcmdToplistAction,
     getRecommendNewAction,
     // getRecommendToplistAction,
-    getRecommendSingerAction,
+    getRcmdSingerAction,
     getRecommendAnchorAction,
     getPersonalSongListAction} from "@/redux/actions/discover"
 // import { getToplistListAction } from "@/redux/actions/toplist";
@@ -29,19 +29,28 @@ import { useDispatch } from "react-redux";
 
 export default function DscvRcmd () {
     // redux hook
-    const {loading, logined} = useSelector(state => {
-        const {discover:dscvState, login:loginState,toplist:toplistState} = state
+    const {loaded, logined} = useSelector(state => {
+        const {discover:dscvState, login:loginState,toplist:toplistState,singer:singerState} = state
         // const loginState = state.login
+        // console.log(dscvState.get("recommendAnchors"))
+        // console.log(dscvState.get("songList"))
+        // console.log(dscvState.get("news"))
+        // console.log(toplistState.get("toplists"))
+        // console.log(singerState.get("singers"))
+        // console.log(dscvState.get("recommendAnchors"))
+        // console.log(dscvState.get("banners")!==null &&
+        // dscvState.get("songList")!==null &&
+        // dscvState.get("news")!==null &&
+        // toplistState.get("toplists") &&
+        // singerState.get("singers") &&
+        // dscvState.get("recommendAnchors")!==null)
         return {
-            loading: !dscvState.get("banners") || 
-            !dscvState.get("songList") || 
-            !dscvState.get("news") || 
-            !toplistState.get("toplists") ||
-            // !dscvState.get("risingToplist") || 
-            // !dscvState.get("newToplist") || 
-            // !dscvState.get("originalToplist") ||
-            !dscvState.get("recommendSingers") || 
-            !dscvState.get("recommendAnchors"),
+            loaded: dscvState.get("banners")!==null &&
+            dscvState.get("songList")!==null &&
+            dscvState.get("news")!==null &&
+            Object.keys(toplistState.get("toplists")).length &&
+            Object.keys(singerState.get("singers")).length &&
+            dscvState.get("recommendAnchors")!==null,
             logined: loginState.get("logined")
         }
     })
@@ -53,13 +62,16 @@ export default function DscvRcmd () {
         dispatch(getRcmdSongListAction())
         dispatch(getRcmdToplistAction())
         dispatch(getRecommendNewAction())
-        dispatch(getRecommendSingerAction())
+        dispatch(getRcmdSingerAction())
         dispatch(getRecommendAnchorAction())
-    },[])
-    useEffect(() => logined && dispatch(getPersonalSongListAction()), [logined])
-
+    },[dispatch])
+    useEffect(() => {
+        logined && dispatch(getPersonalSongListAction())
+        !logined && dispatch(getRcmdSongListAction())
+    }, [logined,dispatch])
+    // console.log(loaded)
     // render
-    return <Skeleton loading={loading} active>
+    return <Skeleton loading={!loaded} active>
         <Banner/>
         <div className="discover-recommend-content w980">
             <div className="recommend-content-main">
@@ -75,51 +87,3 @@ export default function DscvRcmd () {
         </div>
     </Skeleton>
 }
-
-// class DiscoverRecommend extends Component {
-
-//     componentDidMount () {
-//         const {getBannerAction, getHotRecommendAction, getRecommendNewAction,getRecommendToplistAction,getRecommendSingerAction, getRecommendAnchorAction} = this.props
-//         getBannerAction()
-//         getHotRecommendAction()
-//         getRecommendNewAction()
-//         getRecommendToplistAction()
-//         getRecommendSingerAction()
-//         getRecommendAnchorAction()
-//     }
-//     render () {
-//         const {loading} = this.props
-//         return (
-//             <Skeleton loading={loading} active>
-//                 <Banner/>
-//                 <div className="discover-recommend-content w980">
-//                     <div className="recommend-content-main">
-//                         <RecommendHot/>
-//                         <RcmdPersonal/>
-//                         <RecommendNew/>
-//                         <RecommendToplist/>
-//                     </div>
-//                     <div className="recommend-content-aside">
-//                         <RecommendSinger/>
-//                         <RecommendAnchor/>
-//                     </div>
-//                 </div>
-//             </Skeleton>
-//         )
-//     }
-// }
-// function mapStateToProps (state) {
-//     const discoverState = state.discover
-//     return {
-//         loading: !discoverState.get("banners") || !discoverState.get("hotRecommends") || !discoverState.get("recommendNews") || !discoverState.get("risingToplist") || !discoverState.get("newToplist") || !discoverState.get("originalToplist") ||
-//         !discoverState.get("recommendSingers") || !discoverState.get("recommendAnchors")
-//     }
-// }
-// export default connect(mapStateToProps, {
-//     getBannerAction,
-//     getHotRecommendAction,
-//     getRecommendNewAction,
-//     getRecommendToplistAction,
-//     getRecommendSingerAction,
-//     getRecommendAnchorAction
-// })(DiscoverRecommend)

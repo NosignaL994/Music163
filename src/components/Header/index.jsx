@@ -1,15 +1,17 @@
 import './style.less'
 
+import { Popover } from 'antd'
 import {NavLink} from 'react-router-dom'
-
 import { useEffect } from 'react'
+import { useSelector,useDispatch } from 'react-redux'
+
 import debounce from '@/utils/debounce'
 import {getSearchSuggestAction, searchIptAction, searchFocusChangeAction} from "@/redux/actions/header"
 import {
     switchLoginVisibleAction,
-    getUserProfileAction} from "@/redux/actions/login"
-import { useSelector,useDispatch } from 'react-redux'
-// import { useDispatch } from 'react-redux'
+    getUserProfileAction,
+    logoutAction} from "@/redux/actions/login"
+import { clearCookie } from '@/utils/storage'
 
 export default function Header () {
     const dispatch = useDispatch()
@@ -47,6 +49,10 @@ export default function Header () {
 
     function loginHandler () {
         dispatch(switchLoginVisibleAction())
+    }
+    function logoutHandler () {
+        console.log(123);
+        dispatch(logoutAction())
     }
 
     return (
@@ -107,7 +113,22 @@ export default function Header () {
                     </div>
                 </div>
                 <NavLink className="create-center" to="/create-center">创作者中心</NavLink>
-                {profile ? <div className="header-avatar"><img src={profile?.avatarUrl} alt="" /></div> : <button className="login" onClick={loginHandler}>登录</button>}
+                {logined ? 
+                <Popover 
+                // visible={true}
+                overlayClassName="header-user-group"
+                content={
+                    <ul>
+                        <li><a href="#"><i className="sprite_icon3 user-mine"/>我的主页</a></li>
+                        <li><a href="#"><i className="sprite_icon3 user-msg"/>我的消息</a></li>
+                        <li><a href="#"><i className="sprite_icon3 user-grade"/>我的等级</a></li>
+                        <li><a href="#"><i className="sprite_icon3 user-vip"/>VIP会员</a></li>
+                        <li><a href="#"><i className="sprite_icon3 user-setting"/>个人设置</a></li>
+                        <li><a href="#"><i className="sprite_icon3 user-auth"/>实名认证</a></li>
+                        <li><a href="javascript:;" onClick={logoutHandler}><i className="sprite_icon3 user-exit"/>退出</a></li>
+                    </ul>
+                }><div className="header-avatar"><img src={profile?.avatarUrl} alt="" /></div></Popover>
+                 : <button className="login" onClick={loginHandler}>登录</button>}
             </div>
         </div>
         

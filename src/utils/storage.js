@@ -6,3 +6,6 @@ export function saveCookie (cookie) {
 export function getCookie () {
     return localStorage.getItem("cookie")
 }
+export function clearCookie () {
+    localStorage.removeItem("cookie")
+}

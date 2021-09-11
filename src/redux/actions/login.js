@@ -5,7 +5,7 @@ import { SWITCH_LOGIN_VISIBLE,
     SET_LOGINED,
     SET_USER_PROFILE } from "@/common/actionType"
 import {getRequest} from "@/utils/request"
-import { saveCookie,getCookie } from "@/utils/storage"
+import { saveCookie,getCookie,clearCookie } from "@/utils/storage"
 // import { SET_LOGINED } from "../../common/actionType"
 export function switchLoginVisibleAction () {
     return {
@@ -74,4 +74,16 @@ export function getUserProfileAction () {
             type: SET_USER_PROFILE,
             data: response.data.profile
         })).catch(error => console.log(error))
+}
+
+export function logoutAction () {
+    const cookie = getCookie()
+    return dispatch => getRequest("/logout", {
+        cookie
+    })
+    .then(response => {
+        clearCookie()
+        dispatch(setLoginedAction(false))
+    })
+    .catch(error => console.log(error))
 }

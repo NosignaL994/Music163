@@ -44,3 +44,7 @@ export const SWITCH_VIPGUIDE_VISIBLE = "SWITCH_VIPGUIDE_VISIBLE"
 // toplist
 export const SET_TOPLIST_LIST = "SET_TOPLIST_LIST"
 export const ADD_TOPLIST = "ADD_TOPLIST"
+
+// singer
+export const ADD_SINGER = "ADD_SINGER"
+export const SET_SINGER_TOPLIST = "SET_SINGER_TOPLIST"

@@ -1,18 +1,24 @@
-import {getRequest,getPlaylistDetail,getToplistList,getSongsDetail} from "@/utils/request"
+import {
+    getRequest,
+    getPlaylistDetail,
+    getToplistList,
+    getSongsDetail} from "@/utils/request"
 import { 
     GET_BANNER_OVER,
     SET_RCMD_SONGLIST,
     SET_TOPLIST_LIST,
     SET_RCMD_NEW,
-    GET_RECOMMEND_SINGER_OVER,
+    // GET_RECOMMEND_SINGER_OVER,
     GET_RECOMMEND_ANCHOR_OVER,
-    ADD_TOPLIST} from "@/common/actionType"
+    ADD_TOPLIST,
+    SET_SINGER_TOPLIST} from "@/common/actionType"
 
 import {isAccessible} from "@/utils/common"
 import {getCookie} from "@/utils/storage"
 
-import {setPlaylistAction} from "@/redux/actions/playbar"
-import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
+import {setPlaylistAction} from "./playbar"
+import {switchVipGuideVisibleAction} from "./vipguide"
+import { getSingerDetailAction } from "./singer"
 
 export const getBannerAction = () => dispatch => {
     getRequest('/banner')
@@ -75,15 +81,20 @@ export const getRecommendNewAction = () => dispatch => {
 }
 
 
-export const getRecommendSingerAction = () => dispatch => getRequest('/top/artists', {
-    limit: 5
-})
-    .then(response => dispatch({
-        type: GET_RECOMMEND_SINGER_OVER,
-        data: response.data.artists
-    }))
-    .catch(error => console.log(error))
-
+export function getRcmdSingerAction () {
+    return dispatch => getRequest('/top/artists')
+    .then(response => {
+        const artists = response.data.artists
+        // console.log(artists);
+        dispatch({
+            type: SET_SINGER_TOPLIST,
+            data: artists
+        })
+        for (const artist of artists.slice(0,5)) {
+            dispatch(getSingerDetailAction(artist.id))
+        }
+    }).catch(error => console.log(error))
+}
 export const getRecommendAnchorAction = () => dispatch => getRequest('/dj/toplist', {
     limit: 5
 }).then(response => dispatch({

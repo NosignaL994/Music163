@@ -173,6 +173,9 @@
         img {
             width: 100%;
         }
+        // &:hover {
+
+        // }
     }
     .login {
         display: inline;
@@ -182,6 +185,61 @@
         &:hover {
             text-decoration: underline;
         }
+    }
+}
+.header-user-group {
+    .ant-popover-arrow-content {
+        background-color: #2c2c2c;
+    }
+    .ant-popover-inner-content {
+        padding: 0;
+        background-color: #2c2c2c;
+        li>a {
+                width: 158px;
+                display: block;
+                height: 34px;
+                line-height: 34px;
+                padding-left: 68px;
+                // text-align: center;
+                font-size: 12px;
+                color: #ccc;
+                text-decoration: none;
+                position: relative;
+                &:hover {
+                    color: white;
+                    background-color: #353535;
+                }
+                i {
+                    display: inline-block;
+                    position: absolute;
+                    left: 40px;
+                    top: 50%;
+                    transform: translate(0,-50%);
+                    width: 18px;
+                    height: 18px;
+                }
+                .user-mine {
+                    background-position: 0 -80px;
+                }
+                .user-msg {
+                    background-position: -20px -120px;
+                }
+                .user-grade {
+                    background-position: 0 -100px;
+                }
+                .user-vip {
+                    background-position: 0 -221px;
+                }
+                .user-setting {
+                    background-position: 0 -140px;
+                }
+                .user-auth {
+                    background-position: -20px -142px;
+                }
+                .user-exit {
+                    background-position: 0 -200px;
+                }
+            }
     }
 }
 

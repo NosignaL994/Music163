@@ -37,7 +37,7 @@ export default function RcmdHot () {
                             <img src={item.picUrl} alt="" />
                             <div className="hot-cover-mask">
                                 <button className="hot-play sprite_icon" onClick={playHandler(item.id)}></button>
-                                <div className="hot-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount)}</div>
+                                <div className="hot-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount||item.playCount)}</div>
                             </div>
                         </div>
                         <p>{item.name}</p>

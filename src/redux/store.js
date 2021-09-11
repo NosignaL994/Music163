@@ -10,13 +10,16 @@ import playbarReducer from "./reducers/playbar"
 import loginReducer from "./reducers/login"
 import vipReducer from "./reducers/vipguide"
 import toplistReducer from "./reducers/toplist"
+import singerReducer from "./reducers/singer"
+
 const reducer = combineReducers({
     header: headerReducer,
     discover: discoverReducer,
     playbar: playbarReducer,
     login: loginReducer,
     vip: vipReducer,
-    toplist: toplistReducer
+    toplist: toplistReducer,
+    singer: singerReducer
 })
 // const persistConfig = {
 //     key: "root",

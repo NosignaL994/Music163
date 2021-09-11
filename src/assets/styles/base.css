@@ -58,7 +58,9 @@ button {
 .sprite_icon2 {
   background: url(../images/sprite_icon2.png) no-repeat;
 }
-
+.sprite_icon3 {
+  background: url(../images/icon3.png) no-repeat;
+}
 .sprite_button {
   background: url(../images/sprite_button.png) no-repeat;
 }

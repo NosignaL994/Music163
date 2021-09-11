@@ -37,3 +37,9 @@ export async function getSongUrl (id) {
     return getRequest("/song/url", {id})
     .then(response => response.data.data[0].url)
 }
+
+export async function getSingerDetail (id) {
+    // console.log(id);
+    return getRequest("/artist/detail",{id})
+    .then(response => response.data.data)
+}
