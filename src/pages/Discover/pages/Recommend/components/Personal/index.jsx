@@ -1,11 +1,11 @@
 import "./style.less"
 
-import { useState,useEffect } from "react"
+import { useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
 
 import { formatDay,formatCount } from "@/utils/format"
 
-import { getPlaylistAction } from "@/redux/actions/discover"
+import { getPlaylistAction } from "@/redux/actions/playbar"
 
 export default function RcmdPersonal () {
     // state
@@ -17,16 +17,16 @@ export default function RcmdPersonal () {
     // redux
     const dispatch = useDispatch()
     const {songList} = useSelector(state => {
-        const dscvState = state.discover
+        const recommend = state.recommend
         return {
-            songList: dscvState.get("songList")
+            songList: recommend.get("songList")
         }
     })
     function playHandler(id) {
         return () => dispatch(getPlaylistAction(id))
     }
     return songList && <section className="rcmd-personal">
-        <header className="rcmd-personal-hd recommend-main-hd">
+        <header className="rcmd-personal-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
                 <a href="javascript:;">个性化推荐</a>
             </h2>
@@ -45,8 +45,8 @@ export default function RcmdPersonal () {
                 songList.slice(0,3).map(item => (
                     <li key={item.id}>
                         <div href="javascript:;" className="personal-cover">
-                            <img src={item.picUrl} alt="" />
                             <div className="personal-cover-mask">
+                                <img src={item.picUrl+"?param=140y140"} alt="" />
                                 <button className="personal-play sprite_icon" onClick={playHandler(item.id)}></button>
                                 <div className="personal-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount)}</div>
                             </div>

@@ -1,14 +1,14 @@
 import './style.less'
 
 import { useSelector,useDispatch } from 'react-redux';
-import { getPlaylistAction } from '@/redux/actions/discover';
+import { getPlaylistAction } from '@/redux/actions/playbar';
 import { formatCount } from '@/utils/format';
 export default function RcmdHot () {
     const dispatch = useDispatch()
     const {songList} = useSelector(state => {
-        const dscvState = state.discover
+        const recommend = state.recommend
         return {
-            songList: dscvState.get("songList")
+            songList: recommend.get("songList")
         }
     })
     function playHandler(id) {
@@ -16,7 +16,7 @@ export default function RcmdHot () {
     }
     // console.log(songList)
     return <section className="discover-rcmd-hot">
-        <header className="rcmd-hot-hd recommend-main-hd">
+        <header className="rcmd-hot-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
                 <a href="javascript:;">热门推荐</a>
             </h2>
@@ -34,8 +34,8 @@ export default function RcmdHot () {
                 songList.map(item => (
                     <li key={item.id}>
                         <div className="hot-cover">
-                            <img src={item.picUrl} alt="" />
                             <div className="hot-cover-mask">
+                                <img src={item.picUrl+"?param=140y140"} alt="" />
                                 <button className="hot-play sprite_icon" onClick={playHandler(item.id)}></button>
                                 <div className="hot-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount||item.playCount)}</div>
                             </div>

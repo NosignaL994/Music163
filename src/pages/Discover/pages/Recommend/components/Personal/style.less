@@ -29,32 +29,45 @@
     .personal-cover {
         // display: block;
         position: relative;
-        width: 140px;
-        height: 140px;
-        border-radius: 3px;
-        overflow: hidden;
         text-decoration: none;
         margin-bottom: 8px;
 
-        img {
-            width: 100%;
-        }
-        .personal-cover-mask {
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background-color: rgba(0, 0, 0, 0.3);
-            
-            opacity: 0;
-            transition: opacity ease 666ms;
-            &:hover {
+        
+        &:hover .personal-cover-mask {
+            transform: translate(0,-10px);
+            .personal-play,
+            .personal-playcount {
+                display: initial;
+            }
+            &::after {
                 opacity: 1;
             }
+        }
+        .personal-cover-mask {
+            position: relative;
+            transition: transform 0.2s;
+            border-radius: 3px;
+            overflow: hidden;
+            img {
+                width: 140px;
+                height: 140px;
+            }
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; bottom: 0; right: 0;
+                background-color: rgba(0, 0, 0, 0.3);
+                opacity: 0;
+                transition: opacity ease 0.2s;
+            }
             .personal-play {
+                display: none;
                 width: 39px;
                 height: 39px;
                 position: absolute;
                 top: 50%;
                 left: 50%;
+                z-index: 1;
                 transform: translate(-50%,-50%);
                 background-position: -33px -137px;
                 &:hover {
@@ -62,9 +75,11 @@
                 }
             }
             .personal-playcount {
+                display: none;
                 position: absolute;
                 bottom: 0;
                 left: 50%;
+                z-index: 1;
                 transform: translate(-50%,0);
                 font-size: 12px;
                 color: #ccc;

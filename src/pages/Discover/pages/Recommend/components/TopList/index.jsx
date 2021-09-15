@@ -41,7 +41,7 @@ export default function RcmdTopList () {
     const rcmdToplists = [toplists[riseToplistId],toplists[newToplistId],toplists[originalToplistId]]
     // console.log(rcmdToplists)
     return <section className="rcmd-toplist">
-        <header className="rcmd-toplist-hd recommend-main-hd">
+        <header className="rcmd-toplist-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
                 <a href="javascript:;">榜单</a>
             </h2>

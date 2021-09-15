@@ -11,6 +11,11 @@
     }
     ul {
         padding: 5px;
+        &::after{
+            content: "";
+            display: block;
+            clear: both;
+        }
         li {
             float: left;
             margin-right: 10px;
@@ -27,6 +32,9 @@
                 color: #666;
                 a {
                     color: #666;
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
             }
             .new-cover {
@@ -36,6 +44,7 @@
                 position: relative;
                 img {
                     width: 100px;
+                    height: 100px;
                     margin-right: 18px;
                 }
                 .new-play {
@@ -64,8 +73,9 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
+                color: black;
                 &:hover {
-                    color: black;
+                    text-decoration: underline;
                 }
             }
         }

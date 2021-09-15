@@ -1,10 +1,10 @@
 
 
-// import '@/assets/styles/reset.css'
+import '@/assets/styles/reset.css'
 import '@/assets/styles/base.css'
 
 import React from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
 import Header from "./components/Header";
 import Login from "./components/Login"
@@ -13,11 +13,11 @@ import VipGuide from "./components/VipGuide"
 import BackTop from './components/BackTop';
 import Footer from "./components/Footer"
 import Discover from './pages/Discover';
-import Download from './pages/Download';
+// import Download from './pages/Download';
 import Friend from './pages/Friend';
 import Mine from './pages/Mine';
 import Musician from './pages/Musician';
-import Shop from './pages/Shop';
+// import Shop from './pages/Shop';
 
 
 

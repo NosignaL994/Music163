@@ -48,3 +48,11 @@ export const ADD_TOPLIST = "ADD_TOPLIST"
 // singer
 export const ADD_SINGER = "ADD_SINGER"
 export const SET_SINGER_TOPLIST = "SET_SINGER_TOPLIST"
+
+// radio
+export const SET_HOT_RADIOS = "SET_HOT_RADIOS"
+
+// songlist
+export const SET_HQ_SONGLIST = "SET_HQ_SONGLIST"
+export const SET_HQ_SONGLIST_COUNT = "SET_HQ_SONGLIST_COUNT"
+export const SET_SONGLIST_CATEGORY = "SET_SONGLIST_CATEGORY"

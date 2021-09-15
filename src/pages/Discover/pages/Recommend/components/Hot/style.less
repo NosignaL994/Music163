@@ -10,11 +10,14 @@
     a {
         color: #666;
         margin: 0 10px;
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
 .rcmd-hot-content {
-    /* width: 100%; */
+    // width: 100%;
     display: grid;
     grid-template-columns: repeat(4,140px);
     grid-auto-flow: row;
@@ -22,31 +25,49 @@
     // column-gap: 1fr;
     grid-row-gap: 30px;
     .hot-cover {
-        // width: 140px;
-        border-radius: 3px;
-        overflow: hidden;
         position: relative;
         margin-bottom: 8px;
-        img {
-            width: 140px;
-            height: 140px;
+        &:hover .hot-cover-mask {
+            transform: translate(0,-10px);
+            &::after {
+                opacity: 1;
+            }
+            .hot-play,
+            .hot-playcount {
+                display: initial;
+            }
         }
+        
     }
     .hot-cover-mask {
-        position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
-        background-color: rgba(0, 0, 0, 0.3);
-        opacity: 0;
-        transition: opacity ease 666ms;
-        &:hover {
-            opacity: 1;
+        transition: transform 0.2s;
+        position: relative;
+        &::after {
+            position: absolute;
+            content: "";
+            display: block;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity ease 0.2s;
+            
         }
+        
+        img {
+            transition: transform 1s;
+            width: 140px;
+            height: 140px;
+            border-radius: 3px;
+        }
+        
         .hot-play {
+            display: none;
             width: 39px;
             height: 39px;
             position: absolute;
             top: 50%;
             left: 50%;
+            z-index: 1;
             transform: translate(-50%,-50%);
             background-position: -33px -137px;
             &:hover {
@@ -54,12 +75,14 @@
             }
         }
         .hot-playcount {
+            display: none;
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translate(-50%,0);
             font-size: 12px;
             color: #ccc;
+            z-index: 1;
             div {
                 display: inline-block;
                 width: 14px;

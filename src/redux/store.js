@@ -5,21 +5,25 @@ import thunk from 'redux-thunk'
 // import immutableTransform from "redux-persist-transform-immutable"
 
 import headerReducer from "./reducers/header";
-import discoverReducer from "./reducers/discover"
 import playbarReducer from "./reducers/playbar"
 import loginReducer from "./reducers/login"
 import vipReducer from "./reducers/vipguide"
-import toplistReducer from "./reducers/toplist"
-import singerReducer from "./reducers/singer"
+import recommendReducer from "./reducers/discover/recommend"
+import toplistReducer from "./reducers/discover/toplist"
+import singerReducer from "./reducers/discover/singer"
+import radioReducer from "./reducers/discover/radio"
+import songlistReducer from "./reducers/discover/songlist"
 
 const reducer = combineReducers({
     header: headerReducer,
-    discover: discoverReducer,
+    recommend: recommendReducer,
     playbar: playbarReducer,
     login: loginReducer,
     vip: vipReducer,
     toplist: toplistReducer,
-    singer: singerReducer
+    singer: singerReducer,
+    radio: radioReducer,
+    songlist: songlistReducer
 })
 // const persistConfig = {
 //     key: "root",

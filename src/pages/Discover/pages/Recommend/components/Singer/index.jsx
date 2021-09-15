@@ -7,24 +7,22 @@ export default function RcmdSinger () {
         singers: state.singer.get("singers"),
         singerToplist: state.singer.get('singerToplist')
     }))
-    // console.log(111)
-    // console.log(singers);
-    // console.log(singerToplist.slice(0,5))
-    return <section className="recommend-aside-singer">
-        <header className="recommend-aside-hd">
+    
+    return <section className="rcmd-aside-singer">
+        <header className="rcmd-aside-hd">
             <span>入驻歌手</span>
-            <a href="#" className="recommend-aside-all">查看全部&nbsp;&gt;</a>
+            <a href="#" className="rcmd-aside-all">查看全部&nbsp;&gt;</a>
         </header>
-        <div className="recommend-singer-content">
+        <div className="rcmd-singer-content">
         <ul>
             {
                 singerToplist && singerToplist.slice(0,5).map(item => (
                     <li key={item.id}><a href="#">
-                        <img src={item.img1v1Url} alt="" className="recommend-singer-avatar"/>
-                        <div className="recommend-singer-msg">
-                            <div className="recommend-singer-name">{item.name}</div>
+                        <img src={item.picUrl+"?param=62y62"} alt="" className="singer-avatar"/>
+                        <div className="singer-msg">
+                            <div className="singer-name">{item.name}</div>
                             <div className="singer-description">
-                                {singers[item.id].identify.imageDesc}
+                                {singers[item.id] && singers[item.id].identify.imageDesc}
                             </div>
                             
                         </div>
@@ -32,7 +30,7 @@ export default function RcmdSinger () {
                 ))
             }
         </ul>
-        <a href="#" className="recommend-singer-apply sprite_button">申请成为网易音乐人</a>
+        <a href="#" className="singer-apply sprite_button">申请成为网易音乐人</a>
         </div>
     </section>
 

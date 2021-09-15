@@ -33,19 +33,19 @@ export default function PlayBar () {
     useEffect(() => {
         if (!playlist.length) return
         index !== -1 && dispatch(setPlayUrlAction(playlist[index].id))
-    },[index, playlist])
+    },[index, playlist, dispatch])
 
     useEffect(() => {
         if (!url) return
         audio.current.play().then(() => setPlaying(true))
-        .catch(error => setPlayUrlAction(formatSongUrl(playlist[index].id)))
+        .catch(error => dispatch(setPlayUrlAction(formatSongUrl(playlist[index].id))))
         
-    },[url])
+    },[url,dispatch])
 
     useEffect(() => {
         if (!playlist.length) return
         index === -1 && dispatch(setPlayIdxAction(0))
-    }, [playlist])
+    }, [playlist,dispatch])
     function timeUpdateHandler (event) {
         if (sliderChanging) return
         const duration = playlist[index].dt

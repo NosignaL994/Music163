@@ -4,54 +4,43 @@
 import {Skeleton} from "antd"
 import {useSelector} from "react-redux"
 
-import "@/assets/styles/reset.css"
+// import "@/assets/styles/reset.css"
 import "./style.less"
 
 import Banner from "./components/Banner"
-import RecommendHot from "./components/Hot";
+import RcmdHot from "./components/Hot";
 import RcmdPersonal from "./components/Personal"
-import RecommendNew from "./components/New";
-import RecommendToplist from "./components/TopList";
-import RecommendSinger from "./components/Singer";
-import RecommendAnchor from "./components/Anchor";
+import RcmdNew from "./components/New";
+import RcmdToplist from "./components/TopList";
+import RcmdSinger from "./components/Singer";
+import RcmdRadio from "./components/Radio";
 import {
     getBannerAction,
     getRcmdSongListAction,
     getRcmdToplistAction,
-    getRecommendNewAction,
-    // getRecommendToplistAction,
+    getRcmdNewAction,
     getRcmdSingerAction,
-    getRecommendAnchorAction,
-    getPersonalSongListAction} from "@/redux/actions/discover"
-// import { getToplistListAction } from "@/redux/actions/toplist";
+    getPersonalSongListAction} from "@/redux/actions/discover/recommend"
+import {getHotRadioAction} from "@/redux/actions/discover/radio"
+
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function DscvRcmd () {
     // redux hook
     const {loaded, logined} = useSelector(state => {
-        const {discover:dscvState, login:loginState,toplist:toplistState,singer:singerState} = state
-        // const loginState = state.login
-        // console.log(dscvState.get("recommendAnchors"))
-        // console.log(dscvState.get("songList"))
-        // console.log(dscvState.get("news"))
-        // console.log(toplistState.get("toplists"))
-        // console.log(singerState.get("singers"))
-        // console.log(dscvState.get("recommendAnchors"))
-        // console.log(dscvState.get("banners")!==null &&
-        // dscvState.get("songList")!==null &&
-        // dscvState.get("news")!==null &&
-        // toplistState.get("toplists") &&
-        // singerState.get("singers") &&
-        // dscvState.get("recommendAnchors")!==null)
+        const {recommend,login,toplist,singer,radio} = state
         return {
-            loaded: dscvState.get("banners")!==null &&
-            dscvState.get("songList")!==null &&
-            dscvState.get("news")!==null &&
-            Object.keys(toplistState.get("toplists")).length &&
-            Object.keys(singerState.get("singers")).length &&
-            dscvState.get("recommendAnchors")!==null,
-            logined: loginState.get("logined")
+            loaded: 
+            recommend.get("banners")!==null &&
+            recommend.get("songList")!==null &&
+            recommend.get("news")!==null &&
+            Object.keys(toplist.get("toplists")).length &&
+            Object.keys(singer.get("singers")).length &&
+            // discover.get("recommendAnchors")!==null,
+            //  && 
+            radio.get("hotRadio")!==null,
+            logined: login.get("logined")
         }
     })
     const dispatch = useDispatch()
@@ -61,9 +50,9 @@ export default function DscvRcmd () {
         dispatch(getBannerAction())
         dispatch(getRcmdSongListAction())
         dispatch(getRcmdToplistAction())
-        dispatch(getRecommendNewAction())
+        dispatch(getRcmdNewAction())
         dispatch(getRcmdSingerAction())
-        dispatch(getRecommendAnchorAction())
+        dispatch(getHotRadioAction())
     },[dispatch])
     useEffect(() => {
         logined && dispatch(getPersonalSongListAction())
@@ -73,16 +62,16 @@ export default function DscvRcmd () {
     // render
     return <Skeleton loading={!loaded} active>
         <Banner/>
-        <div className="discover-recommend-content w980">
-            <div className="recommend-content-main">
-                <RecommendHot/>
+        <div className="discover-rcmd w980">
+            <div className="rcmd-main">
+                <RcmdHot/>
                 {logined && <RcmdPersonal/>}
-                <RecommendNew/>
-                <RecommendToplist/>
+                <RcmdNew/>
+                <RcmdToplist/>
             </div>
-            <div className="recommend-content-aside">
-                <RecommendSinger/>
-                <RecommendAnchor/>
+            <div className="rcmd-aside">
+                <RcmdSinger/>
+                <RcmdRadio/>
             </div>
         </div>
     </Skeleton>

@@ -1,6 +1,6 @@
 import "./style.less"
 
-import { Component, Fragment } from "react";
+import { Fragment } from "react";
 import {Carousel} from "antd"
 import { useSelector,useDispatch } from "react-redux";
 
@@ -12,9 +12,9 @@ import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
 export default function RcmdNew () {
     const dispatch = useDispatch()
     const {news} = useSelector(state => {
-        const dscvState = state.discover
+        const recommend = state.recommend
         return {
-            news: dscvState.get("news")
+            news: recommend.get("news")
         }
     })
     function playHandler(id) {
@@ -25,8 +25,8 @@ export default function RcmdNew () {
             dispatch(isAccessible(tracks[0]) ? setPlaylistAction(tracks) : switchVipGuideVisibleAction())
         }).catch(error => console.log(error))
     }
-    return <section className="discover-recommend-new">
-        <header className="recommend-new-hd recommend-main-hd">
+    return <section className="discover-rcmd-new">
+        <header className="rcmd-new-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
                 <a href="javascript:;">新碟上架</a>
             </h2>
@@ -38,7 +38,7 @@ export default function RcmdNew () {
                     news.slice(0,5).map(item => (
                         <li key={item.id}>
                             <a href="javascript:;" className="new-cover sprite_cover">
-                                <img src={item.picUrl} alt="" />
+                                <img src={item.picUrl+"?param=100y100"} alt="" />
                                 <button className="new-play sprite_icon" onClick={playHandler(item.id)}></button>
                             </a>
                             <a href="javascript:;" className="new-name">{item.name}</a>
@@ -62,7 +62,7 @@ export default function RcmdNew () {
                     news.slice(5,10).map(item => (
                         <li key={item.id}>
                             <a href="javascript:;" className="new-cover sprite_cover">
-                                <img src={item.picUrl} alt="" />
+                                <img src={item.picUrl+"?param=100y100"} alt="" />
                                 <button className="new-play sprite_icon" onClick={playHandler(item.id)}></button>
                             </a>
                             <a href="javascript:;" className="new-name">{item.name}</a>
