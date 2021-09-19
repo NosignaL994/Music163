@@ -13,16 +13,13 @@ import VipGuide from "./components/VipGuide"
 import BackTop from './components/BackTop';
 import Footer from "./components/Footer"
 import Discover from './pages/Discover';
-// import Download from './pages/Download';
 import Friend from './pages/Friend';
 import Mine from './pages/Mine';
 import Musician from './pages/Musician';
-// import Shop from './pages/Shop';
 
-
+// import {}
 
 function App() {
-  
   return (
     <BrowserRouter>
       <Header/>

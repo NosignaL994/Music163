@@ -1,5 +1,5 @@
-import {getRequest} from "@/utils/request"
-import {SET_TOPLIST_LIST} from "@/common/actionType"
+// import {getRequest} from "@/utils/request"
+// import {SET_TOPLIST_LIST} from "@/common/actionType"
 
 // export const getToplistListAction = () => dispatch => {
 //     getRequest('/toplist')

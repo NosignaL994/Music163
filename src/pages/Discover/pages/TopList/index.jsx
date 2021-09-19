@@ -1,8 +1,12 @@
-import { Component } from "react";
+// import { Component } from "react";
+import "./style.less"
 
+import { Skeleton } from "antd"
 
-export default class DiscoverTopList extends Component {
-    render () {
-        return <div>discover-toplist.....</div>
-    }
+export default function Toplist () {
+    return <Skeleton loading={false}>
+        <div className="discover-toplist w980">
+
+        </div>
+    </Skeleton>
 }

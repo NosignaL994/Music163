@@ -1,8 +1,8 @@
 import { Map } from "immutable";
 
 import {
-    SET_HQ_SONGLIST,
-    SET_HQ_SONGLIST_COUNT,
+    SET_SONGLIST,
+    SET_SONGLIST_COUNT,
     SET_SONGLIST_CATEGORY} from "@/common/actionType"
 
 const defaultState = Map({
@@ -14,10 +14,10 @@ const defaultState = Map({
 export default function reducer (state=defaultState,action) {
     const {type, data} = action
     switch (type) {
-        case SET_HQ_SONGLIST:
+        case SET_SONGLIST:
             // console.log(data);
             return state.set("hqSongList",[...state.get("hqSongList"),...data])
-        case SET_HQ_SONGLIST_COUNT:
+        case SET_SONGLIST_COUNT:
             return state.set("hqSongListCount",data)
         case SET_SONGLIST_CATEGORY:
             const categories = []

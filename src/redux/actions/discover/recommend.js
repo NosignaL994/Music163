@@ -2,6 +2,7 @@ import {
     getRequest,
     getPlaylistDetail,
     getToplistList,
+    getWithCookie
     } from "@/utils/request"
 import { 
     GET_BANNER_OVER,
@@ -11,7 +12,6 @@ import {
     ADD_TOPLIST,
     SET_SINGER_TOPLIST} from "@/common/actionType"
 
-import {getCookie} from "@/utils/storage"
 
 import { getSingerDetailAction } from "./singer"
 
@@ -82,10 +82,8 @@ export function getRcmdSingerAction () {
 
 // RcmdPersonal
 export function getPersonalSongListAction () {
-    const cookie = getCookie()
-    return dispatch => getRequest("/recommend/resource", {
-        cookie
-    }).then(response => dispatch({
+    // const cookie = getCookie()
+    return dispatch => getWithCookie("/recommend/resource").then(response => dispatch({
         type: SET_RCMD_SONGLIST,
         data: response.data.recommend
     }))

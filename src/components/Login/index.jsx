@@ -9,6 +9,7 @@ import { getLoginQrKeyAction,
     checkLoginQrAction,
     setLoginCodeAction,
     setLoginedAction } from "@/redux/actions/login";
+import { getCookie } from "../../utils/storage";
 
 // import {reducer} from "@/redux/login"
 export default function Login () {
@@ -31,7 +32,9 @@ export default function Login () {
     const code = mapState.get("code")
     const key = mapState.get("key")
     const logined = mapState.get("logined")
-
+    useEffect(() => {
+        if (logined) document.cookie = getCookie()
+    },[logined])
     useEffect(() => {
         if (visible === true) {
             dispatch(getLoginQrKeyAction())
@@ -54,11 +57,6 @@ export default function Login () {
             dispatch(setLoginedAction(true))
         }
     }, [code])
-    // useEffect(() => {
-    //     if (qrimg) {
-    //         setTimer(setInterval(()=> dispatch(checkLoginQrAction(key)), 1000))
-    //     }
-    // }, [qrimg])
     function cancelHandler () {
         dispatch(switchLoginVisibleAction())
     }
@@ -66,7 +64,6 @@ export default function Login () {
         dispatch(getLoginQrKeyAction())
         dispatch(setLoginCodeAction(801))
     }
-    // console.log(code)
     return (
         
         <Modal 
