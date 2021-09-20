@@ -4,7 +4,7 @@ import "./style.less"
 import { useSelector,useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import { Skeleton } from "antd"
-import { Route,Switch } from "react-router"
+
 import ToplistNav from "./components/Nav"
 import ToplistDetail from "./pages/Detail"
 import { getToplistListAction,getToplistDetailAction } from "@/redux/actions/discover/toplist"

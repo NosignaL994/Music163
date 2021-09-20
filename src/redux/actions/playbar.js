@@ -4,32 +4,42 @@ import {
     SET_PLAYLIST,
     SET_PLAY_IDX,
     ADD_PLAY,
-    SET_PLAY_URL } from "@/common/actionType"
+    SET_PLAY_URL,
+    ADD_PLAYLIST } from "@/common/actionType"
 import {getSongUrl,getSongsDetail,getPlaylistDetail} from "@/utils/request"
 import {formatSongUrl} from "@/utils/format"
 import {isAccessible} from "@/utils/common"
 
 import {switchVipGuideVisibleAction} from "./vipguide"
 
-export const setPlaySongAction = track => ({
-    type: SET_PLAY_SONG,
-    data: track
-})
-export const setPlaylistAction = playlist => ({
-    type: SET_PLAYLIST,
-    data: playlist
-})
-
+export function setPlaySongAction (track) {
+    return (isAccessible(track)) ? {
+            type: SET_PLAY_SONG,
+            data: track
+        } : switchVipGuideVisibleAction()
+}
+export function setPlaylistAction (tracks) {
+    return (isAccessible(tracks[0])) ? {
+        type: SET_PLAYLIST,
+        data: tracks
+    } : switchVipGuideVisibleAction()
+}
+export function addPlaylistAciton (tracks) {
+    return (isAccessible(tracks[0])) ? {
+        type: ADD_PLAYLIST,
+        data: tracks
+    } : switchVipGuideVisibleAction()
+}
 export const setPlayIdxAction = idx => ({
     type: SET_PLAY_IDX,
     data: idx
 })
 
 export function addPlayAction (track) {
-    return {
+    return (isAccessible(track)) ? {
         type: ADD_PLAY,
         data: track
-    }
+    } : switchVipGuideVisibleAction()
 }
 export function setPlayUrlAction (arg) {
     return isNaN(arg) ? {

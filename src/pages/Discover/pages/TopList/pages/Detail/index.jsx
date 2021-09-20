@@ -10,20 +10,35 @@ import {
     CommentOutlined,
     ClockCircleOutlined,
     PlayCircleFilled } from "@ant-design/icons"
-import { useSelector } from "react-redux"
-import { formatDate,formatMMSS } from "@/utils/format";
+import { useSelector,useDispatch } from "react-redux"
 import { Fragment } from "react";
 
+import { formatDate,formatMMSS } from "@/utils/format";
+import {setPlaySongAction,addPlayAction,setPlaylistAction} from "@/redux/actions/playbar"
+import { NavLink } from "react-router-dom";
+
 export default function ToplistDetail (props) {
+    const dispatch = useDispatch()
     const {id,index} = props
     const {toplists, toplistList} = useSelector(state => ({
         toplists: state.toplist.get("toplists"),
         toplistList: state.toplist.get("toplistList")
     }))
-    // console.log(toplists[id]);
+    function toplistPlayHandler (toplist) {
+        return () => dispatch(setPlaylistAction(toplist))
+    }
+    function songPlayHandler (track) {
+        return () => dispatch(setPlaySongAction(track))
+    }
+    function addPlayHandler (track) {
+        return () => dispatch(addPlayAction(track))
+    }
+    
     const detail = toplists[id]
     const toplist = toplistList[index]
     const {month, day} = formatDate(toplist.updateTime)
+    // console.log(detail)
+
     return <div className="toplist-detail">
         <header className="toplist-detail-hd">
             <img src={detail.coverImgUrl+"?param=150y150"} alt="" />
@@ -31,19 +46,19 @@ export default function ToplistDetail (props) {
                 <h2 className="toplist-name">{detail.name}</h2>
                 <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日&nbsp;&nbsp;&nbsp;<span>({toplist.updateFrequency})</span></div>
                 <div className="toplist-btns">
-                    <Button type="primary" className="toplist-play"><PlayCircleOutlined/>播放</Button>
-                    <Button type="primary" className="toplist-add"><PlusOutlined /></Button>
-                    <Button><FolderAddOutlined />({detail.subscribedCount})</Button>
-                    <Button><ShareAltOutlined />({detail.shareCount})</Button>
-                    <Button><DownloadOutlined />下载</Button>
-                    <Button><CommentOutlined />({detail.commentCount})</Button>
+                    <Button type="primary" className="toplist-play ant-btn-primary-reset" onClick={toplistPlayHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
+                    <Button type="primary" className="toplist-add ant-btn-primary-reset"><PlusOutlined /></Button>
+                    <Button className="ant-btn-normal-reset"><FolderAddOutlined />({detail.subscribedCount})</Button>
+                    <Button className="ant-btn-normal-reset"><ShareAltOutlined />({detail.shareCount})</Button>
+                    <Button className="ant-btn-normal-reset"><DownloadOutlined />下载</Button>
+                    <Button className="ant-btn-normal-reset"><CommentOutlined />({detail.commentCount})</Button>
                 </div>
             </div>
         </header>
         <div className="toplist-detail-songs">
             <div className="toplist-songshd">
                 <h2>歌曲列表</h2>
-                <span>100首歌</span>
+                <span>{detail.trackCount}首歌</span>
                 <div className="toplist-playcount">播放：<span>{detail.playCount}</span>次</div>
             </div>
             <table className="toplist-songstable">
@@ -60,14 +75,14 @@ export default function ToplistDetail (props) {
                         <tr key={item.id} className={idx<3 ? "toplist-top3" : ""}>
                             <td className="toplist-rank"><div>{idx+1}</div></td>
                             <td>
-                                {idx<3 && <img src={item.al.picUrl+"?param=50y50"}/>}
-                                <button><PlayCircleFilled /></button>
+                                {idx<3 && <img src={item.al.picUrl+"?param=50y50"} alt=""/>}
+                                <button onClick={songPlayHandler(item)}><PlayCircleFilled /></button>
                                 <a href="javascript:;">{item.name}</a>
                                 
                                 {item.alia.length>0 && 
                                 <span className="toplist-alia">
                                     {item.alia.map((alia,idx) => (
-                                        <Fragment>{idx === 0 && " - "}{alia}{idx !== item.alia.length-1 && " / "}</Fragment>
+                                        <Fragment key={idx}>{idx === 0 && " - "}{alia}{idx !== item.alia.length-1 && " / "}</Fragment>
                                     ))}
                                 </span>
                                 }
@@ -76,7 +91,7 @@ export default function ToplistDetail (props) {
                             <td>
                                 <span className="toplist-duration">{formatMMSS(item.dt)}</span>
                                 <div className="toplist-songbtns">
-                                    <button className="toplist-songadd sprite_icon2"></button>
+                                    <button className="toplist-songadd sprite_icon2" onClick={addPlayHandler(item)}></button>
                                     <button className="toplist-songcollect sprite_table"></button>
                                     <button className="toplist-songforward sprite_table"></button>
                                     <button className="toplist-songdownload sprite_table"></button>
@@ -91,5 +106,9 @@ export default function ToplistDetail (props) {
                 </tbody>
             </table>
         </div>
+        {detail.trackCount > detail.tracks.length && <div className="toplist-download-guide">
+            <div>查看更多内容，请下载客户端</div>
+            <NavLink to="/download">立即下载</NavLink>
+        </div>}
     </div>
 }

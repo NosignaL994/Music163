@@ -1,9 +1,19 @@
 .toplist-detail {
     padding: 40px;
+    border-right: solid 1px #ccc;
+    .ant-btn {
+        padding: 0 8px;
+        margin-right: 5px;
+        font-size: 12px;
+        .anticon + span {
+            margin-left: 5px;
+        }
+    }
     .toplist-detail-hd {
         display: flex;
         margin-bottom: 40px;
         img {
+            
             padding: 3px;
             border: solid 1px #ccc;
             margin-right: 30px;
@@ -25,14 +35,7 @@
                 }
             }
             .toplist-btns {
-                .ant-btn {
-                    padding: 0 8px;
-                    margin-right: 5px;
-                    font-size: 12px;
-                    .anticon + span {
-                        margin-left: 5px;
-                    }
-                }
+                
                 .toplist-play {
                     border-right: 1px solid #ddd;
                     margin-right:0;
@@ -41,6 +44,29 @@
                     border-left: 1px solid #ddd;
                     position: relative;
                     left: -1px;
+                }
+                .ant-btn-primary-reset{
+                    &:focus {
+                        color: white;
+                        background: #1890ff;
+                        border-color: #1890ff;
+                    }
+                    &:hover {
+                        color: white;
+                        border-color: #40a9ff;
+                        background: #40a9ff;
+                    }
+                }
+                .ant-btn-normal-reset {
+                    &:focus {
+                        color: black;
+                        // background: #1890ff;
+                        border-color: #d9d9d9;
+                    }
+                    &:hover {
+                        color: #40a9ff;
+                        border-color: #40a9ff;
+                    }
                 }
             }
         }
@@ -137,6 +163,7 @@
                         }
                     }
                     img {
+                        width: 50px;
                         margin-right: 15px;
                         border-radius: 3px;
                     }
@@ -196,6 +223,24 @@
                     
                 }
             }
+        }
+    }
+    .toplist-download-guide {
+        margin-top: 30px;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        div {
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            color: white;
+            background-image: linear-gradient(90deg,#ff5a4c 0%,#ff1d12 100%);
+            border-radius: 15px;
         }
     }
 }

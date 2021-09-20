@@ -1,10 +1,7 @@
 import "./style.less"
 
-import { useSelector,useDispatch } from "react-redux"
-import { getToplistDetailAction } from "@/redux/actions/discover/toplist"
-import { NavLink } from "react-router-dom"
+import { useSelector } from "react-redux"
 export default function ToplistNav (props) {
-    const dispatch = useDispatch()
     const toplistList = useSelector(state => state.toplist.get("toplistList"))
     const {setId,setIndex,id} = props
 
@@ -22,7 +19,7 @@ export default function ToplistNav (props) {
             <ul>
                 {toplistList.slice(0,4).map((item,idx) => (
                     <li key={item.id}>
-                        <button className={id===item.id && "toplist-active"} onClick={navClickHandler(item.id,idx)}>
+                        <button className={id===item.id ? "toplist-active" : ""} onClick={navClickHandler(item.id,idx)}>
                             <img src={item.coverImgUrl+"?param=40y40"} alt="" />
                             <div className="toplist-title">
                                 <h3>{item.name}</h3>
@@ -40,7 +37,7 @@ export default function ToplistNav (props) {
             <ul>
                 {toplistList.slice(4).map((item,idx) => (
                     <li key={item.id}>
-                        <button className={id===item.id && "toplist-active"} onClick={navClickHandler(item.id,idx)}>
+                        <button className={id===item.id ? "toplist-active" : ""} onClick={navClickHandler(item.id,idx)}>
                             <img src={item.coverImgUrl+"?param=40y40"} alt="" />
                             <div className="toplist-title">
                                 <h3>{item.name}</h3>

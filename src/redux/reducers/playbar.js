@@ -4,7 +4,8 @@ import {
     SET_PLAYLIST,
     SET_PLAY_IDX,
     ADD_PLAY,
-    SET_PLAY_URL} from "@/common/actionType"
+    SET_PLAY_URL,
+    ADD_PLAYLIST} from "@/common/actionType"
 const defaultState = Map({
     playIdx: -1,
     playlist: [],
@@ -30,6 +31,8 @@ export default function reducer (state = defaultState, action) {
                 playIdx: 0,
                 playlist: data
             })
+        case ADD_PLAYLIST:
+            return state.set("playlist", [...state.get("playlist"),...data])
         case SET_PLAY_IDX:
             return state.set("playIdx", data)
         case ADD_PLAY:

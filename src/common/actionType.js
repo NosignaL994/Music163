@@ -29,6 +29,7 @@ export const SET_PLAYLIST = "SET_PLAYLIST"
 export const SET_PLAY_IDX = "SET_PLAY_IDX"
 export const ADD_PLAY = "ADD_PLAY"
 export const SET_PLAY_URL= "SET_PLAY_URL"
+export const ADD_PLAYLIST = "ADD_PLAYLIST"
 
 // login
 export const SWITCH_LOGIN_VISIBLE = "SWITCH_LOGIN_VISIBLE"
