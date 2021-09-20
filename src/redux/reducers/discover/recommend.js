@@ -16,7 +16,7 @@ const defaultState = Map({
 })
 
 export default function reducer (state = defaultState, action) {
-    // console.log(state);
+
     const {type, data} = action
     switch (type) {
         case GET_BANNER_OVER:
@@ -25,18 +25,10 @@ export default function reducer (state = defaultState, action) {
             return state.set("songList", data)
         case SET_RCMD_NEW:
             return state.set("news", data)
-        // case GET_RISING_TOPLIST_OVER:
-        //     return state.set("risingToplist", data)
-        // case GET_NEW_TOPLIST_OVER:
-        //     return state.set("newToplist", data)
-        // case GET_ORIGINAL_TOPLIST_OVER:
-        //     return state.set("originalToplist", data)
         case GET_RECOMMEND_SINGER_OVER: 
             return state.set("singers", data)
         case GET_RECOMMEND_ANCHOR_OVER:
             return state.set("recommendAnchors", data)
-        // case SWITCH_LOGIN_VISIBLE:
-        //     return state.set("loginVisible", data)
         default:
             return state
     }

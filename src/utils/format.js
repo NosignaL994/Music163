@@ -32,7 +32,17 @@ export function formatDay (day) {
             break;
     }
 }
-
+export function formatDate (timestamp) {
+    const date = new Date(timestamp)
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    const day = date.getDate()
+    return {
+        year,
+        month: (month < 9) ? "0"+(1+month):(month+1), 
+        day: (day < 10) ? '0' + day : day
+    }
+}
 export function formatCount (count) {
     // console.log()
     switch (true) {

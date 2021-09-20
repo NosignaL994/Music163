@@ -1,0 +1,52 @@
+.toplist-nav {
+    width: 240px;
+    flex: 0 0 auto;
+    padding-top: 20px;
+    background-color: #f9f9f9;
+    border-left: solid 1px #d3d3d3;
+    border-right: solid 1px #d3d3d3;
+    .toplist-group {
+        h2 {
+            margin: 0;
+            font-size: 14px;
+            color: black;
+            font-weight: bold;
+            margin: 20px 20px 12px;
+        }
+        li button {
+            display: flex;
+            padding: 10px 20px;
+            height: 60px;
+            width: 100%;
+            background-color: transparent;
+            &:hover {
+                background-color: #f4f2f2;
+            }
+            &.toplist-active {
+                background-color: #e6e6e6;
+            }
+            img {
+                height: 100%;
+                vertical-align: top;
+                margin-right: 10px;
+            }
+            .toplist-title {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                font-size: 12px;
+                text-align: left;
+                h3 {
+                    
+                    font-size: 12px;
+                    font-weight: normal;
+                }
+                div {
+                    bottom: 0;
+                    color: #999;
+                }
+            }
+        }
+    }
+}
