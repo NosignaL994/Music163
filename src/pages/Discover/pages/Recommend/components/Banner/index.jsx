@@ -1,11 +1,10 @@
+import { Carousel } from "antd";
+import "./style.less"
 
 
 import { Component } from "react";
-import { Carousel } from "antd";
 import { connect } from "react-redux";
 
-import "@/assets/styles/reset.css"
-import "./style.less"
 
 // import { changeBannerAction } from "@/redux/actions/recommend"
 

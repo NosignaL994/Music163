@@ -8,27 +8,26 @@ import {
     ADD_PLAYLIST } from "@/common/actionType"
 import {getSongUrl,getSongsDetail,getPlaylistDetail} from "@/utils/request"
 import {formatSongUrl} from "@/utils/format"
-import {isAccessible} from "@/utils/common"
+import {isAccessibleAction} from "@/redux/actions/common"
 
-import {switchVipGuideVisibleAction} from "./vipguide"
 
 export function setPlaySongAction (track) {
-    return (isAccessible(track)) ? {
-            type: SET_PLAY_SONG,
-            data: track
-        } : switchVipGuideVisibleAction()
+    return isAccessibleAction(track,{
+        type: SET_PLAY_SONG,
+        data: track
+    })
 }
 export function setPlaylistAction (tracks) {
-    return (isAccessible(tracks[0])) ? {
+    return isAccessibleAction(tracks[0],{
         type: SET_PLAYLIST,
         data: tracks
-    } : switchVipGuideVisibleAction()
+    })
 }
 export function addPlaylistAciton (tracks) {
-    return (isAccessible(tracks[0])) ? {
+    return isAccessibleAction(tracks[0],{
         type: ADD_PLAYLIST,
         data: tracks
-    } : switchVipGuideVisibleAction()
+    })
 }
 export const setPlayIdxAction = idx => ({
     type: SET_PLAY_IDX,
@@ -36,10 +35,10 @@ export const setPlayIdxAction = idx => ({
 })
 
 export function addPlayAction (track) {
-    return (isAccessible(track)) ? {
+    return isAccessibleAction(track, {
         type: ADD_PLAY,
         data: track
-    } : switchVipGuideVisibleAction()
+    })
 }
 export function setPlayUrlAction (arg) {
     return isNaN(arg) ? {
@@ -58,8 +57,7 @@ export function setPlayUrlAction (arg) {
 
 export function getPlaylistAction (id) {
     return dispatch => getPlaylistDetail(id)
-        .then(songlist => isAccessible(songlist.tracks[0]) ?
-            getSongsDetail(songlist.trackIds) : Promise.reject("收费歌曲，无法播放"))
-        .then(songs => dispatch(setPlaylistAction(songs)), () => dispatch(switchVipGuideVisibleAction()))
+        .then(songlist => getSongsDetail(songlist.trackIds))
+        .then(songs => dispatch(setPlaylistAction(songs)))
         .catch(error => console.log(error))
 } 

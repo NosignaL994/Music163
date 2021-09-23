@@ -1,6 +1,4 @@
-
-
-import '@/assets/styles/reset.css'
+// import "@/assets/styles/antGlobal.less"
 import '@/assets/styles/base.css'
 
 import React from 'react';
@@ -16,7 +14,10 @@ import Discover from './pages/Discover';
 import Friend from './pages/Friend';
 import Mine from './pages/Mine';
 import Musician from './pages/Musician';
+import BuyGuide from './components/BuyGuide';
 
+import '@/assets/styles/reset.less'
+import '@/assets/styles/antdCmpReset.less'
 // import {}
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Header/>
       <Login/>
       <VipGuide/>
+      <BuyGuide/>
       <Switch>
         <Route path="/discover" component={Discover}/>
         <Route path="/musician" component={Musician}/>

@@ -7,7 +7,8 @@ import thunk from 'redux-thunk'
 import headerReducer from "./reducers/header";
 import playbarReducer from "./reducers/playbar"
 import loginReducer from "./reducers/login"
-import vipReducer from "./reducers/vipguide"
+import vipguideReducer from "./reducers/vipguide"
+import buyguideReducer from "./reducers/buyguide"
 import recommendReducer from "./reducers/discover/recommend"
 import toplistReducer from "./reducers/discover/toplist"
 import singerReducer from "./reducers/discover/singer"
@@ -19,20 +20,11 @@ const reducer = combineReducers({
     recommend: recommendReducer,
     playbar: playbarReducer,
     login: loginReducer,
-    vip: vipReducer,
+    vipguide: vipguideReducer,
+    buyguide: buyguideReducer,
     toplist: toplistReducer,
     singer: singerReducer,
     radio: radioReducer,
     songlist: songlistReducer
 })
-// const persistConfig = {
-//     key: "root",
-//     transforms: [immutableTransform()],
-//     storage,
-//     blackList: ["root"]
-//     // whiteList: []
-// }
-// const persistedReducer = persistReducer(persistConfig, reducer)
 export const store = createStore(reducer, applyMiddleware(thunk))
-// export const persistor = persistStore(store)
-// export default store

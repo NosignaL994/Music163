@@ -9,7 +9,7 @@ import {
     setPlayUrlAction
 } from "@/redux/actions/playbar"
 import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
-import {isAccessible} from "@/utils/common"
+import {isAccessibleAction} from "@/redux/actions/common"
 import {formatSongUrl} from "@/utils/format"
 export default function PlayBar () {
     // state
@@ -57,8 +57,7 @@ export default function PlayBar () {
     function endedHandler () {
         setPlaying(false)
         const idx = index === playlist.length-1 ? 0 : index+1
-        dispatch(isAccessible(playlist[idx]) ? setPlayIdxAction(idx) : switchVipGuideVisibleAction())
-    
+        dispatch(isAccessibleAction(playlist[idx],setPlayIdxAction(idx)))
     }
     function sliderChangeHandler (value) {
         const duration = playlist[index].dt
@@ -78,12 +77,12 @@ export default function PlayBar () {
     }
     function switchPrevHandler () {
         if (index > 0) {
-            dispatch(isAccessible(playlist[index-1]) ? setPlayIdxAction(index-1):switchVipGuideVisibleAction())
+            dispatch(isAccessibleAction(playlist[index-1],setPlayIdxAction(index-1)))
         } else if (index === 0) replay()
     }
     function switchNextHandler () {
         if (index < playlist.length-1) {
-            dispatch(isAccessible(playlist[index+1]) ? setPlayIdxAction(index+1):switchVipGuideVisibleAction())
+            dispatch(isAccessibleAction(playlist[index+1],setPlayIdxAction(index+1)))
         } else if (index === playlist.length-1) replay()
     }
     function playlistPlayHandler(idx) {

@@ -5,12 +5,7 @@ import { useSelector,useDispatch } from "react-redux"
 import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
 export default function VipGuide () {
     const dispatch = useDispatch()
-    const {visible} = useSelector(state => {
-        const vipguideState = state.vip
-        return {
-            visible: vipguideState.get("visible")
-        }
-    })
+    const visible = useSelector(state => state.vipguide.get("visible"))
     function cancelHandler () {
         dispatch(switchVipGuideVisibleAction())
     }

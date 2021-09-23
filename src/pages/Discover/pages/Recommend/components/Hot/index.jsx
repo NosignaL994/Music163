@@ -40,7 +40,7 @@ export default function RcmdHot () {
                                 <div className="hot-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount||item.playCount)}</div>
                             </div>
                         </div>
-                        <p>{item.name}</p>
+                        <a href="javascript:;"><p className="twoline">{item.name}</p></a>
                     </li>
                 ))
             }

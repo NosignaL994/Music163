@@ -1,19 +1,8 @@
-body,
-textarea,
-select,
-input,
-button {
-  font-size: 12px;
-  color: #333;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #eaedf2;
-}
-/* body {
-  
-} */
+
 #root {
   background-color: #eaedf2;
 }
+
 .w1100 {
     width: 1100px;
     margin: 0 auto;
@@ -34,13 +23,23 @@ button {
   white-space: nowrap;
 }
 
+.twoline {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .icon {
   background: url(../images/icon.png) no-repeat;
 }
-
+.icon2 {
+  background: url(../images/icon2.png) no-repeat;
+}
 
 .sprite_01 {
-    background: url(../images/sprite_01.png) no-repeat;
+  background: url(../images/sprite_01.png) no-repeat;
 }
 
 .sprite_02 {

@@ -11,7 +11,6 @@ import {
     switchLoginVisibleAction,
     getUserProfileAction,
     logoutAction} from "@/redux/actions/login"
-import { clearCookie } from '@/utils/storage'
 
 export default function Header () {
     const dispatch = useDispatch()
@@ -51,7 +50,7 @@ export default function Header () {
         dispatch(switchLoginVisibleAction())
     }
     function logoutHandler () {
-        console.log(123);
+        // console.log(123);
         dispatch(logoutAction())
     }
 

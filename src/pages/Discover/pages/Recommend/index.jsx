@@ -1,10 +1,5 @@
-
-
-// import React, { Component } from "react";
 import {Skeleton} from "antd"
 import {useSelector} from "react-redux"
-
-// import "@/assets/styles/reset.css"
 import "./style.less"
 
 import Banner from "./components/Banner"
@@ -35,7 +30,7 @@ export default function DscvRcmd () {
             recommend.get("banners")!==null &&
             recommend.get("songList")!==null &&
             recommend.get("news")!==null &&
-            Object.keys(toplist.get("toplists")).length &&
+            !toplist.get("toplists").isEmpty() &&
             Object.keys(singer.get("singers")).length &&
             // discover.get("recommendAnchors")!==null,
             //  && 

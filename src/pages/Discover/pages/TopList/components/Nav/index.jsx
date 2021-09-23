@@ -1,16 +1,18 @@
 import "./style.less"
 
-import { useSelector } from "react-redux"
-export default function ToplistNav (props) {
-    const toplistList = useSelector(state => state.toplist.get("toplistList"))
-    const {setId,setIndex,id} = props
+import { useSelector,useDispatch } from "react-redux"
 
-    function navClickHandler (id,idx) {
-        return () => {
-            setId(id)
-            setIndex(idx)
-        }
+import { setToplistIndexAction } from "@/redux/actions/discover/toplist"
+export default function ToplistNav () {
+    const dispatch = useDispatch()
+    const {toplistList,index} = useSelector(state => ({
+        toplistList: state.toplist.get("toplistList"),
+        index: state.toplist.get("index")
+    }))
+    function navClickHandler (idx) {
+        return () => dispatch(setToplistIndexAction(idx))
     }
+    const {id} = toplistList[index]
     return <div className="toplist-nav">
         <section className="toplist-group-cloudmusic toplist-group">
             <header>
@@ -19,7 +21,7 @@ export default function ToplistNav (props) {
             <ul>
                 {toplistList.slice(0,4).map((item,idx) => (
                     <li key={item.id}>
-                        <button className={id===item.id ? "toplist-active" : ""} onClick={navClickHandler(item.id,idx)}>
+                        <button className={id===item.id ? "toplist-active" : ""} onClick={navClickHandler(idx)}>
                             <img src={item.coverImgUrl+"?param=40y40"} alt="" />
                             <div className="toplist-title">
                                 <h3>{item.name}</h3>
@@ -37,7 +39,7 @@ export default function ToplistNav (props) {
             <ul>
                 {toplistList.slice(4).map((item,idx) => (
                     <li key={item.id}>
-                        <button className={id===item.id ? "toplist-active" : ""} onClick={navClickHandler(item.id,idx)}>
+                        <button className={id===item.id ? "toplist-active" : ""} onClick={navClickHandler(idx+4)}>
                             <img src={item.coverImgUrl+"?param=40y40"} alt="" />
                             <div className="toplist-title">
                                 <h3>{item.name}</h3>

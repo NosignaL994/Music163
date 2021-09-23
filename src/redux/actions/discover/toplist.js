@@ -1,5 +1,8 @@
 import {getRequest,getPlaylistDetail} from "@/utils/request"
-import {SET_TOPLIST_LIST,ADD_TOPLIST} from "@/common/actionType"
+import {
+    SET_TOPLIST_LIST,
+    ADD_TOPLIST,
+    SET_TOPLIST_INDEX} from "@/common/actionType"
 // import 
 export function getToplistListAction () {
     return dispatch => getRequest('/toplist')
@@ -19,4 +22,11 @@ export function getToplistDetailAction (id) {
             type: ADD_TOPLIST,
             data: playlist
         })).catch(error => console.log(error))
+}
+
+export function setToplistIndexAction (index) {
+    return {
+        type: SET_TOPLIST_INDEX,
+        data: index
+    }
 }

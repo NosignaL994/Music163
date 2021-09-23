@@ -11,12 +11,11 @@ import { getToplistListAction,getToplistDetailAction } from "@/redux/actions/dis
 
 export default function Toplist () {
     const dispatch = useDispatch()
-    const {toplistList,toplists} = useSelector(state => ({
+    const {toplistList,toplists,index} = useSelector(state => ({
         toplistList: state.toplist.get("toplistList"),
-        toplists: state.toplist.get("toplists")
+        toplists: state.toplist.get("toplists"),
+        index: state.toplist.get("index")
     }))
-    const [id, setId] = useState(0)
-    const [index,setIndex] = useState(0)
     useEffect(() => {
         if (!toplistList) {
             dispatch(getToplistListAction())
@@ -24,21 +23,12 @@ export default function Toplist () {
             for (const toplist of toplistList) {
                 dispatch(getToplistDetailAction(toplist.id))
             }
-            setId(toplistList[0].id)
         }
     }, [toplistList,dispatch])
-    // useEffect(() => {
-    //     id !== 0 && dispatch(getToplistDetailAction(id))
-    // }, [id,dispatch])
-    return <Skeleton loading={!toplistList || !toplists[id]}>
+    return <Skeleton loading={!toplistList || !toplists.get(toplistList[index].id)}>
         <div className="discover-toplist w980">
-            <ToplistNav setId={setId} setIndex={setIndex} id={id}/>
-            {/* <Switch>
-                {Object.values(toplists).map(item => (
-                    <Route key={item.id} path={`/discover/toplist/id=${item.id}`} render={ToplistDetail}/>
-                ))}
-            </Switch> */}
-            <ToplistDetail id={id} index={index}/>
+            <ToplistNav />
+            <ToplistDetail/>
         </div>
     </Skeleton>
 }

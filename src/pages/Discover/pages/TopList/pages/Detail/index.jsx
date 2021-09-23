@@ -17,12 +17,12 @@ import { formatDate,formatMMSS } from "@/utils/format";
 import {setPlaySongAction,addPlayAction,setPlaylistAction} from "@/redux/actions/playbar"
 import { NavLink } from "react-router-dom";
 
-export default function ToplistDetail (props) {
+export default function ToplistDetail () {
     const dispatch = useDispatch()
-    const {id,index} = props
-    const {toplists, toplistList} = useSelector(state => ({
+    const {toplists, toplistList,index} = useSelector(state => ({
         toplists: state.toplist.get("toplists"),
-        toplistList: state.toplist.get("toplistList")
+        toplistList: state.toplist.get("toplistList"),
+        index: state.toplist.get("index")
     }))
     function toplistPlayHandler (toplist) {
         return () => dispatch(setPlaylistAction(toplist))
@@ -34,8 +34,8 @@ export default function ToplistDetail (props) {
         return () => dispatch(addPlayAction(track))
     }
     
-    const detail = toplists[id]
     const toplist = toplistList[index]
+    const detail = toplists.get(toplist.id)
     const {month, day} = formatDate(toplist.updateTime)
     // console.log(detail)
 
@@ -46,8 +46,8 @@ export default function ToplistDetail (props) {
                 <h2 className="toplist-name">{detail.name}</h2>
                 <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日&nbsp;&nbsp;&nbsp;<span>({toplist.updateFrequency})</span></div>
                 <div className="toplist-btns">
-                    <Button type="primary" className="toplist-play ant-btn-primary-reset" onClick={toplistPlayHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
-                    <Button type="primary" className="toplist-add ant-btn-primary-reset"><PlusOutlined /></Button>
+                    <Button type="primary" className="toplist-play" onClick={toplistPlayHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
+                    <Button type="primary" className="toplist-add"><PlusOutlined /></Button>
                     <Button className="ant-btn-normal-reset"><FolderAddOutlined />({detail.subscribedCount})</Button>
                     <Button className="ant-btn-normal-reset"><ShareAltOutlined />({detail.shareCount})</Button>
                     <Button className="ant-btn-normal-reset"><DownloadOutlined />下载</Button>

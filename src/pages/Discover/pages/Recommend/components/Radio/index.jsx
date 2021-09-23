@@ -1,9 +1,6 @@
 import { useSelector } from "react-redux"
 import "./style.less"
 
-// import { Component } from "react";
-// import {connect} from "react-redux"
-
 export default function RcmdRadio () {
     const {radios} = useSelector(state => ({
         radios: state.radio.get("hotRadio")

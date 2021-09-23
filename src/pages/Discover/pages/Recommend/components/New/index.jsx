@@ -1,13 +1,11 @@
+import {Carousel} from "antd"
 import "./style.less"
 
 import { Fragment } from "react";
-import {Carousel} from "antd"
 import { useSelector,useDispatch } from "react-redux";
 
 import {getRequest} from "@/utils/request"
-import {isAccessible} from "@/utils/common"
 import {setPlaylistAction} from "@/redux/actions/playbar"
-import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
 
 export default function RcmdNew () {
     const dispatch = useDispatch()
@@ -22,7 +20,7 @@ export default function RcmdNew () {
             id
         }).then(response => {
             const tracks = response.data.songs
-            dispatch(isAccessible(tracks[0]) ? setPlaylistAction(tracks) : switchVipGuideVisibleAction())
+            dispatch(setPlaylistAction(tracks))
         }).catch(error => console.log(error))
     }
     return <section className="discover-rcmd-new">

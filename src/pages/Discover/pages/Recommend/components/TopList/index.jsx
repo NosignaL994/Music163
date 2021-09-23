@@ -1,33 +1,31 @@
+
+import { notification } from "antd";
 import "./style.less"
 
 import { useDispatch,useSelector } from "react-redux";
-import { message,notification } from "antd";
-
+import { Link } from "react-router-dom";
 import {
     setPlaySongAction,
     addPlayAction} from "@/redux/actions/playbar"
-import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
-import {isAccessible} from "@/utils/common"
-import {
-    newToplistId,
-    riseToplistId,
-    originalToplistId} from "@/common/constant"
-
-export default function RcmdTopList () {
+import { setToplistIndexAction } from "@/redux/actions/discover/toplist";
+    
+    export default function RcmdTopList () {
     const dispatch = useDispatch()
-    const {toplists} = useSelector(state => ({
-        toplists: state.toplist.get('toplists')
+    const {toplistList,toplists} = useSelector(state => ({
+        toplists: state.toplist.get("toplists"),
+        toplistList: state.toplist.get('toplistList')
     }))
     function playHandler (track) {
-        return () => 
-            dispatch(isAccessible(track) ? setPlaySongAction(track) : switchVipGuideVisibleAction())
+        return () => dispatch(setPlaySongAction(track))
     }
     function addPlayHandler (track) {
         return () => {
             dispatch(addPlayAction(track))
             openNotification()
         }
-            
+    }
+    function toToplistHandler (index) {
+        return () => dispatch(setToplistIndexAction(index))
     }
     function openNotification () {
         notification.open({
@@ -38,7 +36,7 @@ export default function RcmdTopList () {
             // icon: null,
         });
     }
-    const rcmdToplists = [toplists[riseToplistId],toplists[newToplistId],toplists[originalToplistId]]
+    // const rcmdToplists = [toplists[riseToplistId],toplists[newToplistId],toplists[originalToplistId]]
     // console.log(rcmdToplists)
     return <section className="rcmd-toplist">
         <header className="rcmd-toplist-hd rcmd-main-hd">
@@ -50,10 +48,10 @@ export default function RcmdTopList () {
         <div className="rcmd-toplist-content rcmd_toplist_bg">
             <ul>
                 {
-                    rcmdToplists.map(toplist => (
+                    toplistList.slice(0,3).map((toplist,index) => (
                         toplist && <li key={toplist.id}><dl>
                             <dt className="toplist-title">
-                            <img src={toplist.coverImgUrl} alt="" />
+                            <Link to="/discover/toplist" onClick={toToplistHandler(index)}><img src={toplist.coverImgUrl} alt="" /></Link>
                             <h3>
                                 <a href="javascript:;">{toplist.name}</a>
                                 <button className="toplist-play sprite_02"></button>
@@ -62,7 +60,7 @@ export default function RcmdTopList () {
                             </dt>
                             <dd>
                                 <ol>
-                                    {toplist.tracks.slice(0,10).map((track,idx) => (
+                                    {toplists.get(toplist.id) && toplists.get(toplist.id).tracks.slice(0,10).map((track,idx) => (
                                 <li key={track.id}>
                                     <span className={idx < 3 ? "toplist-rank toplist-topthree" : "toplist-rank"} >{idx+1}</span>
                                     <a className="toplist-song" href="javascript:;" >{track.name}</a>
@@ -73,7 +71,7 @@ export default function RcmdTopList () {
                                     </div>
                                 </li>
                                 ))}
-                                <li><a href="javascript:;" className="toplist-all">查看全部&nbsp;&gt;</a></li>
+                                <li><Link to="/discover/toplist" onClick={toToplistHandler(index)} className="toplist-all">查看全部&nbsp;&gt;</Link></li>
                             </ol></dd>
                         </dl></li>
 

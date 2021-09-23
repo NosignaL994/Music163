@@ -1,4 +1,5 @@
 import "./style.less"
+
 import { Component } from "react";
 
 import policeImg from "@/assets/images/police.png"
