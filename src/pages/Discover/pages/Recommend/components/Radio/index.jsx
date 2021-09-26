@@ -2,8 +2,8 @@ import { useSelector } from "react-redux"
 import "./style.less"
 
 export default function RcmdRadio () {
-    const {radios} = useSelector(state => ({
-        radios: state.radio.get("hotRadio")
+    const {hotRadios} = useSelector(state => ({
+        hotRadios: state.radio.get("hotList")
     }))
     return <section className="discover-rcmd-anchor">
         <header className="rcmd-aside-hd">
@@ -12,7 +12,7 @@ export default function RcmdRadio () {
         <div className="rcmd-radio-content">
             <ul>
                 {
-                    radios&&radios.slice(0,5).map(item => (
+                    hotRadios&&hotRadios.slice(0,5).map(item => (
                         <li key={item.id}><a href="javascript:;">
                             <img src={item.picUrl+"?param=40y40"} alt="" className="radio-avatar"/>
                             <div className="radio-info">

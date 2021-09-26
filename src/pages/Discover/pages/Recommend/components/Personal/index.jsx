@@ -4,27 +4,32 @@ import { useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
 
 import { formatDay,formatCount } from "@/utils/format"
-import { getPlaylistAction } from "@/redux/actions/playbar"
+import {getAndPlaySonglistAction} from "@/redux/actions/songlist"
+import { setPlaylistAction } from "@/redux/actions/playbar"
 
 export default function RcmdPersonal () {
     // state
-    const [date, setDate] = useState((new Date()).getDate())
-    const [day, setDay] = useState(formatDay(new Date().getDay()))
+    const [date] = useState((new Date()).getDate())
+    const [day] = useState(formatDay(new Date().getDay()))
 
     // useEffect(() => console.log(111))
 
     // redux
     const dispatch = useDispatch()
-    const {songList} = useSelector(state => {
-        const recommend = state.recommend
-        return {
-            songList: recommend.get("songList")
+    const {loginRcmdList,songlists} = useSelector(state => ({
+        loginRcmdList: state.songlist.get("loginRcmdList"),
+        songlists: state.songlist.get("songlists")
+    }))
+    function playHandler(songlist) {
+        return () => {
+            if (songlists.has(songlist.id)) {
+                dispatch(setPlaylistAction(songlists.get(songlist.id).tracks))
+            } else {
+                dispatch(getAndPlaySonglistAction(songlist.id))
+            }
         }
-    })
-    function playHandler(id) {
-        return () => dispatch(getPlaylistAction(id))
     }
-    return songList && <section className="rcmd-personal">
+    return loginRcmdList && <section className="rcmd-personal">
         <header className="rcmd-personal-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
                 <a href="javascript:;">个性化推荐</a>
@@ -41,12 +46,12 @@ export default function RcmdPersonal () {
                 <p>根据你的口味生成，<br/>每天6:00更新</p>
             </li>
             {
-                songList.slice(0,3).map(item => (
+                loginRcmdList.slice(0,3).map(item => (
                     <li key={item.id}>
                         <div href="javascript:;" className="personal-cover">
                             <div className="personal-cover-mask">
                                 <img src={item.picUrl+"?param=140y140"} alt="" />
-                                <button className="personal-play sprite_icon" onClick={playHandler(item.id)}></button>
+                                <button className="personal-play sprite_icon" onClick={playHandler(item)}></button>
                                 <div className="personal-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount)}</div>
                             </div>
                         </div>

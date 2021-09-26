@@ -1,21 +1,22 @@
 import "./style.less"
 import { useSelector,useDispatch } from "react-redux"
 
-import {getPlaylistAction} from "@/redux/actions/playbar"
+import {setPlaylistAction} from "@/redux/actions/playbar"
 import { formatCount } from "@/utils/format"
 
 // import { useDispatch } from "react-redux"
 
 export default function SongListSonglists (props) {
     const dispatch = useDispatch()
-    const songlists = useSelector(state => state.songlist.get("hqSongList"))
+    const topAllList = useSelector(state => state.songlist.get("topAllList"))
+
     function playHandler(id) {
-        return () => dispatch(getPlaylistAction(id))
+        return () => dispatch(setPlaylistAction(id))
     }
     const {page, pageSize} = props
     // console.log(props.page, props.pageSize)
     return <ul className="songlist-group">
-    {songlists.slice((page-1)*pageSize,page*pageSize).map((item,idx) => (
+    {topAllList.slice((page-1)*pageSize,page*pageSize).map((item,idx) => (
         <li key={item.id+idx}>
             <div className="songlist-cover">
                 <div className="songlist-cover-mask">

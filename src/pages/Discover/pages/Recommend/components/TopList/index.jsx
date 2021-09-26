@@ -6,26 +6,36 @@ import { useDispatch,useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
     setPlaySongAction,
-    addPlayAction} from "@/redux/actions/playbar"
-import { setToplistIndexAction } from "@/redux/actions/discover/toplist";
+    addPlaySongAction
+} from "@/redux/actions/playbar"
+import { setToplistCurIdAction } from "@/redux/actions/toplist";
+import { useEffect } from "react";
+import { getSonglistAction } from "@/redux/actions/songlist";
     
     export default function RcmdTopList () {
     const dispatch = useDispatch()
-    const {toplistList,toplists} = useSelector(state => ({
+    const {songlists,toplists} = useSelector(state => ({
         toplists: state.toplist.get("toplists"),
-        toplistList: state.toplist.get('toplistList')
+        songlists: state.songlist.get('songlists')
     }))
+    useEffect(() => {
+        for (const toplist of toplists) {
+            if (!songlists.has(toplist.id)) {
+                dispatch(getSonglistAction(toplist.id))
+            }
+        }
+    }, [toplists, dispatch])
     function playHandler (track) {
         return () => dispatch(setPlaySongAction(track))
     }
     function addPlayHandler (track) {
         return () => {
-            dispatch(addPlayAction(track))
+            dispatch(addPlaySongAction(track))
             openNotification()
         }
     }
-    function toToplistHandler (index) {
-        return () => dispatch(setToplistIndexAction(index))
+    function toToplistHandler (id) {
+        return () => dispatch(setToplistCurIdAction(id))
     }
     function openNotification () {
         notification.open({
@@ -33,9 +43,10 @@ import { setToplistIndexAction } from "@/redux/actions/discover/toplist";
             message: "已添加到播放列表",
             className:'addplay-notice',
             duration: 2
-            // icon: null,
         });
     }
+    // console.log(toplists[0].id);
+    // console.log(songlists.get(toplists[0].id));
     // const rcmdToplists = [toplists[riseToplistId],toplists[newToplistId],toplists[originalToplistId]]
     // console.log(rcmdToplists)
     return <section className="rcmd-toplist">
@@ -48,10 +59,10 @@ import { setToplistIndexAction } from "@/redux/actions/discover/toplist";
         <div className="rcmd-toplist-content rcmd_toplist_bg">
             <ul>
                 {
-                    toplistList.slice(0,3).map((toplist,index) => (
-                        toplist && <li key={toplist.id}><dl>
+                    toplists.slice(0,3).map(toplist => (
+                        <li key={toplist.id}><dl>
                             <dt className="toplist-title">
-                            <Link to="/discover/toplist" onClick={toToplistHandler(index)}><img src={toplist.coverImgUrl} alt="" /></Link>
+                            <Link to="/discover/toplist" onClick={toToplistHandler(toplist.id)}><img src={toplist.coverImgUrl} alt="" /></Link>
                             <h3>
                                 <a href="javascript:;">{toplist.name}</a>
                                 <button className="toplist-play sprite_02"></button>
@@ -60,7 +71,7 @@ import { setToplistIndexAction } from "@/redux/actions/discover/toplist";
                             </dt>
                             <dd>
                                 <ol>
-                                    {toplists.get(toplist.id) && toplists.get(toplist.id).tracks.slice(0,10).map((track,idx) => (
+                                    {songlists.get(toplist.id) && songlists.get(toplist.id).tracks.slice(0,10).map((track,idx) => (
                                 <li key={track.id}>
                                     <span className={idx < 3 ? "toplist-rank toplist-topthree" : "toplist-rank"} >{idx+1}</span>
                                     <a className="toplist-song" href="javascript:;" >{track.name}</a>
@@ -71,7 +82,7 @@ import { setToplistIndexAction } from "@/redux/actions/discover/toplist";
                                     </div>
                                 </li>
                                 ))}
-                                <li><Link to="/discover/toplist" onClick={toToplistHandler(index)} className="toplist-all">查看全部&nbsp;&gt;</Link></li>
+                                <li><Link to="/discover/toplist" onClick={toToplistHandler(toplist.id)} className="toplist-all">查看全部&nbsp;&gt;</Link></li>
                             </ol></dd>
                         </dl></li>
 

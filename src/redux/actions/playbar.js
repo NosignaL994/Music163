@@ -3,12 +3,16 @@ import {
     SET_PLAY_SONG, 
     SET_PLAYLIST,
     SET_PLAY_IDX,
-    ADD_PLAY,
+    ADD_PLAY_SONG,
     SET_PLAY_URL,
     ADD_PLAYLIST } from "@/common/actionType"
-import {getSongUrl,getSongsDetail,getPlaylistDetail} from "@/utils/request"
-import {formatSongUrl} from "@/utils/format"
-import {isAccessibleAction} from "@/redux/actions/common"
+
+import {
+    SONG_URL_URI
+} from "@/common/constant"
+import {getRequest} from "@/utils/request"
+import {isAccessibleAction} from "./common"
+import { completeSonglistTracksAction } from "./songlist"
 
 
 export function setPlaySongAction (track) {
@@ -34,30 +38,28 @@ export const setPlayIdxAction = idx => ({
     data: idx
 })
 
-export function addPlayAction (track) {
+export function addPlaySongAction (track) {
     return isAccessibleAction(track, {
-        type: ADD_PLAY,
+        type: ADD_PLAY_SONG,
         data: track
     })
 }
-export function setPlayUrlAction (arg) {
-    return isNaN(arg) ? {
-            type: SET_PLAY_URL,
-            data: arg
-        } : dispatch => getSongUrl(arg)
-        .then(url => url || Promise.reject())
-        .then(url => dispatch({
-            type: SET_PLAY_URL,
-            data: url
-        }), () => dispatch({
-            type:SET_PLAY_URL,
-            data: formatSongUrl(arg)
-        })).catch(error => console.log(error))
+
+export function setPlayUrlAction (url) {
+    return {
+        type: SET_PLAY_URL,
+        data: url
+    }
+}
+export function getAndSetPlayUrlAction (id) {
+    return dispatch => getRequest(SONG_URL_URI, {id})
+    .then(response => dispatch(setPlayUrlAction(response.data.data[0].url)))
+    .catch(error => console.log(error))
 }
 
-export function getPlaylistAction (id) {
-    return dispatch => getPlaylistDetail(id)
-        .then(songlist => getSongsDetail(songlist.trackIds))
-        .then(songs => dispatch(setPlaylistAction(songs)))
-        .catch(error => console.log(error))
-} 
+// export function getPlaylistAction (id) {
+//     return dispatch => getPlaylistDetail(id)
+//         .then(songlist => getSongsDetail(songlist.trackIds))
+//         .then(songs => dispatch(setPlaylistAction(songs)))
+//         .catch(error => console.log(error))
+// } 

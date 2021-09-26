@@ -9,14 +9,15 @@ import RcmdNew from "./components/New";
 import RcmdToplist from "./components/TopList";
 import RcmdSinger from "./components/Singer";
 import RcmdRadio from "./components/Radio";
-import {
-    getBannerAction,
-    getRcmdSongListAction,
-    getRcmdToplistAction,
-    getRcmdNewAction,
-    getRcmdSingerAction,
-    getPersonalSongListAction} from "@/redux/actions/discover/recommend"
-import {getHotRadioAction} from "@/redux/actions/discover/radio"
+import {getBannerAction} from "@/redux/actions/recommend"
+import { 
+    getTopSonglistAction,
+    getLoginRcmdSonglistAction,
+    getRcmdSongListAction } from "@/redux/actions/songlist";
+import { getNewAlbumAction } from "@/redux/actions/album";
+import { getTopSingerAction } from "@/redux/actions/singer";
+import { getToplistsAction } from "@/redux/actions/toplist";
+import {getHotRadioAction} from "@/redux/actions/radio"
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -24,18 +25,23 @@ import { useDispatch } from "react-redux";
 export default function DscvRcmd () {
     // redux hook
     const {loaded, logined} = useSelector(state => {
-        const {recommend,login,toplist,singer,radio} = state
+        // console.log(state);
+        // const {recommend,login,toplist,singer,radio} = state
+        // console.log(state?.recommend.get("banners"))
+        // console.log(state?.songlist.get("rcmdList").size)
+        // console.log(state?.album.get("newList").size )
+        // console.log(state?.toplist.get("toplists"))
+        // console.log(state?.singer.get("topList").size)
+        // console.log(state?.radio.get("hotList").size)
         return {
             loaded: 
-            recommend.get("banners")!==null &&
-            recommend.get("songList")!==null &&
-            recommend.get("news")!==null &&
-            !toplist.get("toplists").isEmpty() &&
-            Object.keys(singer.get("singers")).length &&
-            // discover.get("recommendAnchors")!==null,
-            //  && 
-            radio.get("hotRadio")!==null,
-            logined: login.get("logined")
+            state?.recommend.get("banners") &&
+            state?.songlist.get("rcmdList").size  &&
+            state?.album.get("newList").size  &&
+            state?.toplist.get("toplists") &&
+            state?.singer.get("topList").size &&
+            state?.radio.get("hotList").size ,
+            logined: state.login.get("logined")
         }
     })
     const dispatch = useDispatch()
@@ -44,16 +50,16 @@ export default function DscvRcmd () {
     useEffect(() => {
         dispatch(getBannerAction())
         dispatch(getRcmdSongListAction())
-        dispatch(getRcmdToplistAction())
-        dispatch(getRcmdNewAction())
-        dispatch(getRcmdSingerAction())
+        dispatch(getTopSingerAction())
+        dispatch(getTopSonglistAction())
+        dispatch(getNewAlbumAction())
+        dispatch(getToplistsAction())
         dispatch(getHotRadioAction())
     },[dispatch])
     useEffect(() => {
-        logined && dispatch(getPersonalSongListAction())
-        !logined && dispatch(getRcmdSongListAction())
-    }, [logined,dispatch])
-    // console.log(loaded)
+        logined && dispatch(getLoginRcmdSonglistAction())
+    },[logined,dispatch])
+
     // render
     return <Skeleton loading={!loaded} active>
         <Banner/>

@@ -8,26 +8,26 @@ import SongListHeader from "./components/Header"
 import SongListSonglists from "./components/Songlists"
 import SongListPagination from "./components/Pagenation"
 import {
-    getSonglistAction,
-    getSonglistCategoryAction} from "@/redux/actions/discover/songlist"
+    getTopSonglistAction,
+    getSonglistCategoryAction} from "@/redux/actions/songlist"
 export default function SongList () {
     const dispatch = useDispatch()
     const [page,setPage] = useState(1)
-    const [pageSize, setPageSize] = useState(35)
-    const songlists = useSelector(state => state.songlist.get("hqSongList"))
+    const [pageSize] = useState(35)
+    const topAllList = useSelector(state => state.songlist.get("topAllList"))
     useEffect(() => {
         dispatch(getSonglistCategoryAction())
     },[dispatch])
     useEffect(() => {
-        const offset = songlists.length
-        const limit = page*pageSize - songlists.length
+        const offset = topAllList.length
+        const limit = page*pageSize - topAllList.length
         if (limit > 100 ) {
-            dispatch(getSonglistAction(100,offset))
+            dispatch(getTopSonglistAction(100,offset))
         } else if (limit >= pageSize) {
-            dispatch(getSonglistAction(limit, offset))
+            dispatch(getTopSonglistAction(limit, offset))
         }
-    },[page,songlists,dispatch])
-    return <Skeleton loading={!songlists[(page-1)*pageSize]} active>
+    },[page,topAllList,dispatch])
+    return <Skeleton loading={!topAllList[(page-1)*pageSize]} active>
         <div className="discover-songlist w980">
             <SongListHeader/>
             <div className="songlist-content">

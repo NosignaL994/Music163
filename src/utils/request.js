@@ -36,24 +36,24 @@ export async function postRequest (url, params = {}) {
     })
 }
 
-export async function getPlaylistDetail (id) {
-    return getRequest("/playlist/detail", {id}).then(response => response.data.playlist)
-}
-export async function getToplistList () {
-    return getRequest("/toplist").then(response => response.data.list)
-}
+// export async function getPlaylistDetail (id) {
+//     return getRequest("/playlist/detail", {id}).then(response => response.data.playlist)
+// }
+// export async function getToplistList () {
+    // return getRequest("/toplist").then(response => response.data.list)
+// }
 export async function getSongsDetail (ids) {
     return getRequest("/song/detail", {ids: ids.reduce((acc, trackId, idx) => 
         idx === ids.length-1 ? acc + trackId.id : acc + trackId.id + ','
     , '')}).then(response => response.data.songs)
 }
-export async function getSongUrl (id) {
-    return getRequest("/song/url", {id})
-    .then(response => response.data.data[0].url)
-}
+// export async function getSongUrl (id) {
+//     return getRequest(, {id})
+//     .then(response => response.data.data[0].url)
+// }
 
-export async function getSingerDetail (id) {
-    // console.log(id);
-    return getRequest("/artist/detail",{id})
-    .then(response => response.data.data)
-}
+// export async function getSingerDetail (id) {
+//     // console.log(id);
+//     return getRequest(,{id})
+//     .then(response => response.data.data)
+// }

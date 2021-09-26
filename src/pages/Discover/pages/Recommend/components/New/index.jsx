@@ -9,12 +9,9 @@ import {setPlaylistAction} from "@/redux/actions/playbar"
 
 export default function RcmdNew () {
     const dispatch = useDispatch()
-    const {news} = useSelector(state => {
-        const recommend = state.recommend
-        return {
-            news: recommend.get("news")
-        }
-    })
+    const {newAlbums} = useSelector(state => ({
+        newAlbums: state.album.get("newList")
+    }))
     function playHandler(id) {
         return () => getRequest("album", {
             id
@@ -33,7 +30,7 @@ export default function RcmdNew () {
         <Carousel className="rcmd-new-content" arrows dots={false}>
             <ul className="new-list1">
                 {
-                    news.slice(0,5).map(item => (
+                    newAlbums.slice(0,5).map(item => (
                         <li key={item.id}>
                             <a href="javascript:;" className="new-cover sprite_cover">
                                 <img src={item.picUrl+"?param=100y100"} alt="" />
@@ -57,7 +54,7 @@ export default function RcmdNew () {
             </ul>
             <ul className="new-list2">
                 {
-                    news.slice(5,10).map(item => (
+                    newAlbums.slice(5,10).map(item => (
                         <li key={item.id}>
                             <a href="javascript:;" className="new-cover sprite_cover">
                                 <img src={item.picUrl+"?param=100y100"} alt="" />

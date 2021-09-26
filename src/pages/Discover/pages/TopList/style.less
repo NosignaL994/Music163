@@ -1,7 +1,28 @@
 .discover-toplist {
     display: flex;
     background-color: white;
-    h1,h2,h3,ul,li {
-        margin: 0;
+    .toplist-hdstyle {
+        height: 35px;
+        line-height: 35px;
+        border-bottom: solid 2px #c20c0c;
+        h2 {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: normal;
+            margin-right: 20px;
+        }
+        .hd-total {
+            font-size: 12px;
+            color: #666;
+        }
+        .hd-playcount {
+            float: right;
+            font-size: 12px;
+            color: #666;
+            span {
+                color: #c20c0c;
+                font-weight: bold;
+            }
+        }
     }
 }

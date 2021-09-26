@@ -14,15 +14,18 @@ import { useSelector,useDispatch } from "react-redux"
 import { Fragment } from "react";
 
 import { formatDate,formatMMSS } from "@/utils/format";
-import {setPlaySongAction,addPlayAction,setPlaylistAction} from "@/redux/actions/playbar"
-import { NavLink } from "react-router-dom";
+import {
+    setPlaySongAction,
+    addPlaySongAction,
+    setPlaylistAction} from "@/redux/actions/playbar"
+import DownloadGuide from "../DownloadGuide";
+import ToplistComment from "../Comment";
 
 export default function ToplistDetail () {
     const dispatch = useDispatch()
-    const {toplists, toplistList,index} = useSelector(state => ({
+    const {toplists,id} = useSelector(state => ({
         toplists: state.toplist.get("toplists"),
-        toplistList: state.toplist.get("toplistList"),
-        index: state.toplist.get("index")
+        id: state.toplist.get("id")
     }))
     function toplistPlayHandler (toplist) {
         return () => dispatch(setPlaylistAction(toplist))
@@ -31,12 +34,12 @@ export default function ToplistDetail () {
         return () => dispatch(setPlaySongAction(track))
     }
     function addPlayHandler (track) {
-        return () => dispatch(addPlayAction(track))
+        return () => dispatch(addPlaySongAction(track))
     }
     
-    const toplist = toplistList[index]
-    const detail = toplists.get(toplist.id)
-    const {month, day} = formatDate(toplist.updateTime)
+    // const toplist = toplistList[index]
+    const detail = toplists.get(id)
+    const {month, day} = formatDate(detail.updateTime)
     // console.log(detail)
 
     return <div className="toplist-detail">
@@ -44,7 +47,7 @@ export default function ToplistDetail () {
             <img src={detail.coverImgUrl+"?param=150y150"} alt="" />
             <div className="toplist-info">
                 <h2 className="toplist-name">{detail.name}</h2>
-                <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日&nbsp;&nbsp;&nbsp;<span>({toplist.updateFrequency})</span></div>
+                <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日&nbsp;&nbsp;&nbsp;<span>({detail.updateFrequency})</span></div>
                 <div className="toplist-btns">
                     <Button type="primary" className="toplist-play" onClick={toplistPlayHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
                     <Button type="primary" className="toplist-add"><PlusOutlined /></Button>
@@ -56,10 +59,10 @@ export default function ToplistDetail () {
             </div>
         </header>
         <div className="toplist-detail-songs">
-            <div className="toplist-songshd">
+            <div className="toplist-hdstyle">
                 <h2>歌曲列表</h2>
-                <span>{detail.trackCount}首歌</span>
-                <div className="toplist-playcount">播放：<span>{detail.playCount}</span>次</div>
+                <span className="hd-total">{detail.trackCount}首歌</span>
+                <div className="hd-playcount">播放：<span>{detail.playCount}</span>次</div>
             </div>
             <table className="toplist-songstable">
                 <thead>
@@ -106,9 +109,7 @@ export default function ToplistDetail () {
                 </tbody>
             </table>
         </div>
-        {detail.trackCount > detail.tracks.length && <div className="toplist-download-guide">
-            <div>查看更多内容，请下载客户端</div>
-            <NavLink to="/download">立即下载</NavLink>
-        </div>}
+        <DownloadGuide/>
+        <ToplistComment/>
     </div>
 }

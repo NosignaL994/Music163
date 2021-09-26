@@ -3,9 +3,9 @@ import "./style.less"
 import {useSelector} from "react-redux"
 
 export default function RcmdSinger () {
-    const {singers,singerToplist} = useSelector(state => ({
+    const {singers,topList} = useSelector(state => ({
         singers: state.singer.get("singers"),
-        singerToplist: state.singer.get('singerToplist')
+        topList: state.singer.get('topList')
     }))
     
     return <section className="rcmd-aside-singer">
@@ -16,13 +16,13 @@ export default function RcmdSinger () {
         <div className="rcmd-singer-content">
         <ul>
             {
-                singerToplist && singerToplist.slice(0,5).map(item => (
+                topList && topList.slice(0,5).map(item => (
                     <li key={item.id}><a href="#">
                         <img src={item.picUrl+"?param=62y62"} alt="" className="singer-avatar"/>
                         <div className="singer-msg">
                             <div className="singer-name">{item.name}</div>
                             <div className="singer-description">
-                                {singers[item.id] && singers[item.id].identify.imageDesc}
+                                {singers.get(item.id) && singers.get(item.id).identify.imageDesc}
                             </div>
                             
                         </div>
