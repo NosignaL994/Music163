@@ -19,34 +19,11 @@ import { getTopSingerAction } from "@/redux/actions/singer";
 import { getToplistsAction } from "@/redux/actions/toplist";
 import {getHotRadioAction} from "@/redux/actions/radio"
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 
-export default function DscvRcmd () {
-    // redux hook
-    const {loaded, logined} = useSelector(state => {
-        // console.log(state);
-        // const {recommend,login,toplist,singer,radio} = state
-        // console.log(state?.recommend.get("banners"))
-        // console.log(state?.songlist.get("rcmdList").size)
-        // console.log(state?.album.get("newList").size )
-        // console.log(state?.toplist.get("toplists"))
-        // console.log(state?.singer.get("topList").size)
-        // console.log(state?.radio.get("hotList").size)
-        return {
-            loaded: 
-            state?.recommend.get("banners") &&
-            state?.songlist.get("rcmdList").size  &&
-            state?.album.get("newList").size  &&
-            state?.toplist.get("toplists") &&
-            state?.singer.get("topList").size &&
-            state?.radio.get("hotList").size ,
-            logined: state.login.get("logined")
-        }
-    })
+function useRcmdData (logined) {
     const dispatch = useDispatch()
-
-    // react hook
     useEffect(() => {
         dispatch(getBannerAction())
         dispatch(getRcmdSongListAction())
@@ -59,7 +36,24 @@ export default function DscvRcmd () {
     useEffect(() => {
         logined && dispatch(getLoginRcmdSonglistAction())
     },[logined,dispatch])
+}
 
+export default function DscvRcmd () {
+    // redux hook
+    const {banners,songlist,album,toplist,singer,radio,logined} = useSelector(state => {
+        return {
+            banners: state.recommend.get("banners"),
+            songlist: state.songlist.get("rcmdList").size,
+            album: state.album.get("newList").size,
+            toplist: state.toplist.get("toplists"),
+            singer: state.singer.get("topList").size,
+            radio: state.radio.get("hotList").size,
+            logined: state.login.get("logined")
+        }
+    })
+    const loaded = banners&&songlist&&album&&toplist&&singer&&radio
+    useRcmdData(logined)
+    console.log(123);
     // render
     return <Skeleton loading={!loaded} active>
         <Banner/>

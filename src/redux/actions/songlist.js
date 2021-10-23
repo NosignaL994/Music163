@@ -1,9 +1,8 @@
 import {getRequest,getWithCookie} from "@/utils/request"
 
 import {
-    SET_TOP_ALL_SONGLIST,
-    SET_SONGLIST_COUNT,
-    SET_SONGLIST_CATEGORY,
+    SET_TOP_SONGLIST,
+    SET_TOP_CATEGORY,
     ADD_SONGLIST,
     SET_RCMD_SONGLIST,
     COMPLETE_SONGLIST_TRACKS,
@@ -14,21 +13,24 @@ import {
     RCMD_SONGLIST_URI,
     TOP_SONGLIST_URI,
     SONG_TRACK_URI,
-    LOGIN_RCMD_SONGLIST_URI
+    LOGIN_RCMD_SONGLIST_URI,
+    SONGLIST_CAT_URI
 } from "@/common/constant"
 import {setPlaylistAction} from "@/redux/actions/playbar"
-export function getTopSonglistAction (limit=35,offset) {
+export function getTopSonglistAction (limit=35,offset,cat,order) {
     return dispatch => getRequest(TOP_SONGLIST_URI,{
         limit,
-        offset
+        offset,
+        cat,
+        order
     }).then(response => {
+        // console.log(limit,offset,cat,order);
         dispatch({
-            type: SET_SONGLIST_COUNT,
-            data: response.data.total
-        })
-        dispatch({
-            type: SET_TOP_ALL_SONGLIST,
-            data: response.data.playlists
+            type: SET_TOP_SONGLIST,
+            data: {
+                response: response.data,
+                order
+            }
         })
     }).catch(error => console.log(error))
 }
@@ -53,34 +55,28 @@ export function getLoginRcmdSonglistAction () {
 }
 
 export function getSonglistCategoryAction () {
-    return dispatch => getRequest("/playlist/catlist")
+    // console.log(123);
+    return dispatch => getRequest(SONGLIST_CAT_URI)
     .then(response => dispatch({
-        type: SET_SONGLIST_CATEGORY,
+        type: SET_TOP_CATEGORY,
         data: response.data
     })).catch(error => console.log(error))
 }
 
 export function getAndPlaySonglistAction (id) {
     return dispatch => getSonglistAction(id)(dispatch)
-        .then(tracks => {
-            dispatch(setPlaylistAction(tracks))
-        })
+        .then(tracks => dispatch(setPlaylistAction(tracks)))
         .catch(error => console.log(error))
 }
 export function getSonglistAction (id) {
     return dispatch => getRequest(SONGLIST_URI,{id})
         .then(response => {
+            const songlist = response.data.playlist
             dispatch({
                 type: ADD_SONGLIST,
-                data: response.data.playlist
+                data: songlist
             })
-            return response.data.playlist
-        }).then(async songlist => {
-            let tracks = songlist.tracks
-            if (songlist.tracks.length < songlist.trackIds.length) {
-                tracks = await completeSonglistTracksAction(songlist)(dispatch)
-            }
-            return tracks
+            return songlist.tracks
         }).catch(error => console.log(error))
 }
 
@@ -101,6 +97,5 @@ export function completeSonglistTracksAction (songlist) {
                     id
                 }
             })
-            return [...songlist.tracks,...songs]
         }).catch(error => console.log(error)) 
 }

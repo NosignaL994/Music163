@@ -23,9 +23,9 @@ import ToplistComment from "../Comment";
 
 export default function ToplistDetail () {
     const dispatch = useDispatch()
-    const {toplists,id} = useSelector(state => ({
-        toplists: state.toplist.get("toplists"),
-        id: state.toplist.get("id")
+    const {curId,songlists} = useSelector(state => ({
+        songlists: state.songlist.get("songlists"),
+        curId: state.toplist.get("curId")
     }))
     function toplistPlayHandler (toplist) {
         return () => dispatch(setPlaylistAction(toplist))
@@ -37,17 +37,15 @@ export default function ToplistDetail () {
         return () => dispatch(addPlaySongAction(track))
     }
     
-    // const toplist = toplistList[index]
-    const detail = toplists.get(id)
+    const detail = songlists.get(curId)
     const {month, day} = formatDate(detail.updateTime)
-    // console.log(detail)
 
     return <div className="toplist-detail">
         <header className="toplist-detail-hd">
             <img src={detail.coverImgUrl+"?param=150y150"} alt="" />
             <div className="toplist-info">
                 <h2 className="toplist-name">{detail.name}</h2>
-                <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日&nbsp;&nbsp;&nbsp;<span>({detail.updateFrequency})</span></div>
+                <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日</div>
                 <div className="toplist-btns">
                     <Button type="primary" className="toplist-play" onClick={toplistPlayHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
                     <Button type="primary" className="toplist-add"><PlusOutlined /></Button>

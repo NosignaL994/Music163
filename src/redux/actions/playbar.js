@@ -12,7 +12,6 @@ import {
 } from "@/common/constant"
 import {getRequest} from "@/utils/request"
 import {isAccessibleAction} from "./common"
-import { completeSonglistTracksAction } from "./songlist"
 
 
 export function setPlaySongAction (track) {
@@ -56,10 +55,3 @@ export function getAndSetPlayUrlAction (id) {
     .then(response => dispatch(setPlayUrlAction(response.data.data[0].url)))
     .catch(error => console.log(error))
 }
-
-// export function getPlaylistAction (id) {
-//     return dispatch => getPlaylistDetail(id)
-//         .then(songlist => getSongsDetail(songlist.trackIds))
-//         .then(songs => dispatch(setPlaylistAction(songs)))
-//         .catch(error => console.log(error))
-// } 

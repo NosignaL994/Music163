@@ -11,32 +11,20 @@ import {
     getToplistsAction,
     setToplistCurIdAction
 } from "@/redux/actions/toplist"
-import {
-    getSonglistAction
-} from "@/redux/actions/songlist"
-import {getHotCommentAction} from "@/redux/actions/comment"
-import { COMMENT_TYPE_SONGLIST } from "@/common/constant"
 export default function Toplist () {
     const dispatch = useDispatch()
-    const {toplistList,toplists,id} = useSelector(state => ({
-        toplistList: state.toplist.get("toplistList"),
+    const {songlists,toplists,curId} = useSelector(state => ({
+        songlists: state.songlist.get("songlists"),
         toplists: state.toplist.get("toplists"),
-        id: state.toplist.get("id")
+        curId: state.toplist.get("curId")
     }))
     useEffect(() => {
-        if (!toplistList) {
-            dispatch(getToplistsAction())
-        } else {
-            dispatch(setToplistCurIdAction(toplistList[0].id))
-            for (const toplist of toplistList) {
-                dispatch(getSonglistAction(toplist.id))
-            }
-        }
-    }, [toplistList,dispatch])
+        dispatch(getToplistsAction())
+    }, [dispatch])
     useEffect(() => {
-        toplistList && dispatch(getHotCommentAction(id,COMMENT_TYPE_SONGLIST,1))
-    },[dispatch])
-    return <Skeleton loading={!toplistList || !toplists.get(id)}>
+        if (toplists && curId === 0) dispatch(setToplistCurIdAction(toplists[0].id))
+    }, [toplists,dispatch])
+    return <Skeleton loading={!toplists || !songlists.get(curId)}>
         <div className="discover-toplist w980">
             <ToplistNav />
             <ToplistDetail/>

@@ -3,4 +3,90 @@
     .comment-hd {
         margin-bottom: 20px;
     }
+    .toplist-editor {
+        &::after {
+            display: block;
+            content: "";
+            clear: right;
+        }
+        .toplist-commentv {
+            margin-top: 10px;
+            float: right;
+            clear: right;
+        }
+        .ant-input-textarea {
+            
+            position: relative;
+            &::after {
+                position: absolute;
+                right: 58px;
+                bottom: -15px;
+                transform: translate(0, 100%);
+            }
+        }
+    }
+    .toplist-comment-group {
+        &.hot-comment {
+            margin-bottom: 30px;
+        }
+        h3 {
+            font-size: 12px;
+        }
+        .ant-comment-inner {
+            padding: 15px 0;
+            border-top: dotted 1px #ccc;
+            .ant-comment-content {
+                position: relative;
+    
+                .ant-comment-content-author {
+                    position: absolute;
+                    bottom: 0;
+                }
+                .ant-comment-content-detail {
+                    margin-bottom: 32px;
+                    .comment-user {
+                        color: #0c73c2;
+                    }
+                }
+                .comment-like {
+                    float: right;
+                    margin-right: 10px;
+                    color: #333;
+                }
+                .comment-replied {
+                    position: relative;
+                    padding: 10px 20px;
+                    margin: 5px 0;
+                    background-color: #f4f4f4;
+                    color: #666;
+                    border: solid 1px #dedede;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -3px;
+                        display: block;
+                        height: 5px;
+                        width: 5px;
+                        transform: rotate(45deg);
+                        background-color: #f4f4f4;
+                        border-left: solid 1px #dedede;
+                        border-top: solid 1px #dedede;
+                    }
+                }
+                .comment-replay {
+                    float: right;
+                    color: #666;
+                }
+                .ant-comment-actions {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                   
+                }
+                
+            }
+        }
+    }
+    
+    
 }

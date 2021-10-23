@@ -5,35 +5,25 @@ import { useSelector,useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 
 import SongListHeader from "./components/Header"
-import SongListSonglists from "./components/Songlists"
+import SongListItems from "./components/Items"
 import SongListPagination from "./components/Pagenation"
-import {
-    getTopSonglistAction,
-    getSonglistCategoryAction} from "@/redux/actions/songlist"
+import {getSonglistCategoryAction} from "@/redux/actions/songlist"
 export default function SongList () {
     const dispatch = useDispatch()
+    const [cat,setCat] = useState("全部")
     const [page,setPage] = useState(1)
     const [pageSize] = useState(35)
-    const topAllList = useSelector(state => state.songlist.get("topAllList"))
+    const [order,setOrder] = useState("hot")
+    // const list = useSelector(state => state.songlist.getIn([cat,order]))
     useEffect(() => {
         dispatch(getSonglistCategoryAction())
     },[dispatch])
-    useEffect(() => {
-        const offset = topAllList.length
-        const limit = page*pageSize - topAllList.length
-        if (limit > 100 ) {
-            dispatch(getTopSonglistAction(100,offset))
-        } else if (limit >= pageSize) {
-            dispatch(getTopSonglistAction(limit, offset))
-        }
-    },[page,topAllList,dispatch])
-    return <Skeleton loading={!topAllList[(page-1)*pageSize]} active>
-        <div className="discover-songlist w980">
-            <SongListHeader/>
+    return <div className="discover-songlist w980">
+            <SongListHeader setCat={setCat} setPage={setPage} setOrder={setOrder} cat={cat} order={order} />
             <div className="songlist-content">
-                <SongListSonglists page={page} pageSize={pageSize}/>
-                <SongListPagination page={page} pageSize={pageSize} setPage={setPage}/>
+                <SongListItems page={page} pageSize={pageSize} cat={cat} order={order}/>
+                <SongListPagination page={page} pageSize={pageSize} setPage={setPage} cat={cat}/>
             </div>
         </div>
-    </Skeleton>
+    
 }

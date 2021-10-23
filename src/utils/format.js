@@ -10,7 +10,9 @@ export function formatMMSS (time) {
     second = second.length === 1 ? '0'+second : second
     return minute + ':' + second
 }
-
+export function formatNum2(num) {
+    return ((num < 10) ? '0' : "") + num
+}
 export function formatDay (day) {
     switch (day) {
         case 0:
@@ -39,8 +41,29 @@ export function formatDate (timestamp) {
     const day = date.getDate()
     return {
         year,
-        month: (month < 9) ? "0"+(1+month):(month+1), 
-        day: (day < 10) ? '0' + day : day
+        month: formatNum2(month+1), 
+        day: formatNum2(day)
+    }
+}
+export function formatDate2 (timestamp) {
+    const now = new Date()
+    const date = new Date(timestamp)
+
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    const day = date.getDate()
+
+    const nowYear = now.getFullYear()
+    const nowMonth = now.getMonth()
+    const nowDay = now.getDate()
+    if (nowYear-year >= 1) {
+        return year + "年" + formatNum2(month+1) + "月" + formatNum2(day) + "日"
+    } else if (nowMonth!==month || nowDay-day>1) {
+        return formatNum2(month+1) + "月" + formatNum2(day)  + "日"
+    } else if (nowDay !== day) {
+        return "昨天" + formatNum2(date.getHours()) + ":" + formatNum2(date.getMinutes())
+    } else {
+        return formatNum2(date.getHours()) + ":" + formatNum2(date.getMinutes())
     }
 }
 export function formatCount (count) {

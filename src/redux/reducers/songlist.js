@@ -1,9 +1,9 @@
 import { Map,List } from "immutable";
 
 import {
-    SET_TOP_ALL_SONGLIST,
+    SET_TOP_SONGLIST,
     SET_SONGLIST_COUNT,
-    SET_SONGLIST_CATEGORY,
+    SET_TOP_CATEGORY,
     SET_RCMD_SONGLIST,
     ADD_SONGLIST,
     COMPLETE_SONGLIST_TRACKS,
@@ -13,8 +13,8 @@ import {
 const defaultState = Map({
     rcmdList: List([]),
     loginRcmdList: List([]),
-    topAllList: List([]),
-    hqSongListCount: 0,
+    top: null,
+    // hqSongListCount: 0,
     categories: null,
     songlists: Map({})
 })
@@ -26,26 +26,46 @@ export default function reducer (state=defaultState,action) {
             return state.mergeIn(["rcmdList"],data)
         case SET_LOGIN_RCMD_SONGLIST:
             return state.mergeIn(["loginRcmdList"],data)
-        case SET_TOP_ALL_SONGLIST:
-            return state.mergeIn(["topAllList"],data)
-        case SET_SONGLIST_COUNT:
-            return state.set("hqSongListCount",data)
-        case SET_SONGLIST_CATEGORY:
-            const categories = []
+        case SET_TOP_SONGLIST:
+            // 歌单种类不同，以各自的分类为键
+            const {response,order} = data
+            return state.mergeDeepIn([response.cat], {
+                total: response.total,
+                [order]: response.playlists
+            })
+        case SET_TOP_CATEGORY:
+            const cat = {}
+            const songlistObj = {}
             for (const key in data.categories) {
-                categories.push({
+                const name = data.categories[key]
+                cat[name] = {
                     id: key,
-                    cat: data.categories[key],
-                    group: data.sub.filter(item => item.category===parseInt(key))
-                })
+                    list: []
+                }
             }
-            return state.set("categories",categories)
+            for (const item of data.sub) {
+                const key = item.category
+                const name = data.categories[key]
+                cat[name].list.push(item.name)
+                songlistObj[item.name] = {
+                    total: 0,
+                    hot: [],
+                    new: []
+                }
+            }
+            songlistObj["全部"] = {
+                total: 0,
+                hot: [],
+                new: []
+            }
+            // console.log(songlistObj);
+            return state.merge({
+                categories: cat,
+                ...songlistObj
+            })
         case ADD_SONGLIST:
-            // console.log(data);
             return state.setIn(["songlists",data.id],data)
         case COMPLETE_SONGLIST_TRACKS:
-            // console.log(data.id);
-            // console.log(data);
             return state.mergeIn(["songlists",data.id,"tracks"],data.tracks)
         default:
             return state

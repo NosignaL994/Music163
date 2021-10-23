@@ -1,5 +1,5 @@
 // export const BASE_URL = "https://netease-cloud-music-api-lilac-kappa.vercel.app"
-export const BASE_URL = "http://localhost:4000"
+export const BASE_URL = "http://localhost:3000"
 export const SEARCH_SUGGEST_URL = "/search/suggest"
 
 export const DEFAULT_REQUEST_TIMEOUT = 5000
@@ -17,7 +17,8 @@ export const COMMENT_TYPE_SONGLIST = 2
 export const COMMENT_TYPE_ABLUM = 3
 export const COMMENT_TYPE_RADIO = 4
 export const COMMENT_TYPE_VEDIO = 5
-
+export const COMMENT = 1
+export const REPLY = 2
 // URI API
     // songlist
 export const SONGLIST_URI = "/playlist/detail"
@@ -25,6 +26,7 @@ export const RCMD_SONGLIST_URI = '/personalized'
 export const LOGIN_RCMD_SONGLIST_URI = "/recommend/resource"
 export const TOP_SONGLIST_URI = "/top/playlist"
 export const SONG_TRACK_URI = "/song/detail"
+export const SONGLIST_CAT_URI = "/playlist/catlist"
     // singer
 export const TOP_SINGER_URI = '/top/artists'
 export const SINGER_DETAIL_URI = "/artist/detail"
@@ -36,3 +38,9 @@ export const TOPLISTS_URI = "/toplist"
 
     // playbar
 export const SONG_URL_URI= "/song/url"
+    // comment
+export const COMMENT_NEW_URI = "/comment/new"
+export const COMMENT_URI = "/comment"
+export const COMMENT_LIKE_URI = "/comment/like"
+export const PLAYLIST_COMMENT_URI = "/comment/playlist"
+export const HOT_COMMENT_URI = "/comment/hot"

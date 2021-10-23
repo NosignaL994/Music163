@@ -33,7 +33,6 @@ export default function PlayBar () {
 
     useEffect(() => {
         if (!playlist.size || index === -1) return
-        // console.log(formatSongUrl(playlist.get(index).id));
         dispatch(setPlayUrlAction(formatSongUrl(playlist.get(index).id)))
     },[index, playlist, dispatch])
 

@@ -19,14 +19,10 @@ export default function reducer (state = defaultState, action) {
         case SET_PLAY_SONG:
             const oldPlaylist = state.get("playlist")
             const idx = oldPlaylist.findIndex(ele => ele.id === data.id)
-            if (idx !== -1 ) {
-                return state.set("playIdx", idx)
-            } else {
-                return state.mergeDeep({
-                    playIdx: oldPlaylist.length,
-                    playlist: data
-                })
-            }
+            return (idx !== -1 ) ? state.set("playIdx", idx) : state.mergeDeep({
+                playIdx: oldPlaylist.size,
+                playlist: [data]
+            })
         case SET_PLAYLIST:
             return state.merge({
                 playIdx: 0,
@@ -37,11 +33,8 @@ export default function reducer (state = defaultState, action) {
         case SET_PLAY_IDX:
             return state.set("playIdx", data)
         case ADD_PLAY_SONG:
-            return state.mergeDeep({
-                playlist: [data]
-            })
+            return state.mergeIn(["playlist"],[data])
         case SET_PLAY_URL:
-            // console.log(data);
             return state.set("playUrl", data)
         default:
             return state
