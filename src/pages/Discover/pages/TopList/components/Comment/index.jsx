@@ -9,10 +9,10 @@ import {
     setToplistCurPageAction
 } from "@/redux/actions/toplist"
 import {switchLoginVisibleAction} from "@/redux/actions/login"
-import {COMMENT_TYPE_SONGLIST,COMMENT_URI,COMMENT} from "@/common/constant"
+import {COMMENT_TYPE_SONGLIST,COMMENT_URI,COMMENT} from "@/constant"
 import { formatDate2 } from "@/utils/format"
 import debounce from "@/utils/debounce"
-import { postWithCookie } from "@/utils/request"
+import request from "@/utils/request"
 
 
 export default function ToplistComment () {
@@ -57,7 +57,7 @@ export default function ToplistComment () {
     // }
     function commentHandler () {
         if (!value ) return
-        postWithCookie(COMMENT_URI,{
+        request.post(COMMENT_URI,{
             t:COMMENT,
             type:COMMENT_TYPE_SONGLIST,
             id: curId,

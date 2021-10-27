@@ -1,4 +1,4 @@
-import {SET_BUY_GUIDE_SHOW} from "@/common/actionType"
+import {SET_BUY_GUIDE_SHOW} from "@/constant"
 
 export function setBuyGuideShowAction (show) {
     return {

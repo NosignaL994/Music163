@@ -1,6 +1,6 @@
 import { Map,List } from "immutable";
 
-import { SET_HOT_RADIOS } from "@/common/actionType";
+import { SET_HOT_RADIOS } from "@/constant";
 
 const defaultState = Map({
     hotList: List([]),

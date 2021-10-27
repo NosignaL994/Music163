@@ -2,7 +2,8 @@ import {Map} from "immutable"
 import {
     SET_TOPLISTS,
     SET_TOPLIST_CUR_ID,
-    SET_TOPLIST_CUR_PAGE} from "@/common/actionType"
+    SET_TOPLIST_CUR_PAGE
+} from "@/constant"
 // 歌曲榜单
 const defaultState = Map({
     toplists: null,

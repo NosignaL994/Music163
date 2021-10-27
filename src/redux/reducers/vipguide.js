@@ -1,6 +1,6 @@
 import {Map} from "immutable"
 
-import {SWITCH_VIPGUIDE_VISIBLE} from "@/common/actionType"
+import {SWITCH_VIPGUIDE_VISIBLE} from "@/constant"
 
 const defaultState = Map({
     visible: false

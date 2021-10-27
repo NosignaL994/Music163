@@ -1,16 +1,25 @@
-import {getRequest} from "@/utils/request"
+import request from "@/utils/request"
 import {
-    NEW_ALBUM_URI
-} from "@/common/constant"
-import {
-    SET_NEW_ALBUMS
-} from "@/common/actionType"
+    NEW_ALBUM_URI,
+    
+    SET_NEW_ALBUMS,
+    ADD_ALBUM
+} from "@/constant"
 
 export function getNewAlbumAction () {
-    return dispatch => getRequest(NEW_ALBUM_URI)
-        .then(response => dispatch({
+    return dispatch => request.get(NEW_ALBUM_URI)
+        .then(data => dispatch({
             type: SET_NEW_ALBUMS,
-            data: response.data.albums
+            data: data.albums
         }))
-        .catch(error => console.log(error))
-} 
+    }
+export function getAlbumAction (id) {
+    return dispatch => request.get("album", {id})
+    .then(data => {
+        const tracks = data.songs
+        dispatch({
+            data:tracks,
+            type:ADD_ALBUM
+        })
+    })
+}

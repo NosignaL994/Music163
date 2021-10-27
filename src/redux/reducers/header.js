@@ -1,7 +1,7 @@
 
 import {Map} from "immutable"
 
-import {GET_SEARCH_SUGGEST,SEARCH_IPT, SEARCH_FOCUS_CHANGE} from "@/common/actionType"
+import {GET_SEARCH_SUGGEST,SEARCH_IPT, SEARCH_FOCUS_CHANGE} from "@/constant"
 
 
 const defaultState = Map({

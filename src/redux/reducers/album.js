@@ -2,7 +2,7 @@ import {Map, List} from "immutable"
 import {
     ADD_ALBUM,
     SET_NEW_ALBUMS
-} from "@/common/actionType"
+} from "@/constant"
 
 const defaultState = Map({
     albums: Map({}),

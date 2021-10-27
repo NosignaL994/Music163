@@ -9,40 +9,15 @@ import RcmdNew from "./components/New";
 import RcmdToplist from "./components/TopList";
 import RcmdSinger from "./components/Singer";
 import RcmdRadio from "./components/Radio";
-import {getBannerAction} from "@/redux/actions/recommend"
-import { 
-    getTopSonglistAction,
-    getLoginRcmdSonglistAction,
-    getRcmdSongListAction } from "@/redux/actions/songlist";
-import { getNewAlbumAction } from "@/redux/actions/album";
-import { getTopSingerAction } from "@/redux/actions/singer";
-import { getToplistsAction } from "@/redux/actions/toplist";
-import {getHotRadioAction} from "@/redux/actions/radio"
+// import {getBannerAction} from "./recommend"
+import { useRcmdData } from "./hooks";
 
-import { useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
 
-function useRcmdData (logined) {
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getBannerAction())
-        dispatch(getRcmdSongListAction())
-        dispatch(getTopSingerAction())
-        dispatch(getTopSonglistAction())
-        dispatch(getNewAlbumAction())
-        dispatch(getToplistsAction())
-        dispatch(getHotRadioAction())
-    },[dispatch])
-    useEffect(() => {
-        logined && dispatch(getLoginRcmdSonglistAction())
-    },[logined,dispatch])
-}
 
 export default function DscvRcmd () {
     // redux hook
-    const {banners,songlist,album,toplist,singer,radio,logined} = useSelector(state => {
+    const {songlist,album,toplist,singer,radio,logined} = useSelector(state => {
         return {
-            banners: state.recommend.get("banners"),
             songlist: state.songlist.get("rcmdList").size,
             album: state.album.get("newList").size,
             toplist: state.toplist.get("toplists"),
@@ -51,9 +26,8 @@ export default function DscvRcmd () {
             logined: state.login.get("logined")
         }
     })
-    const loaded = banners&&songlist&&album&&toplist&&singer&&radio
+    const loaded = songlist&&album&&toplist&&singer&&radio
     useRcmdData(logined)
-    console.log(123);
     // render
     return <Skeleton loading={!loaded} active>
         <Banner/>

@@ -42,6 +42,7 @@ export const SET_HOT_RADIOS = "SET_HOT_RADIOS"
 // album
 export const SET_NEW_ALBUMS = "SET_NEW_ALBUMS"
 export const ADD_ALBUM = "ADD_ALBUM"
+
 // songlist
 export const ADD_SONGLIST = "ADD_SONGLIST"
 export const SET_TOP_SONGLIST = "SET_TOP_SONGLIST"

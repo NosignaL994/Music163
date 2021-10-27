@@ -1,5 +1,5 @@
 import "./style.less"
-import scanSuccessPng from "@/assets/images/scan_success.png"
+// import scanSuccessPng from "@/assets/images/scan_success.png"
 import { Modal } from "antd";
 import {useDispatch, useSelector} from "react-redux"
 import { useEffect, useState } from "react";
@@ -76,7 +76,7 @@ export default function Login () {
         footer={null}>
             {code === 802 ?
             <div className="login-qr-commit">
-                <img src={scanSuccessPng} alt="" />
+                <img src="./images/scan_success.png" alt="" />
                 <div>扫描成功</div>
                 <div>请在手机上确认登录</div>
             </div> : 

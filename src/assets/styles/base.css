@@ -72,10 +72,6 @@
   background: url(../images/sprite_table.png) no-repeat;
 }
 
-.sprite_banner {
-  background: url(../images/banner_sprite.png) no-repeat;
-}
-
 .my_music {
   background: url(../images/mymusic.png) no-repeat;
 }
@@ -84,9 +80,7 @@
   background: url(../images/notlogin.jpg) no-repeat;
 }
 
-.sprite_playbar {
-  background: url(../images/playbar_sprite.png) no-repeat;
-}
+
 
 .rcmd_toplist_bg {
   background: url(../images/recommend-top-bg.png) no-repeat;
@@ -116,6 +110,3 @@
   background: url(../images/qr_guide.png) no-repeat;
 }
 
-.sprite_date {
-  background: url(../images/date.png) no-repeat;
-}

@@ -1,14 +1,12 @@
 import { Map } from "immutable"
-// import storage from "redux-persist/lib/storage"
-// import { persistReducer } from "redux-persist"
-// import immutableTransform from "redux-persist-transform-immutable"
+
 import { 
     SWITCH_LOGIN_VISIBLE,
     SET_LOGIN_QRIMG,
     SET_LOGIN_QR_KEY,
     SET_LOGIN_CODE,
     SET_LOGINED,
-    SET_USER_PROFILE } from "@/common/actionType"
+    SET_USER_PROFILE } from "@/constant"
 import {getCookie} from "@/utils/storage"
 const cookie = getCookie()
 const defaultState = Map({

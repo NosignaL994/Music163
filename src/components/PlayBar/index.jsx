@@ -2,14 +2,13 @@ import "./style.less"
 import {Fragment, useState,useEffect,useRef } from "react";
 import { Slider,Popover } from "antd"
 import { useSelector,useDispatch } from "react-redux";
-
 import {formatMMSS} from "@/utils/format"
 import {
     setPlayIdxAction,
     setPlayUrlAction,
     getAndSetPlayUrlAction
 } from "@/redux/actions/playbar"
-import {isAccessibleAction} from "@/redux/actions/common"
+
 import {formatSongUrl} from "@/utils/format"
 export default function PlayBar () {
     // state
@@ -30,28 +29,23 @@ export default function PlayBar () {
             songlists: state.songlist.get("songlists")
         }
     })
+    const song = playlist?.get(index)
 
     useEffect(() => {
-        if (!playlist.size || index === -1) return
-        dispatch(setPlayUrlAction(formatSongUrl(playlist.get(index).id)))
-    },[index, playlist, dispatch])
+        if (!song) return
+        dispatch(setPlayUrlAction(formatSongUrl(song.id)))
+    },[song, dispatch])
 
     useEffect(() => {
         if (!url) return
-        // console.log(111);
         audio.current.play()
         .then(() => setPlaying(true), () => dispatch(getAndSetPlayUrlAction(playlist.get(index).id)))
         .catch(error => console.log(error))
         
     },[url,dispatch])
-
-    // useEffect(() => {
-    //     if (!playlist.length) return
-    //     index === -1 && dispatch(setPlayIdxAction(0))
-    // }, [playlist,dispatch])
     function timeUpdateHandler (event) {
         if (sliderChanging) return
-        const duration = playlist.get(index).dt
+        const duration = song.dt
         const currentTime = event.target.currentTime * 1000
         const progress = (currentTime * 100) / duration
         setCurrentTime(currentTime)
@@ -60,10 +54,10 @@ export default function PlayBar () {
     function endedHandler () {
         setPlaying(false)
         const idx = index === playlist.length-1 ? 0 : index+1
-        dispatch(isAccessibleAction(playlist.get(idx),setPlayIdxAction(idx)))
+        dispatch(setPlayIdxAction(idx))
     }
     function sliderChangeHandler (value) {
-        const duration = playlist.get(index).dt
+        const duration = song.dt
         const newCurrentTime = (value * duration) / 100
         setSliderChanging(true)
         setProgress(value)
@@ -80,12 +74,12 @@ export default function PlayBar () {
     }
     function switchPrevHandler () {
         if (index > 0) {
-            dispatch(isAccessibleAction(playlist.get(index-1),setPlayIdxAction(index-1)))
+            dispatch(setPlayIdxAction(index-1))
         } else if (index === 0) replay()
     }
     function switchNextHandler () {
         if (index < playlist.size-1) {
-            dispatch(isAccessibleAction(playlist.get(index+1),setPlayIdxAction(index+1)))
+            dispatch(setPlayIdxAction(index+1))
         } else if (index === playlist.size-1) replay()
     }
     function playlistPlayHandler(idx) {
@@ -96,10 +90,6 @@ export default function PlayBar () {
         setCurrentTime(0)
         audio.current.currentTime = 0
     }
-    const song = playlist.get(index)
-    // console.log(song);
-    // console.log(playlist, index);
-    // console.log(song[index]);
     return <Fragment>
         <div className="playbar sprite_playbar">
             <div className="playbar-player w980">

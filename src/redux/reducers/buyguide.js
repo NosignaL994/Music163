@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { SET_BUY_GUIDE_SHOW } from "@/common/actionType";
+import { SET_BUY_GUIDE_SHOW } from "@/constant";
 const defaultState = Map({
     show: false
 })

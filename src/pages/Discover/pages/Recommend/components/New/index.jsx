@@ -4,21 +4,19 @@ import "./style.less"
 import { Fragment } from "react";
 import { useSelector,useDispatch } from "react-redux";
 
-import {getRequest} from "@/utils/request"
 import {setPlaylistAction} from "@/redux/actions/playbar"
-
+import { getAlbumAction } from "@/redux/actions/album";
 export default function RcmdNew () {
     const dispatch = useDispatch()
-    const {newAlbums} = useSelector(state => ({
-        newAlbums: state.album.get("newList")
+    const {newAlbums,albums} = useSelector(state => ({
+        newAlbums: state.album.get("newList"),
+        albums: state.album.get("albums")
     }))
     function playHandler(id) {
-        return () => getRequest("album", {
-            id
-        }).then(response => {
-            const tracks = response.data.songs
-            dispatch(setPlaylistAction(tracks))
-        }).catch(error => console.log(error))
+        return async () => {
+            await dispatch(getAlbumAction(id))
+            dispatch(setPlaylistAction(albums.get(id).tracks))
+        }
     }
     return <section className="discover-rcmd-new">
         <header className="rcmd-new-hd rcmd-main-hd">

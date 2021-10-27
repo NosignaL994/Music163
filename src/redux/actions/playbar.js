@@ -5,44 +5,64 @@ import {
     SET_PLAY_IDX,
     ADD_PLAY_SONG,
     SET_PLAY_URL,
-    ADD_PLAYLIST } from "@/common/actionType"
-
-import {
+    ADD_PLAYLIST,
     SONG_URL_URI
-} from "@/common/constant"
-import {getRequest} from "@/utils/request"
-import {isAccessibleAction} from "./common"
+} from "@/constant"
+
+import request from "@/utils/request"
+import { setBuyGuideShowAction } from "@/redux/actions/buyguide"
+import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
 
 
+export function isAccessibleAction(track,action) {
+    if (!track) return false
+    switch (track.fee) {
+        case 1:
+            return switchVipGuideVisibleAction()
+        case 4:
+            return setBuyGuideShowAction()
+        default:
+            return action
+    }
+}
 export function setPlaySongAction (track) {
-    return isAccessibleAction(track,{
+    const action = {
         type: SET_PLAY_SONG,
         data: track
-    })
+    }
+    return isAccessibleAction(track,action)
 }
 export function setPlaylistAction (tracks) {
-    return isAccessibleAction(tracks[0],{
+    const action =  {
         type: SET_PLAYLIST,
         data: tracks
-    })
+    }
+    return isAccessibleAction(tracks[0],action)
 }
 export function addPlaylistAciton (tracks) {
-    return isAccessibleAction(tracks[0],{
+    const action = {
         type: ADD_PLAYLIST,
         data: tracks
-    })
+    }
+    return isAccessibleAction(tracks[0],action)
 }
-export const setPlayIdxAction = idx => ({
-    type: SET_PLAY_IDX,
-    data: idx
-})
 
 export function addPlaySongAction (track) {
-    return isAccessibleAction(track, {
+    const action = {
         type: ADD_PLAY_SONG,
         data: track
-    })
+    }
+    return isAccessibleAction(track,action)
 }
+
+export function setPlayIdxAction (idx) {
+    return {
+        type: SET_PLAY_IDX,
+        data: idx
+    }
+}
+
+
 
 export function setPlayUrlAction (url) {
     return {
@@ -51,7 +71,6 @@ export function setPlayUrlAction (url) {
     }
 }
 export function getAndSetPlayUrlAction (id) {
-    return dispatch => getRequest(SONG_URL_URI, {id})
-    .then(response => dispatch(setPlayUrlAction(response.data.data[0].url)))
-    .catch(error => console.log(error))
+    return dispatch => request.get(SONG_URL_URI, {id})
+    .then(data => dispatch(setPlayUrlAction(data.data[0].url)))
 }

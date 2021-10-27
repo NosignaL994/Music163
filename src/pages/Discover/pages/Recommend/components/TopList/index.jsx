@@ -12,10 +12,7 @@ import {
 import { setToplistCurIdAction } from "@/redux/actions/toplist";
 import { getSonglistAction } from "@/redux/actions/songlist";
 
-// function useToToplistHandler() {
-//     const dispatch = useDispatch()
-//     return id => useCallback(() => dispatch(setToplistCurIdAction(id)), [])
-// }
+
 
 export default function RcmdTopList () {
 const dispatch = useDispatch()

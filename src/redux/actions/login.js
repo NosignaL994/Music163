@@ -1,12 +1,13 @@
-import { SWITCH_LOGIN_VISIBLE,
+import {
+    SWITCH_LOGIN_VISIBLE,
     SET_LOGIN_QRIMG,
     SET_LOGIN_QR_KEY,
     SET_LOGIN_CODE,
     SET_LOGINED,
-    SET_USER_PROFILE } from "@/common/actionType"
-import {getRequest} from "@/utils/request"
-import { saveCookie,getCookie,clearCookie } from "@/utils/storage"
-// import { SET_LOGINED } from "../../common/actionType"
+    SET_USER_PROFILE 
+} from "@/constant"
+import request from "@/utils/request"
+import { saveCookie,clearCookie } from "@/utils/storage"
 export function switchLoginVisibleAction () {
     return {
         type: SWITCH_LOGIN_VISIBLE,
@@ -15,41 +16,41 @@ export function switchLoginVisibleAction () {
 }
 
 export function getLoginQrKeyAction () {
-    return dispatch => getRequest("/login/qr/key",{
+    return dispatch => request.get("/login/qr/key",{
         _t: Date.now().toString()
-    }).then(response => {
-            const key = response.data.data.unikey
+    }).then(data => {
+            const key = data.data.unikey
             dispatch(getLoginQrimgAction(key))
             dispatch({
                 type: SET_LOGIN_QR_KEY,
                 data: key
             })
-    }).catch(error => console.log(error))
+    })
 }
 
 export function getLoginQrimgAction (key) {
-    return dispatch => getRequest("/login/qr/create",{
+    return dispatch => request.get("/login/qr/create",{
         key,
         qrimg: true,
         _t: Date.now().toString()
-    }).then(response => dispatch({
+    }).then(data => dispatch({
         type: SET_LOGIN_QRIMG,
-        data: response.data.data.qrimg
-    })).catch(error => console.log(error))
+        data: data.data.qrimg
+    }))
 }
 
 export function checkLoginQrAction (key) {
-    return dispatch => getRequest("/login/qr/check",{
+    return dispatch => request.get("/login/qr/check",{
         key,
         _t: Date.now().toString()
-    }).then(response => {
+    }).then(data => {
         
         dispatch({
             type: SET_LOGIN_CODE,
-            data: response.data.code
+            data: data.code
         })
-        response.data.code === 803 && saveCookie(response.data.cookie)
-    }).catch(error => console.log(error))
+        data.code === 803 && saveCookie(data.cookie)
+    })
 }
 
 export function setLoginCodeAction (code) {
@@ -67,23 +68,18 @@ export function setLoginedAction (logined) {
 }
 
 export function getUserProfileAction () {
-    const cookie = getCookie()
-    return dispatch => getRequest("user/account", {
-            cookie
-        }).then(response => dispatch({
+    // const cookie = getCookie()
+    return dispatch => request.get("user/account")
+        .then(data => dispatch({
             type: SET_USER_PROFILE,
-            data: response.data.profile
-        })).catch(error => console.log(error))
+            data: data.profile
+        }))
 }
 
 export function logoutAction () {
-    const cookie = getCookie()
-    return dispatch => getRequest("/logout", {
-        cookie
-    })
-    .then(response => {
-        clearCookie()
-        dispatch(setLoginedAction(false))
-    })
-    .catch(error => console.log(error))
+    return dispatch => request.get("/logout")
+        .then(data => {
+            clearCookie()
+            dispatch(setLoginedAction(false))
+        })
 }

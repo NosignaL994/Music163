@@ -1,4 +1,4 @@
-import {getRequest,getWithCookie} from "@/utils/request"
+import request from "@/utils/request"
 
 import {
     SET_TOP_SONGLIST,
@@ -6,78 +6,70 @@ import {
     ADD_SONGLIST,
     SET_RCMD_SONGLIST,
     COMPLETE_SONGLIST_TRACKS,
-    SET_LOGIN_RCMD_SONGLIST
-} from "@/common/actionType"
-import {
+    SET_LOGIN_RCMD_SONGLIST,
     SONGLIST_URI,
     RCMD_SONGLIST_URI,
     TOP_SONGLIST_URI,
     SONG_TRACK_URI,
     LOGIN_RCMD_SONGLIST_URI,
     SONGLIST_CAT_URI
-} from "@/common/constant"
+} from "@/constant"
 import {setPlaylistAction} from "@/redux/actions/playbar"
 export function getTopSonglistAction (limit=35,offset,cat,order) {
-    return dispatch => getRequest(TOP_SONGLIST_URI,{
+    return dispatch => request.get(TOP_SONGLIST_URI,{
         limit,
         offset,
         cat,
         order
-    }).then(response => {
-        // console.log(limit,offset,cat,order);
-        dispatch({
+    }).then(data => dispatch({
             type: SET_TOP_SONGLIST,
             data: {
-                response: response.data,
+                response: data,
                 order
             }
-        })
-    }).catch(error => console.log(error))
+        }))
 }
 export function getRcmdSongListAction () {
-    return dispatch => getRequest(RCMD_SONGLIST_URI, {
+    return dispatch => request.get(RCMD_SONGLIST_URI, {
         limit: 8
     })
-    .then(response => dispatch({
+    .then(data => dispatch({
             type: SET_RCMD_SONGLIST,
-            data: response.data.result
+            data: data.result
         }))
-    .catch(error => console.log(error))
 }
 
 export function getLoginRcmdSonglistAction () {
-    return dispatch => getWithCookie(LOGIN_RCMD_SONGLIST_URI)
-    .then(response => dispatch({
+    return dispatch => request.get(LOGIN_RCMD_SONGLIST_URI)
+    .then(data => dispatch({
         type: SET_LOGIN_RCMD_SONGLIST,
-        data: response.data.recommend
+        data: data.recommend
     }))
-    .catch(error => console.log(error))
 }
 
 export function getSonglistCategoryAction () {
     // console.log(123);
-    return dispatch => getRequest(SONGLIST_CAT_URI)
-    .then(response => dispatch({
+    return dispatch => request.get(SONGLIST_CAT_URI)
+    .then(data => dispatch({
         type: SET_TOP_CATEGORY,
-        data: response.data
-    })).catch(error => console.log(error))
+        data
+    }))
 }
 
 export function getAndPlaySonglistAction (id) {
     return dispatch => getSonglistAction(id)(dispatch)
         .then(tracks => dispatch(setPlaylistAction(tracks)))
-        .catch(error => console.log(error))
 }
 export function getSonglistAction (id) {
-    return dispatch => getRequest(SONGLIST_URI,{id})
-        .then(response => {
-            const songlist = response.data.playlist
+    return dispatch => request.get(SONGLIST_URI,{id})
+        .then(data => {
+            const songlist = data.playlist
             dispatch({
                 type: ADD_SONGLIST,
                 data: songlist
             })
             return songlist.tracks
-        }).catch(error => console.log(error))
+        })
 }
 
 export function completeSonglistTracksAction (songlist) {
@@ -87,9 +79,9 @@ export function completeSonglistTracksAction (songlist) {
     const ids = trackIds.slice(length).reduce((acc, trackId, idx) => {
         return idx === trackIds.length-length-1 ? acc + trackId.id : (acc + trackId.id + ',')
     }, '')
-    return dispatch => getRequest(SONG_TRACK_URI,{ids})
-        .then(response => {
-            const songs = response.data.songs
+    return dispatch => request.get(SONG_TRACK_URI,{ids})
+        .then(data => {
+            const songs = data.songs
             dispatch({
                 type: COMPLETE_SONGLIST_TRACKS,
                 data: {
@@ -97,5 +89,5 @@ export function completeSonglistTracksAction (songlist) {
                     id
                 }
             })
-        }).catch(error => console.log(error)) 
+        })
 }

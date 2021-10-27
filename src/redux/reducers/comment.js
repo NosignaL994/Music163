@@ -3,7 +3,7 @@ import {
     ADD_SONGLIST_NEW_COMMENT,
     ADD_SONGLIST_HOT_COMMENT,
     SWITCH_LIKE_COMMENT
-} from "@/common/actionType"
+} from "@/constant"
 const defaultState = Map({
     songlist: {
         

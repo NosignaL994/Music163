@@ -2,7 +2,7 @@ import "./style.less"
 
 import { Component } from "react";
 
-import policeImg from "@/assets/images/police.png"
+import policeImg from "./images/police.png"
 
 export default class Footer extends Component {
     render () {
@@ -33,7 +33,7 @@ export default class Footer extends Component {
                         <p className="footer-site-register">
                             <a href="https://beian.miit.gov.cn/#/Integrated/index">粤B2-20090191-18  工业和信息化部备案管理系统网站</a>
                             <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010902002564">
-                                <img src={policeImg} alt="" />
+                                <img src={policeImg} alt="123" />
                                 <span>浙公网安备 33010902002564号</span>
                             </a>
                         </p>

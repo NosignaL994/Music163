@@ -1,12 +1,10 @@
-import {getRequest} from "@/utils/request"
+import request from "@/utils/request"
 import {
     SET_TOPLIST_CUR_ID,
     SET_TOPLISTS,
-    SET_TOPLIST_CUR_PAGE
-} from "@/common/actionType"
-import {
+    SET_TOPLIST_CUR_PAGE,
     TOPLISTS_URI
-} from "@/common/constant"
+} from "@/constant"
 import {getSonglistAction} from "@/redux/actions/songlist"
 
 
@@ -24,8 +22,8 @@ export function setToplistCurPageAction (page) {
 }
 export function getToplistsAction () {
     return dispatch => {
-        getRequest(TOPLISTS_URI).then(response => {
-            const toplists = response.data.list
+        request.get(TOPLISTS_URI).then(data => {
+            const toplists = data.list
             dispatch({
                 type: SET_TOPLISTS,
                 data: toplists
@@ -33,6 +31,6 @@ export function getToplistsAction () {
             for (const toplist of toplists) {
                 dispatch(getSonglistAction(toplist.id))
             }
-        }).catch(error => console.log(error))
+        })
     }
 } 

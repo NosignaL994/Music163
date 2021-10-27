@@ -1,6 +1,6 @@
 import {Map,List} from "immutable"
 
-import { ADD_SINGER,SET_TOP_SINGERS } from "@/common/actionType";
+import { ADD_SINGER,SET_TOP_SINGERS } from "@/constant";
 
 const defaultState = Map({
     topList: List([]), // 歌手榜单

@@ -6,7 +6,7 @@ import {
     SET_PLAY_IDX,
     SET_PLAY_URL,
     ADD_PLAYLIST
-} from "@/common/actionType"
+} from "@/constant"
 const defaultState = Map({
     playIdx: -1,
     playlist: List([]), // 存储播放列表，元素是歌曲track

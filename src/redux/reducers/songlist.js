@@ -2,13 +2,12 @@ import { Map,List } from "immutable";
 
 import {
     SET_TOP_SONGLIST,
-    SET_SONGLIST_COUNT,
     SET_TOP_CATEGORY,
     SET_RCMD_SONGLIST,
     ADD_SONGLIST,
     COMPLETE_SONGLIST_TRACKS,
     SET_LOGIN_RCMD_SONGLIST
-} from "@/common/actionType"
+} from "@/constant"
 
 const defaultState = Map({
     rcmdList: List([]),

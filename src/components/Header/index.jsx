@@ -6,11 +6,16 @@ import { useEffect } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 
 import debounce from '@/utils/debounce'
-import {getSearchSuggestAction, searchIptAction, searchFocusChangeAction} from "@/redux/actions/header"
+import {
+    getSearchSuggestAction,
+    searchIptAction,
+    searchFocusChangeAction
+} from "./actions"
 import {
     switchLoginVisibleAction,
     getUserProfileAction,
-    logoutAction} from "@/redux/actions/login"
+    logoutAction
+} from "@/redux/actions/login"
 
 export default function Header () {
     const dispatch = useDispatch()

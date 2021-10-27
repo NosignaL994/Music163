@@ -2,6 +2,8 @@ import "./style.less"
 
 import {useSelector} from "react-redux"
 
+import {Button} from "antd"
+
 export default function RcmdSinger () {
     const {singers,topList} = useSelector(state => ({
         singers: state.singer.get("singers"),
@@ -30,7 +32,8 @@ export default function RcmdSinger () {
                 ))
             }
         </ul>
-        <a href="#" className="singer-apply sprite_button">申请成为网易音乐人</a>
+        <Button className="singer-apply">申请成为网易音乐人</Button>
+        {/* <a href="#" className=" sprite_button">申请成为网易音乐人</a> */}
         </div>
     </section>
 

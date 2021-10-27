@@ -2,7 +2,7 @@ import { Map } from "immutable";
 
 import { 
     SET_BANNERS,
-} from "@/common/actionType";
+} from "@/constant";
 
 const defaultState = Map({
     banners: null

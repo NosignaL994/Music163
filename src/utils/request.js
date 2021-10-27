@@ -1,48 +1,24 @@
-import axios from "axios";
+import axios from "axios"
 
-import {BASE_URL, DEFAULT_REQUEST_TIMEOUT} from "@/common/constant"
-// import {getCookie} from "./storage"
-// const cookie = getCookie()
-// axios.defaults.withCredentials = true
+import {BASE_URL, DEFAULT_REQUEST_TIMEOUT} from "@/constant"
 
-// console.log(cookie);
-// if (cookie) document.cookie = cookie
-export async function getRequest (url, params) {
-    return axios({
-        url,
-        baseURL: BASE_URL,
-        method: "get",
-        timeout: DEFAULT_REQUEST_TIMEOUT,
-        params
-    })
+
+const instance = axios.create({
+    baseURL:BASE_URL,
+    timeout:DEFAULT_REQUEST_TIMEOUT,
+    withCredentials:true
+})
+instance.interceptors.response.use(response => response.data,error => console.log(error))
+
+function get(url,params) {
+    return instance.get(url,{params})
 }
-export async function getWithCookie (url, params) {
-    return axios({
-        url,
-        baseURL: BASE_URL,
-        method: "get",
-        timeout: DEFAULT_REQUEST_TIMEOUT,
-        params,
-        withCredentials:true
-    })
+function post(url,params) {
+    return instance.post(url,{params})
 }
-export async function postRequest (url, params = {}) {
-    return axios({
-        url,
-        baseURL: BASE_URL,
-        method: "post",
-        timeout: DEFAULT_REQUEST_TIMEOUT,
-        params
-    })
+const request = {
+    get,
+    post
 }
-export async function postWithCookie (url, params) {
-    return axios({
-        url,
-        baseURL: BASE_URL,
-        method: "post",
-        timeout: DEFAULT_REQUEST_TIMEOUT,
-        params,
-        withCredentials:true
-    })
-}
+export default request
 
