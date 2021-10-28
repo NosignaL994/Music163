@@ -2,7 +2,7 @@ import "./style.less"
 import { Modal } from "antd"
 import { useSelector,useDispatch } from "react-redux"
 
-import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
+import {switchVipGuideVisibleAction} from "@/service/actions/vipguide"
 export default function VipGuide () {
     const dispatch = useDispatch()
     const visible = useSelector(state => state.vipguide.get("visible"))

@@ -8,7 +8,7 @@ import "./style.less"
 
 export default function RcmdBanner () {
     const dispatch = useDispatch()
-    const banners = useSelector(state => state.recommend.get("banners"))
+    const banners = useSelector(state => state.banner.get("banners"))
     useEffect(() => {
         dispatch(getBannerAction())
     },[dispatch])

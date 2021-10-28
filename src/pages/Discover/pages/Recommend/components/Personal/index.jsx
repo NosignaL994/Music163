@@ -4,31 +4,21 @@ import { useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
 
 import { formatDay,formatCount } from "@/utils/format"
-import {getAndPlaySonglistAction} from "@/redux/actions/songlist"
-import { setPlaylistAction } from "@/redux/actions/playbar"
+import { usePlayListHandler } from "@/service/hooks/playbar"
+import MemoBtn from "@/components/MemoBtn"
 
 export default function RcmdPersonal () {
     // state
     const [date] = useState((new Date()).getDate())
     const [day] = useState(formatDay(new Date().getDay()))
 
-    // useEffect(() => console.log(111))
-
     // redux
-    const dispatch = useDispatch()
-    const {loginRcmdList,songlists} = useSelector(state => ({
+    const {loginRcmdList} = useSelector(state => ({
         loginRcmdList: state.songlist.get("loginRcmdList"),
         songlists: state.songlist.get("songlists")
     }))
-    function playHandler(songlist) {
-        return () => {
-            if (songlists.has(songlist.id)) {
-                dispatch(setPlaylistAction(songlists.get(songlist.id).tracks))
-            } else {
-                dispatch(getAndPlaySonglistAction(songlist.id))
-            }
-        }
-    }
+    const playHandler = usePlayListHandler()
+    
     return loginRcmdList && <section className="rcmd-personal">
         <header className="rcmd-personal-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
@@ -51,7 +41,7 @@ export default function RcmdPersonal () {
                         <div href="javascript:;" className="personal-cover">
                             <div className="personal-cover-mask">
                                 <img src={item.picUrl+"?param=140y140"} alt="" />
-                                <button className="personal-play sprite_icon" onClick={playHandler(item)}></button>
+                                <MemoBtn className="personal-play sprite_icon" onClick={playHandler(item)}></MemoBtn>
                                 <div className="personal-playcount"><div className="sprite_icon"></div>{formatCount(item.playcount)}</div>
                             </div>
                         </div>

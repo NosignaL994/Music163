@@ -14,7 +14,7 @@ import {
     LOGIN_RCMD_SONGLIST_URI,
     SONGLIST_CAT_URI
 } from "@/constant"
-import {setPlaylistAction} from "@/redux/actions/playbar"
+// import {setPlaylistAction} from "@/service/actions/playbar"
 export function getTopSonglistAction (limit=35,offset,cat,order) {
     return dispatch => request.get(TOP_SONGLIST_URI,{
         limit,
@@ -40,6 +40,7 @@ export function getRcmdSongListAction () {
 }
 
 export function getLoginRcmdSonglistAction () {
+    // console.log(111222);
     return dispatch => request.get(LOGIN_RCMD_SONGLIST_URI)
     .then(data => dispatch({
         type: SET_LOGIN_RCMD_SONGLIST,
@@ -56,20 +57,13 @@ export function getSonglistCategoryAction () {
     }))
 }
 
-export function getAndPlaySonglistAction (id) {
-    return dispatch => getSonglistAction(id)(dispatch)
-        .then(tracks => dispatch(setPlaylistAction(tracks)))
-}
+
 export function getSonglistAction (id) {
     return dispatch => request.get(SONGLIST_URI,{id})
-        .then(data => {
-            const songlist = data.playlist
-            dispatch({
+        .then(data => dispatch({
                 type: ADD_SONGLIST,
-                data: songlist
-            })
-            return songlist.tracks
-        })
+                data: data.playlist
+            }))
 }
 
 export function completeSonglistTracksAction (songlist) {

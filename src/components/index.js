@@ -1,5 +1,5 @@
 import Header from "./Header";
-import Login from "./Login"
+import LoginGuide from "./LoginGuide"
 import PlayBar from "./PlayBar"
 import VipGuide from "./VipGuide"
 import BackTop from './BackTop';
@@ -10,7 +10,7 @@ import { BrowserRouter } from "react-router-dom";
 export default function Wrapper({children}) {
     return <BrowserRouter>
     <Header/>
-    <Login/>
+    <LoginGuide/>
     <VipGuide/>
     <BuyGuide/>
     <BackTop/>

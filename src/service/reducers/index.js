@@ -6,16 +6,17 @@ import playbarReducer from "./playbar"
 import loginReducer from "./login"
 import vipguideReducer from "./vipguide"
 import buyguideReducer from "./buyguide"
-import recommendReducer from "./recommend"
+import bannerReducer from "./banner"
 import toplistReducer from "./toplist"
 import singerReducer from "./singer"
 import radioReducer from "./radio"
 import songlistReducer from "./songlist"
 import commentReducer from "./comment"
 import albumReducer from "./album"
+import userReducer from "./user"
 const reducer = combineReducers({
     header: headerReducer,
-    recommend: recommendReducer,
+    banner: bannerReducer,
     playbar: playbarReducer,
     login: loginReducer,
     vipguide: vipguideReducer,
@@ -25,6 +26,7 @@ const reducer = combineReducers({
     radio: radioReducer,
     songlist: songlistReducer,
     comment: commentReducer,
-    album: albumReducer
+    album: albumReducer,
+    user: userReducer
 })
 export default reducer

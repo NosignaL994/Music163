@@ -10,7 +10,7 @@ import ToplistDetail from "./components/Detail"
 import { 
     getToplistsAction,
     setToplistCurIdAction
-} from "@/redux/actions/toplist"
+} from "@/service/actions/toplist"
 export default function Toplist () {
     const dispatch = useDispatch()
     const {songlists,toplists,curId} = useSelector(state => ({

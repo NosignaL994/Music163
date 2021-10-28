@@ -25,3 +25,10 @@ export const COMMENT_URI = "/comment"
 export const COMMENT_LIKE_URI = "/comment/like"
 export const PLAYLIST_COMMENT_URI = "/comment/playlist"
 export const HOT_COMMENT_URI = "/comment/hot"
+
+// login
+export const CHECK_QR_KEY_URI = "/login/qr/check"
+
+// user
+export const USER_PROFILE_URI = "user/account"
+export const USER_LOGOUT_URI = "/logout"

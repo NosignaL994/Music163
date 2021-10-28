@@ -5,7 +5,7 @@ import { useSelector,useDispatch } from "react-redux"
 import { 
     setToplistCurIdAction,
     setToplistCurPageAction
- } from "@/redux/actions/toplist"
+ } from "@/service/actions/toplist"
 export default function ToplistNav () {
     const dispatch = useDispatch()
     const {toplists,curId} = useSelector(state => ({

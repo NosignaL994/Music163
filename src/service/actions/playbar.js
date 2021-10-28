@@ -10,8 +10,8 @@ import {
 } from "@/constant"
 
 import request from "@/utils/request"
-import { setBuyGuideShowAction } from "@/redux/actions/buyguide"
-import {switchVipGuideVisibleAction} from "@/redux/actions/vipguide"
+import { setBuyGuideShowAction } from "@/service/actions/buyguide"
+import {switchVipGuideVisibleAction} from "@/service/actions/vipguide"
 
 
 export function isAccessibleAction(track,action) {

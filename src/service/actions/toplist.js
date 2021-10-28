@@ -5,7 +5,7 @@ import {
     SET_TOPLIST_CUR_PAGE,
     TOPLISTS_URI
 } from "@/constant"
-import {getSonglistAction} from "@/redux/actions/songlist"
+import {getSonglistAction} from "@/service/actions/songlist"
 
 
 export function setToplistCurIdAction (id) {

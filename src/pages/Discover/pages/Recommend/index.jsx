@@ -10,24 +10,15 @@ import RcmdToplist from "./components/TopList";
 import RcmdSinger from "./components/Singer";
 import RcmdRadio from "./components/Radio";
 // import {getBannerAction} from "./recommend"
-import { useRcmdData } from "./hooks";
+import { useRcmdData,useRcmdLoaded } from "./hooks";
 
 
 
 export default function DscvRcmd () {
     // redux hook
-    const {songlist,album,toplist,singer,radio,logined} = useSelector(state => {
-        return {
-            songlist: state.songlist.get("rcmdList").size,
-            album: state.album.get("newList").size,
-            toplist: state.toplist.get("toplists"),
-            singer: state.singer.get("topList").size,
-            radio: state.radio.get("hotList").size,
-            logined: state.login.get("logined")
-        }
-    })
-    const loaded = songlist&&album&&toplist&&singer&&radio
-    useRcmdData(logined)
+    const logined = useSelector(state => state.user.get("logined"))
+    useRcmdData()
+    const loaded = useRcmdLoaded()
     // render
     return <Skeleton loading={!loaded} active>
         <Banner/>

@@ -1,23 +1,16 @@
-import {Carousel} from "antd"
 import "./style.less"
 
+import { useSelector } from "react-redux";
 import { Fragment } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { Carousel } from "antd";
+import {usePlayAlbumHandler} from "@/service/hooks/playbar"
 
-import {setPlaylistAction} from "@/redux/actions/playbar"
-import { getAlbumAction } from "@/redux/actions/album";
 export default function RcmdNew () {
-    const dispatch = useDispatch()
-    const {newAlbums,albums} = useSelector(state => ({
+    const {newAlbums} = useSelector(state => ({
         newAlbums: state.album.get("newList"),
-        albums: state.album.get("albums")
     }))
-    function playHandler(id) {
-        return async () => {
-            await dispatch(getAlbumAction(id))
-            dispatch(setPlaylistAction(albums.get(id).tracks))
-        }
-    }
+    const playHandler = usePlayAlbumHandler()
+
     return <section className="discover-rcmd-new">
         <header className="rcmd-new-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">

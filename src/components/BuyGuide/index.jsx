@@ -1,7 +1,7 @@
 import "./style.less"
 import { Modal,Button } from "antd";
 import { useSelector,useDispatch } from "react-redux";
-import { setBuyGuideShowAction } from "@/redux/actions/buyguide";
+import { setBuyGuideShowAction } from "@/service/actions/buyguide";
 
 export default function BuyGuide () {
     const dispatch = useDispatch()

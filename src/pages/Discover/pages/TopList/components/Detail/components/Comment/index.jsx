@@ -4,11 +4,15 @@ import {Comment, Avatar, Button, Input,Pagination, Skeleton} from "antd"
 import { useEffect, useState} from "react"
 import { useSelector,useDispatch } from "react-redux"
 
-import { getHotCommentAction,getNewCommentAction,switchLikeCommentAction } from "@/redux/actions/comment"
+import {
+    getHotCommentAction,
+    getNewCommentAction,
+    switchLikeCommentAction
+} from "@/service/actions/comment"
 import {
     setToplistCurPageAction
-} from "@/redux/actions/toplist"
-import {switchLoginVisibleAction} from "@/redux/actions/login"
+} from "@/service/actions/toplist"
+import {switchLoginVisibleAction} from "@/service/actions/login"
 import {COMMENT_TYPE_SONGLIST,COMMENT_URI,COMMENT} from "@/constant"
 import { formatDate2 } from "@/utils/format"
 import debounce from "@/utils/debounce"
@@ -52,9 +56,6 @@ export default function ToplistComment () {
     function textChangeHandler (event) {
         setValue(event.target.value)
     }
-    // function textClickHandler () {
-    //     !logined && dispatch(switchLoginVisibleAction())
-    // }
     function commentHandler () {
         if (!value ) return
         request.post(COMMENT_URI,{
@@ -161,7 +162,7 @@ export default function ToplistComment () {
                                         <a href="javascript:;" className="comment-user">{comment.user.nickname}</a>
                                         <span>：{comment.content}</span>
                                     </div>
-                                    {comment.beReplied.length>0 && comment.beReplied.map(replied => <div className="comment-replied">
+                                    {comment.beReplied.length>0 && comment.beReplied.map((replied,index) => <div className="comment-replied" key={index}>
                                         <a href="javascript:;" className="comment-user">{replied.user.nickname}</a>
                                         <span>：{replied.content}</span>
                                     </div>)}

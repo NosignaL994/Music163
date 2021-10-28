@@ -13,7 +13,6 @@ const defaultState = Map({
     rcmdList: List([]),
     loginRcmdList: List([]),
     top: null,
-    // hqSongListCount: 0,
     categories: null,
     songlists: Map({})
 })
@@ -64,6 +63,7 @@ export default function reducer (state=defaultState,action) {
             })
         case ADD_SONGLIST:
             return state.setIn(["songlists",data.id],data)
+            
         case COMPLETE_SONGLIST_TRACKS:
             return state.mergeIn(["songlists",data.id,"tracks"],data.tracks)
         default:

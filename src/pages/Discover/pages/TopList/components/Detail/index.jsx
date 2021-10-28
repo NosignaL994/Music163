@@ -11,15 +11,17 @@ import {
     ClockCircleOutlined,
     PlayCircleFilled } from "@ant-design/icons"
 import { useSelector,useDispatch } from "react-redux"
-import { Fragment } from "react";
+import { Fragment, useCallback } from "react";
 
 import { formatDate,formatMMSS } from "@/utils/format";
 import {
     setPlaySongAction,
     addPlaySongAction,
-    setPlaylistAction} from "@/redux/actions/playbar"
-import DownloadGuide from "../DownloadGuide";
-import ToplistComment from "../Comment";
+} from "@/service/actions/playbar"
+import { usePlayListHandler } from "@/service/hooks/playbar";
+import DownloadGuide from "./components/DownloadGuide";
+import ToplistComment from "./components/Comment";
+import MemoBtn from "@/components/MemoBtn"
 
 export default function ToplistDetail () {
     const dispatch = useDispatch()
@@ -27,15 +29,11 @@ export default function ToplistDetail () {
         songlists: state.songlist.get("songlists"),
         curId: state.toplist.get("curId")
     }))
-    function toplistPlayHandler (toplist) {
-        return () => dispatch(setPlaylistAction(toplist))
-    }
+    const playlistHandler = usePlayListHandler()
     function songPlayHandler (track) {
         return () => dispatch(setPlaySongAction(track))
     }
-    function addPlayHandler (track) {
-        return () => dispatch(addPlaySongAction(track))
-    }
+    const addPlayHandler = useCallback(track => () => dispatch(addPlaySongAction(track)),[])
     
     const detail = songlists.get(curId)
     const {month, day} = formatDate(detail.updateTime)
@@ -47,7 +45,7 @@ export default function ToplistDetail () {
                 <h2 className="toplist-name">{detail.name}</h2>
                 <div className="toplist-updatetime"><ClockCircleOutlined />&nbsp;最近更新：{month}月{day}日</div>
                 <div className="toplist-btns">
-                    <Button type="primary" className="toplist-play" onClick={toplistPlayHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
+                    <Button type="primary" className="toplist-play" onClick={playlistHandler(detail.tracks)}><PlayCircleOutlined/>播放</Button>
                     <Button type="primary" className="toplist-add"><PlusOutlined /></Button>
                     <Button className="ant-btn-normal-reset"><FolderAddOutlined />({detail.subscribedCount})</Button>
                     <Button className="ant-btn-normal-reset"><ShareAltOutlined />({detail.shareCount})</Button>
@@ -77,7 +75,7 @@ export default function ToplistDetail () {
                             <td className="toplist-rank"><div>{idx+1}</div></td>
                             <td>
                                 {idx<3 && <img src={item.al.picUrl+"?param=50y50"} alt=""/>}
-                                <button onClick={songPlayHandler(item)}><PlayCircleFilled /></button>
+                                <MemoBtn onClick={songPlayHandler(item)}><PlayCircleFilled /></MemoBtn>
                                 <a href="javascript:;">{item.name}</a>
                                 
                                 {item.alia.length>0 && 
@@ -92,7 +90,7 @@ export default function ToplistDetail () {
                             <td>
                                 <span className="toplist-duration">{formatMMSS(item.dt)}</span>
                                 <div className="toplist-songbtns">
-                                    <button className="toplist-songadd sprite_icon2" onClick={addPlayHandler(item)}></button>
+                                    <MemoBtn className="toplist-songadd sprite_icon2" onClick={addPlayHandler(item)}></MemoBtn>
                                     <button className="toplist-songcollect sprite_table"></button>
                                     <button className="toplist-songforward sprite_table"></button>
                                     <button className="toplist-songdownload sprite_table"></button>

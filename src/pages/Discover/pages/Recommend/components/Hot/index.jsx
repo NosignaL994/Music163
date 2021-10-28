@@ -1,31 +1,16 @@
 import './style.less'
-import React,{useCallback} from "react"
-import { useSelector,useDispatch } from 'react-redux';
-import { setPlaylistAction } from '@/redux/actions/playbar';
-import {getAndPlaySonglistAction} from "@/redux/actions/songlist"
+import { useSelector } from 'react-redux';
 import { formatCount } from '@/utils/format';
-function MemoBtn ({type="button",onEvent="onClick",callbackProducer,feature,deps,children,className}) {
-    const callback = callbackProducer(feature)
-    const memoCallback = useCallback(callback,deps)
-    return React.createElement(type,{className,[onEvent]:memoCallback},children)
-}
+import MemoBtn from '@/components/MemoBtn';
+import { usePlayListHandler } from '@/service/hooks/playbar';
+
 export default function RcmdHot () {
-    const dispatch = useDispatch()
-    const {rcmdList,loginRcmdList,logined,songlists} = useSelector(state => ({
+    const {rcmdList,loginRcmdList,logined} = useSelector(state => ({
         rcmdList: state.songlist.get("rcmdList"),
         loginRcmdList: state.songlist.get("loginRcmdList"),
-        logined: state.login.get("logined"),
-        songlists: state.songlist.get("songlists")
+        logined: state.user.get("logined"),
     }))
-    function playHandler (id) {
-        return () => {
-            if (songlists.has(id)) {
-                dispatch(setPlaylistAction(songlists.get(id).tracks))
-            } else {
-                dispatch(getAndPlaySonglistAction(id))
-            }
-        }        
-    }
+    const playHandler = usePlayListHandler()
     return <section className="discover-rcmd-hot">
         <header className="rcmd-hot-hd rcmd-main-hd">
             <h2 className="sprite_02 main-hd-title">
@@ -47,7 +32,7 @@ export default function RcmdHot () {
                         <div className="hot-cover">
                             <div className="hot-cover-mask">
                                 <img src={item.picUrl+"?param=140y140"} alt="" />
-                                <MemoBtn className="hot-play sprite_icon" callbackProducer={playHandler} feature={item.id} deps={[songlists,dispatch]}></MemoBtn>
+                                <MemoBtn className="hot-play sprite_icon" onClick={playHandler(item.id)}></MemoBtn>
                                 <div className="hot-playcount"><div className="sprite_icon"></div>{formatCount(item.playCount || item.playcount)}</div>
                             </div>
                         </div>

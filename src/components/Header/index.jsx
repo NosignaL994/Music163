@@ -2,7 +2,7 @@ import './style.less'
 
 import { Popover } from 'antd'
 import {NavLink} from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect,useCallback } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 
 import debounce from '@/utils/debounce'
@@ -11,54 +11,47 @@ import {
     searchIptAction,
     searchFocusChangeAction
 } from "./actions"
-import {
-    switchLoginVisibleAction,
-    getUserProfileAction,
-    logoutAction
-} from "@/redux/actions/login"
+import {switchLoginVisibleAction} from "@/service/actions/login"
+import { getUserProfileAction,logoutAction } from '@/service/actions/user'
 
 export default function Header () {
     const dispatch = useDispatch()
     const {searchValue,searchSuggest, searchFocused,logined,profile} = useSelector(state => {
-        const headerState = state.header
-        const loginState = state.login
+        const header = state.header
+        const user = state.user
         return {
-            searchValue: headerState.get("searchValue"),
-            searchSuggest: headerState.get("searchSuggest"), 
-            searchFocused: headerState.get("searchFocused"),
-            logined: loginState.get("logined"),
-            profile: loginState.get("profile")
+            searchValue: header.get("searchValue"),
+            searchSuggest: header.get("searchSuggest"), 
+            searchFocused: header.get("searchFocused"),
+            logined: user.get("logined"),
+            profile: user.get("profile")
         }
     })
     // 登录成功应执行的操作
     useEffect(() => {
-        if (logined) {
-            dispatch(getUserProfileAction())
-        }
+        logined && dispatch(getUserProfileAction())
     }, [logined])
 
-    const iptChangeHandler = debounce(function (event) {
+    const iptChangeHandler = useCallback(debounce(function (event) {
         const searchValue = event.target.value.trim()
         dispatch(searchIptAction(searchValue))
         searchValue && dispatch(getSearchSuggestAction(searchValue))
-    }, 400)
+    }, 400),[])
 
-    const iptFocusHandler = debounce(function () {
+    const iptFocusHandler = useCallback(debounce(function () {
         dispatch(searchFocusChangeAction(true))
-    }, 400)
+    }, 400),[])
 
-    const iptBlurHandler = debounce(function () {
+    const iptBlurHandler = useCallback(debounce(function () {
         dispatch(searchFocusChangeAction(false))
-    }, 400)
+    }, 400),[])
 
-    function loginHandler () {
+    const loginHandler = useCallback(() => {
         dispatch(switchLoginVisibleAction())
-    }
-    function logoutHandler () {
-        // console.log(123);
+    },[])
+    const logoutHandler = useCallback(() => {
         dispatch(logoutAction())
-    }
-
+    },[])
     return (
     <header className="site-hd">
         <div className="site-hd-wrapper w1100">
@@ -119,7 +112,6 @@ export default function Header () {
                 <NavLink className="create-center" to="/create-center">创作者中心</NavLink>
                 {logined ? 
                 <Popover 
-                // visible={true}
                 overlayClassName="header-user-group"
                 content={
                     <ul>

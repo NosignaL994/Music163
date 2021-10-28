@@ -15,11 +15,8 @@ export function getNewAlbumAction () {
     }
 export function getAlbumAction (id) {
     return dispatch => request.get("album", {id})
-    .then(data => {
-        const tracks = data.songs
-        dispatch({
-            data:tracks,
-            type:ADD_ALBUM
-        })
-    })
+    .then(data => dispatch({
+            data: data,
+            type: ADD_ALBUM
+        }))
 }

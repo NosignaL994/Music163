@@ -3,10 +3,13 @@ import "./style.less"
 import { Dropdown,Button} from "antd"
 import {CaretDownOutlined} from "@ant-design/icons"
 import { useSelector } from "react-redux"
-import { Fragment,useCallback } from "react"
-
-export default function SongListHeader ({setCat,setPage,cat,order,setOrder}) {
+import { Fragment,useCallback,useEffect } from "react"
+import { useDispatch } from "react-redux"
+import {getSonglistCategoryAction} from "@/service/actions/songlist"
+export default function SongListCategory ({setCat,setPage,cat,order,setOrder}) {
+    const dispatch = useDispatch()
     const categories = useSelector(state => state.songlist.get("categories"))
+    
     function clickHandler (name) {
         return event => {
             event.preventDefault()

@@ -2,14 +2,13 @@ import "./style.less"
 import {Fragment, useState,useEffect,useRef } from "react";
 import { Slider,Popover } from "antd"
 import { useSelector,useDispatch } from "react-redux";
-import {formatMMSS} from "@/utils/format"
+import {formatMMSS,formatSongUrl} from "@/utils/format"
 import {
     setPlayIdxAction,
     setPlayUrlAction,
     getAndSetPlayUrlAction
-} from "@/redux/actions/playbar"
+} from "@/service/actions/playbar"
 
-import {formatSongUrl} from "@/utils/format"
 export default function PlayBar () {
     // state
     const [progress,setProgress] = useState(0)

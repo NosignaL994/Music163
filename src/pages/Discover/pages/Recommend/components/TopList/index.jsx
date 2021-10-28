@@ -4,14 +4,15 @@ import "./style.less"
 
 import { useDispatch,useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect,useCallback, useMemo } from "react";
+import { useEffect,useCallback } from "react";
 import {
     setPlaySongAction,
     addPlaySongAction
-} from "@/redux/actions/playbar"
-import { setToplistCurIdAction } from "@/redux/actions/toplist";
-import { getSonglistAction } from "@/redux/actions/songlist";
-
+} from "@/service/actions/playbar"
+import { setToplistCurIdAction } from "@/service/actions/toplist";
+import { getSonglistAction } from "@/service/actions/songlist";
+import { usePlayListHandler } from "@/service/hooks/playbar";
+import MemoBtn from "@/components/MemoBtn"
 
 
 export default function RcmdTopList () {
@@ -27,19 +28,12 @@ useEffect(() => {
         }
     }
 }, [toplists, dispatch])
-function playHandler (track) {
-    return () => dispatch(setPlaySongAction(track))
-}
-function addPlayHandler (track) {
-    return () => {
-        dispatch(addPlaySongAction(track))
-        openNotification()
-    }
-}
-function toToplistHandler (id) {
-    return () => dispatch(setToplistCurIdAction(id))
-}
-// const toToplistHandler = useMemo(id => () => dispatch(setToplistCurIdAction(id)), [dispatch])
+const playHandler = useCallback(track => () => dispatch(setPlaySongAction(track)),[])
+const addPlayHandler = useCallback(track => () => {
+    dispatch(addPlaySongAction(track))
+    openNotification()
+},[])
+const toToplistHandler = useCallback(id => () => dispatch(setToplistCurIdAction(id)),[])
 function openNotification () {
     notification.open({
         description: '',
@@ -48,7 +42,7 @@ function openNotification () {
         duration: 2
     });
 }
-// const fun = () => useCallback(() => {}, [])
+const playlistHandler = usePlayListHandler()
 return <section className="rcmd-toplist">
     <header className="rcmd-toplist-hd rcmd-main-hd">
         <h2 className="sprite_02 main-hd-title">
@@ -65,7 +59,7 @@ return <section className="rcmd-toplist">
                         <Link to="/discover/toplist" onClick={toToplistHandler(toplist.id)}><img src={toplist.coverImgUrl} alt="" /></Link>
                         <h3>
                             <a href="javascript:;">{toplist.name}</a>
-                            <button className="toplist-play sprite_02"></button>
+                            <MemoBtn className="toplist-play sprite_02" onClick={playlistHandler(toplist.id)}></MemoBtn>
                             <button className="toplist-collect sprite_02"></button>
                         </h3>
                         </dt>
@@ -76,8 +70,8 @@ return <section className="rcmd-toplist">
                                 <span className={idx < 3 ? "toplist-rank toplist-topthree" : "toplist-rank"} >{idx+1}</span>
                                 <a className="toplist-song" href="javascript:;" >{track.name}</a>
                                 <div className="toplist-songbtns">
-                                    <button className="toplist-songbtns-play sprite_02" onClick={playHandler(track)}></button>
-                                    <button className="toplist-songbtns-add sprite_icon2" onClick={addPlayHandler(track)}></button>
+                                    <MemoBtn className="toplist-songbtns-play sprite_02" onClick={playHandler(track)}></MemoBtn>
+                                    <MemoBtn className="toplist-songbtns-add sprite_icon2" onClick={addPlayHandler(track)}></MemoBtn>
                                     <button className="toplist-songbtns-collect sprite_02"></button>
                                 </div>
                             </li>

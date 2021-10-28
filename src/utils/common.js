@@ -1,5 +1,5 @@
-import { setBuyGuideShowAction } from "../redux/actions/buyguide"
-import {switchVipGuideVisibleAction} from "../redux/actions/vipguide"
+import { setBuyGuideShowAction } from "../services/actions/buyguide"
+import {switchVipGuideVisibleAction} from "../services/actions/vipguide"
 import { useDispatch } from "react-redux"
 export function useIsAccessible(track) {
     const dispatch = useDispatch()
